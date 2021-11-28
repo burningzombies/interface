@@ -13,44 +13,26 @@ An open-source interface for Burning Zombies, powered by Avalanche.
 - Development [develop.burningzombies.com](https://develop.burningzombies.com/).
 
 
-### Installation
+
+## Development
 
 ```shell
-npm install
+npm install             # install depencies
+npm run dev             # start next.js development server
+npm run lint && npx tsc # lint and compile
+npm run prettier        # prettier
 ```
 
-### Development
+## Configuring the environment
+
+Make a copy of `env.sample` named `.env.local`
 
 ```shell
-npm run dev
-```
-
-### Build
-
-```shell
-npm run build
-```
-
-### Start
-
-```shell
-npm run start
-```
-
-### Lint
-
-```shell
-npm run lint
-```
-
-### Prettier
-
-```shell
-npm run prettier
-```
-
-### Compile
-
-```shell
-npx tsc
+NEXT_PUBLIC_PROVENANCE_CID=""       # provenance hash ipfs CID
+NEXT_PUBLIC_MASTER_CONTRACT_CID=""  # NFT contract's ABI CID
+NEXT_PUBLIC_MARKET_CONTRACT_CID=""  # Marketplace contract's ABI CID
+NEXT_PUBLIC_NAME="Burning Zombies"  # Application title
+NEXT_PUBLIC_CHAIN_ID=               # Blockchain ID
+NEXT_PUBLIC_MASTER_CONTRACT=""      # Contract address
+NEXT_PUBLIC_MARKET_CONTRACT=""      # Market contract address
 ```
