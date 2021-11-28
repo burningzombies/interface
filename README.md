@@ -17,7 +17,7 @@ An open-source interface for Burning Zombies, powered by Avalanche.
 ## Development
 
 ```shell
-npm install             # install depencies
+npm install             # install dependencies
 npm run dev             # start next.js development server
 npm run lint && npx tsc # lint and compile
 npm run prettier        # prettier
