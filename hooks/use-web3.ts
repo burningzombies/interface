@@ -53,7 +53,7 @@ export const useWeb3 = (): States => {
             }`
           );
           const marketContractABIResponse = await fetch(
-            `https://ipfs.burningzombies.com/ipfs/${
+            `${APP.IPFS_GATEWAY}/ipfs/${
               process.env.NEXT_PUBLIC_MARKET_CONTRACT_CID as string
             }`
           );
