@@ -11,7 +11,7 @@ export const Profile: React.FC<Props> = ({ mintedAt, name, imageURI }) => {
   return (
     <div>
       <Image
-        alt="text"
+        alt={name}
         src={`https://ipfs.burningzombies.com/ipfs/${imageURI
           .split("ipfs://")
           .join("")}`}
