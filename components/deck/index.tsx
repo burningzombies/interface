@@ -20,14 +20,14 @@ export const Deck: React.FC<Props> = ({ ...args }) => {
 
   const pageIndex = parseInt(router.query.page as string);
 
-  if (!args.data && !args.error) {
+  if (!args.data && !args.error)
     return (
       <div className="text-center mt-5">
         <Spinner color="text-light" />
       </div>
     );
-  }
-  if (args.error) {
+
+  if (args.error)
     return (
       <div className="text-center mt-5">
         <span className="text-light">
@@ -36,14 +36,14 @@ export const Deck: React.FC<Props> = ({ ...args }) => {
         </span>
       </div>
     );
-  }
-  if (!args.data || !(args.data.zombies.length > 0)) {
+
+  if (!args.data || !(args.data.zombies.length > 0))
     return (
       <div className="text-center mt-5">
         <span className="text-light">Hmm..., Here it is so silent!</span>
       </div>
     );
-  }
+
   return (
     <div>
       <div className="row">
