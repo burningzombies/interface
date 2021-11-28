@@ -122,7 +122,7 @@ const Graveyard: NextPage = () => {
               <Balance {...{ masterContract, owner: address }} />
             </div>
             <CopyToClipboard
-              text={`https://burningzombies.com/users/${address}`}
+              text={typeof window !== "undefined" ? `${window.location.protocol}//${window.location.host}/users/${address}` : "..."}
               onCopy={() => alert.success(<>Copied.</>)}
             >
               <div
