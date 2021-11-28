@@ -1,0 +1,116 @@
+:root {
+  scroll-behavior: auto !important;
+}
+
+html {
+  font-size: 18pt;
+}
+
+.hero-text {
+  color: var(--bs-warning);
+  text-shadow: 0px 3px 0px #323232;
+}
+
+body {
+  background: #bcd197;
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    #bcd197 0%,
+    #325757 100%
+  );
+  background: -webkit-gradient(
+    radial,
+    center center,
+    0px,
+    center center,
+    100%,
+    color-stop(0%, #bcd197),
+    color-stop(100%, #325757)
+  );
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    #bcd197 0%,
+    #325757 100%
+  );
+  background: -o-radial-gradient(
+    center,
+    ellipse cover,
+    #bcd197 0%,
+    #325757 100%
+  );
+  background: -ms-radial-gradient(
+    center,
+    ellipse cover,
+    #bcd197 0%,
+    #325757 100%
+  );
+  background: radial-gradient(ellipse at center, #bcd197 0%, #325757 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#bcd197, endColorstr=#325757, GradientType=1);
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+}
+
+.wrapper {
+  background: url(../assets/texture.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.text-shadow {
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.form-control {
+  color: var(--bs-secondary);
+  background-color: var(--bs-dark);
+  border: 1px solid var(--bs-dark);
+}
+.form-control:focus {
+  color: var(--bs-light);
+  background-color: var(--bs-dark);
+  border-color: var(--bs-dark);
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.25);
+}
+
+.form-select {
+  color: var(--bs-dark);
+  background-color: var(--bs-warning);
+  border: 1px solid var(--bs-dark);
+}
+.form-select:focus {
+  color: var(--bs-dark);
+  background-color: var(--bs-warning);
+  border-color: var(--bs-dark);
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.25);
+}
+.zombie-bg {
+  background: url(/token-bg.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #46303c;
+}
+.inner-shadow {
+  -moz-box-shadow: inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow: inset 0 0 10px #000000;
+}
+
+.hero-shadow {
+  -webkit-box-shadow: 0px 0px 50px 1px rgba(255, 255, 255, 0.63);
+  box-shadow: 0px 0px 50px 1px rgba(255, 255, 255, 0.63);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: var(--bs-dark);
+}
