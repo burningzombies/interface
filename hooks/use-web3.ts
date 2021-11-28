@@ -48,7 +48,7 @@ export const useWeb3 = (): States => {
           const chainId = await signer.getChainId();
 
           const masterContractABIResponse = await fetch(
-            `https://ipfs.burningzombies.com/ipfs/${
+            `${APP.IPFS_GATEWAY}/ipfs/${
               process.env.NEXT_PUBLIC_MASTER_CONTRACT_CID as string
             }`
           );

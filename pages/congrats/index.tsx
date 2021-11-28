@@ -44,7 +44,7 @@ const PreviewToken: React.FC<Props> = ({ name, imageURI, isNew }) => {
       <Link href={`/zombies/${encodeURIComponent(name.toLowerCase())}`}>
         <a>
           <Image
-            src={`https://ipfs.burningzombies.com/ipfs/${imageURI
+            src={`${APP.IPFS_GATEWAY}/ipfs/${imageURI
               .split("ipfs://")
               .join("")}`}
             layout="responsive"

@@ -7,6 +7,7 @@ import { Scanner } from "../scanner";
 import { Price } from "./price";
 import { Web3Actions } from "../web3-actions";
 import { TransferToken } from "../transfer-token";
+import { APP } from "../../utils/consts";
 
 type Props = {
   mutate: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -22,7 +23,7 @@ export const Card: React.FC<Zombie & Props> = ({ mutate, ...zombie }) => {
           <a>
             <Image
               alt={zombie.name}
-              src={`https://ipfs.burningzombies.com/ipfs/${zombie.imageURI
+              src={`${APP.IPFS_GATEWAY}/ipfs/${zombie.imageURI
                 .split("ipfs://")
                 .join("")}`}
               width={512}

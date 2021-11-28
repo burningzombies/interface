@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["ipfs.burningzombies.com"],
+    domains: ["ipfs.burningzombies.com", "storage.burningzombies.com"],
   },
 };

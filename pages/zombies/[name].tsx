@@ -121,7 +121,9 @@ const SingleZombie: NextPage = () => {
                     <div className="rounded border border-5 border-dark hero-shadow mb-3">
                       <Image
                         className="rounded"
-                        src={`https://ipfs.burningzombies.com/ipfs/${data.zombies[0].imageURI
+                        src={`${
+                          APP.IPFS_GATEWAY
+                        }/ipfs/${data.zombies[0].imageURI
                           .split("ipfs://")
                           .join("")}`}
                         width={512}

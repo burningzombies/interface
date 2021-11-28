@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { APP } from "../../../utils/consts";
 
 type Props = {
   mintedAt: number;
@@ -12,7 +13,7 @@ export const Profile: React.FC<Props> = ({ mintedAt, name, imageURI }) => {
     <div>
       <Image
         alt={name}
-        src={`https://ipfs.burningzombies.com/ipfs/${imageURI
+        src={`${APP.IPFS_GATEWAY}/ipfs/${imageURI
           .split("ipfs://")
           .join("")}`}
         width={512}

@@ -14,7 +14,7 @@ const Provenance: NextPage = () => {
   const { data } = useSWR(
     process.env.NEXT_PUBLIC_PROVENANCE_CID as string,
     (cid) =>
-      fetch(`https://ipfs.burningzombies.com/ipfs/${cid}`).then((r) => r.json())
+      fetch(`${APP.IPFS_GATEWAY}/ipfs/${cid}`).then((r) => r.json())
   );
 
   return (
