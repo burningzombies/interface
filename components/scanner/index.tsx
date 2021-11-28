@@ -59,7 +59,7 @@ const renderModalFooter = (tokenId: string) => {
         target="_blank"
         rel="noreferrer"
         href={
-          APP.CHAIN_ID === 43113
+          APP.CHAIN_ID === 43114
             ? `https://snowtrace.io/token/${APP.MASTER_CONTRACT}?a=${tokenId}`
             : `https://testnet.snowtrace.io/token/${APP.MASTER_CONTRACT}?a=${tokenId}`
         }

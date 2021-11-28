@@ -191,7 +191,11 @@ const SingleZombie: NextPage = () => {
                         <a
                           target="_blank"
                           rel="noreferrer"
-                          href={`https://snowtrace.io/token/${APP.MASTER_CONTRACT}?a=${data.zombies[0].id}`}
+                          href={
+                            APP.CHAIN_ID === 43114
+                              ? `https://snowtrace.io/token/${APP.MASTER_CONTRACT}?a=${data.zombies[0].id}`
+                              : `https://testnet.snowtrace.io/token/${APP.MASTER_CONTRACT}?a=${data.zombies[0].id}`
+                          }
                           className="me-2 text-decoration-none link-light"
                         >
                           View on the snowtrace.io
