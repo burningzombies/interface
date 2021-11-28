@@ -6,5 +6,6 @@
 - [ ] Add a page to show whole collection
 - [ ] Update error messages
 - [ ] Update docs
+- [ ] Share button for profile pages
 
 ### Done
