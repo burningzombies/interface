@@ -21,6 +21,7 @@ export interface TokenHistory {
   date: number;
 }
 
+// Token type
 export interface Zombie {
   id: string;
   name: string;
