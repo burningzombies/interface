@@ -9,16 +9,37 @@ const teamMembers = [
     image: tahaImage,
     name: "Taha",
     title: "Developer",
+    links: [
+      {
+        icon: "fab fa-github",
+        href: "https://github.com/root36x9",
+      },
+      {
+        icon: "fab fa-telegram",
+        href: "https://t.me/root36x9",
+      },
+    ],
   },
   {
     image: annaImage,
     name: "Anna",
     title: "NFT Artist",
+    links: [
+      {
+        icon: "fab fa-telegram",
+        href: "https://t.me/sui_ann",
+      },
+      {
+        icon: "fab fa-vk",
+        href: "https://vk.com/suchkovaanna",
+      },
+    ],
   },
   {
     image: karinImage,
     name: "Karin",
     title: "Marketing",
+    links: [],
   },
 ];
 
@@ -54,6 +75,15 @@ export const Team: React.FC = () => {
             <small className="fw-bold text-light text-shadow">
               {member.title}
             </small>
+            <ul className="list-inline mt-2">
+              {member.links.map((p, i) => (
+                <li className="list-inline-item" key={i}>
+                  <a target="_blank" rel="noreferrer" href={p.href} className="text-light text-shadow">
+                    <i className={p.icon}></i>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
