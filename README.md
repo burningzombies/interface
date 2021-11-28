@@ -9,11 +9,11 @@ An open-source interface for Burning Zombies, powered by Avalanche.
 
 ## Accessing the Interface
 
-- Visit [burningzombies.com](https://burningzombies.com/).
+- Prod [burningzombies.com](https://burningzombies.com/).
 - Development [develop.burningzombies.com](https://develop.burningzombies.com/).
 
 
-## Installation
+### Installation
 
 ```shell
 npm install
