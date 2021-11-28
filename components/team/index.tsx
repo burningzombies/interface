@@ -57,6 +57,21 @@ export const Team: React.FC = () => {
           </div>
         ))}
       </div>
+      <div className="row mt-5">
+        <div className="col-lg-12">
+          <span className="text-light text-shadow">
+            Burning Zombies is an open-source NFT collection.{" "}
+            <a
+              className="link-light"
+              href="https://github.com/burningzombies/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Let's build together!
+            </a>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
