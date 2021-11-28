@@ -100,7 +100,7 @@ const Congrats: NextPage = () => {
     if (typeof window === "undefined" || !router.asPath) return;
 
     const text = encodeURIComponent(
-      `GB Everyone, I just got my zombies 🥳.\n\nLook at them 👉 https://burningzombies.com${router.asPath} 🧟‍♂️🧟‍♀️`
+      `GB Everyone, I just got my zombies 🥳.\n\nLook at them 👉 ${window.location.protocol}//${window.location.host}${router.asPath} 🧟‍♂️🧟‍♀️`
     );
     window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
   };
