@@ -21,15 +21,10 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
     fetcher
   );
 
-  if (!data && !error) {
-    return <Spinner color="text-light" />;
-  }
-  if (error) {
+  if (!data && !error) return <Spinner color="text-light" />;
+
+  if (error || !data || !(data.top.length > 0))
     return <i className="fas text-light fa-times"></i>;
-  }
-  if (!data || !(data.top.length > 0)) {
-    return <i className="fas text-light fa-times"></i>;
-  }
 
   const fraction = (score / data.top[0].score) * 100;
 
