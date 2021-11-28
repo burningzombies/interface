@@ -67,7 +67,7 @@ export const Team: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              Let's build together!
+              Let&apos;s build together!
             </a>
           </span>
         </div>
