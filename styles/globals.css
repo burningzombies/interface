@@ -114,3 +114,9 @@ body {
   text-decoration: none;
   background-color: var(--bs-dark);
 }
+
+.dropdown-menu-dark .dropdown-item.active,
+.dropdown-menu-dark .dropdown-item:active {
+  color: var(--bs-dark);
+  background-color: var(--bs-warning);
+}

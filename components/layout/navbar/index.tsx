@@ -22,7 +22,10 @@ export const Navbar: React.FC = () => {
         >
           Menu
         </a>
-        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <ul
+          className="dropdown-menu dropdown-menu-dark"
+          aria-labelledby="navbarDropdown"
+        >
           <li>
             <Link href="/burn">
               <a
@@ -30,7 +33,7 @@ export const Navbar: React.FC = () => {
                   router.pathname == "/burn" && "active"
                 }`}
               >
-                Burn
+                <i className="me-1 fas fa-fire"></i> Burn
               </a>
             </Link>
           </li>
@@ -41,7 +44,7 @@ export const Navbar: React.FC = () => {
                   router.pathname == "/loot" && "active"
                 }`}
               >
-                Loot
+                <i className="me-1 fas fa-coins"></i> Loot
               </a>
             </Link>
           </li>
@@ -52,7 +55,7 @@ export const Navbar: React.FC = () => {
                   router.pathname == "/zombies" && "active"
                 }`}
               >
-                Collection
+                <i className="me-1 fas fa-biohazard"></i> Collection
               </a>
             </Link>
           </li>
@@ -66,7 +69,7 @@ export const Navbar: React.FC = () => {
                   router.pathname == "/rarity" && "active"
                 }`}
               >
-                Rarity
+                <i className="me-1 fas fa-square-root-alt"></i> Rarity
               </a>
             </Link>
           </li>
@@ -77,7 +80,7 @@ export const Navbar: React.FC = () => {
                   router.pathname == "/provenance" && "active"
                 }`}
               >
-                Provenance
+                <i className="me-1 fas fa-passport"></i> Provenance
               </a>
             </Link>
           </li>
@@ -91,7 +94,7 @@ export const Navbar: React.FC = () => {
               rel="noreferrer"
               className="dropdown-item"
             >
-              Docs
+              <i className="me-1 fas fa-scroll"></i> Docs
             </a>
           </li>
         </ul>
