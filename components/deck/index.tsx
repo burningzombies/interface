@@ -31,7 +31,6 @@ export const Deck: React.FC<Props> = ({ ...args }) => {
     return (
       <div className="text-center mt-5">
         <span className="text-light">
-          {args.error.message}
           Sorry for that, something went wrong if it continues, please report
           us: boo@burningzombies.com
         </span>
