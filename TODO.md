@@ -3,7 +3,7 @@
 ### Todo
 
 - [x] Add `filter by rarity` to the filter component
-- [ ] Add a page to show whole collection
+- [x] Add a page to show whole collection
 - [ ] Update error messages
 - [x] Update docs
 - [x] Share button for profile pages
