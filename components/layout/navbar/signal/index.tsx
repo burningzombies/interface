@@ -1,5 +1,5 @@
 import React from "react";
-import { useWeb3 } from "../../../hooks/use-web3";
+import { useWeb3 } from "../../../../hooks/use-web3";
 import { useAlert } from "react-alert";
 
 export const Signal: React.FC = () => {

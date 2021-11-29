@@ -81,6 +81,19 @@ export const Navbar: React.FC = () => {
               </a>
             </Link>
           </li>
+          <li>
+            <hr className="dropdown-divider" />
+          </li>
+          <li>
+            <a
+              href="https://docs.burningzombies.com"
+              target="_blank"
+              rel="noreferrer"
+              className="dropdown-item"
+            >
+              Docs
+            </a>
+          </li>
         </ul>
       </li>
     );
