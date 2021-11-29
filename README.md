@@ -13,8 +13,6 @@ An open-source interface for Burning Zombies, powered by Avalanche.
 - Prod [burningzombies.com](https://burningzombies.com/).
 - Development [develop.burningzombies.com](https://develop.burningzombies.com/).
 
-
-
 ## Development
 
 ```shell

@@ -9,6 +9,83 @@ import { APP } from "../../../utils/consts";
 export const Navbar: React.FC = () => {
   const router = useRouter();
 
+  const renderDropdown = () => {
+    return (
+      <li className="nav-item dropdown">
+        <a
+          className="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Menu
+        </a>
+        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li>
+            <Link href="/burn">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/burn" && "active"
+                }`}
+              >
+                Burn
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/loot">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/loot" && "active"
+                }`}
+              >
+                Loot
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/zombies">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/zombies" && "active"
+                }`}
+              >
+                Collection
+              </a>
+            </Link>
+          </li>
+          <li>
+            <hr className="dropdown-divider" />
+          </li>
+          <li>
+            <Link href="/rarity">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/rarity" && "active"
+                }`}
+              >
+                Rarity
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/provenance">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/provenance" && "active"
+                }`}
+              >
+                Provenance
+              </a>
+            </Link>
+          </li>
+        </ul>
+      </li>
+    );
+  };
+
   return (
     <nav className="py-3 navbar navbar-expand-lg navbar-dark bg-dark shadow">
       <div className="container">
@@ -89,28 +166,7 @@ export const Navbar: React.FC = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/burn">
-                <a
-                  className={`nav-link ${
-                    router.pathname == "/burn" && "active"
-                  }`}
-                >
-                  Burn
-                </a>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/loot">
-                <a
-                  className={`nav-link ${
-                    router.pathname == "/loot" && "active"
-                  }`}
-                >
-                  Loot
-                </a>
-              </Link>
-            </li>
+            {renderDropdown()}
             <li className="nav-item">
               <Signal />
             </li>

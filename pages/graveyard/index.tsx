@@ -70,7 +70,10 @@ const Graveyard: NextPage = () => {
     }
   }, [router.query]);
 
-  const { data: topZombieData, error: topZombieError } = useSWR<Data>(topZombie(), fetcher);
+  const { data: topZombieData, error: topZombieError } = useSWR<Data>(
+    topZombie(),
+    fetcher
+  );
 
   const isLoadable = () => {
     return (
@@ -172,7 +175,13 @@ const Graveyard: NextPage = () => {
                 <option value="rarity-desc">Rarity (Highest to Lowest)</option>
               </Sorting>
             </div>
-            <Deck {...{ data, error: topZombieError ? topZombieError : error, mutate }} />
+            <Deck
+              {...{
+                data,
+                error: topZombieError ? topZombieError : error,
+                mutate,
+              }}
+            />
           </Web3Wrapper>
         </div>
       </section>

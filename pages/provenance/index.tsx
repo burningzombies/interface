@@ -13,8 +13,7 @@ import { Spinner } from "../../components/spinner";
 const Provenance: NextPage = () => {
   const { data } = useSWR(
     process.env.NEXT_PUBLIC_PROVENANCE_CID as string,
-    (cid) =>
-      fetch(`${APP.IPFS_GATEWAY}/ipfs/${cid}`).then((r) => r.json())
+    (cid) => fetch(`${APP.IPFS_GATEWAY}/ipfs/${cid}`).then((r) => r.json())
   );
 
   return (

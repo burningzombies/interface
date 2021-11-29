@@ -13,9 +13,7 @@ export const Profile: React.FC<Props> = ({ mintedAt, name, imageURI }) => {
     <div>
       <Image
         alt={name}
-        src={`${APP.IPFS_GATEWAY}/ipfs/${imageURI
-          .split("ipfs://")
-          .join("")}`}
+        src={`${APP.IPFS_GATEWAY}/ipfs/${imageURI.split("ipfs://").join("")}`}
         width={512}
         height={512}
         layout="responsive"
