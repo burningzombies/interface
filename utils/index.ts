@@ -1,6 +1,42 @@
 import { ethers } from "ethers";
 import { request } from "graphql-request";
 
+export const parseTier = (tier: string, highScore: number): string => {
+  switch (tier) {
+    case "Common": {
+      const from = ((highScore / 100) * 0.0).toFixed(0);
+      const to = ((highScore / 100) * 40).toFixed(0);
+      return `${from},${to}`;
+    }
+    case "Uncommon": {
+      const from = ((highScore / 100) * 40.0).toFixed(0);
+      const to = ((highScore / 100) * 55).toFixed(0);
+      return `${from},${to}`;
+    }
+    case "Rare": {
+      const from = ((highScore / 100) * 55.0).toFixed(0);
+      const to = ((highScore / 100) * 70).toFixed(0);
+      return `${from},${to}`;
+    }
+    case "Super Rare": {
+      const from = ((highScore / 100) * 70.0).toFixed(0);
+      const to = ((highScore / 100) * 80).toFixed(0);
+      return `${from},${to}`;
+    }
+    case "Mystic": {
+      const from = ((highScore / 100) * 80.0).toFixed(0);
+      const to = ((highScore / 100) * 90).toFixed(0);
+      return `${from},${to}`;
+    }
+    case "Legendary": {
+      const from = ((highScore / 100) * 90.0).toFixed(0);
+      const to = ((highScore / 100) * 100.1).toFixed(0);
+      return `${from},${to}`;
+    }
+  }
+  return "0,999";
+};
+
 export const fetcher = <TData>(query: string): Promise<TData> => {
   return request(
     "https://api.thegraph.com/subgraphs/name/burningzombies/burning-zombies",

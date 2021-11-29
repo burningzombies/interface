@@ -17,7 +17,7 @@ export const Sorting: React.FC<Props> = ({ children, initialPathname }) => {
       pathname: initialPathname,
       query: {
         page: 1,
-        gender: router.query.genger,
+        tier: router.query.tier,
         background: router.query.background,
         skin: router.query.skin,
         mouth: router.query.mouth,

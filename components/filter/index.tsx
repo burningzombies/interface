@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { fetcher } from "../../utils";
 import { getFilterableTraits } from "../../utils/queries";
 import { Spinner } from "../spinner";
+import { ByRarity } from "./by-rarity";
 
 interface Data {
   traits: Array<{
@@ -41,7 +42,7 @@ export const Filter: React.FC<Props> = ({ initialPathname }) => {
       pathname: initialPathname,
       query: {
         page: 1,
-        gender: (f.get("gender") as string) || "",
+        tier: (f.get("tier") as string) || "",
         skin: (f.get("skin") as string) || "",
         background: (f.get("background") as string) || "",
         mouth: (f.get("mouth") as string) || "",
@@ -118,7 +119,13 @@ export const Filter: React.FC<Props> = ({ initialPathname }) => {
           );
         return (
           <form className="row justify-content-center" onSubmit={filter}>
-            {col(data.traits.filter((t) => t.type === "Gender"))}
+            {isReloaded() ? (
+              <div className="text-center mt-2">
+                <Spinner color="text-warning" />
+              </div>
+            ) : (
+              <ByRarity defaultValue={router.query.tier as string} />
+            )}
             {col(data.traits.filter((t) => t.type === "Background"))}
             {col(data.traits.filter((t) => t.type === "Skin"))}
             {col(data.traits.filter((t) => t.type === "Mouth"))}

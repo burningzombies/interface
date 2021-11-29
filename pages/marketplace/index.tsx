@@ -9,8 +9,8 @@ import { BigNumber } from "ethers";
 import { Filter } from "../../components/filter";
 import { Sorting } from "../../components/sorting";
 import { Deck } from "../../components/deck";
-import { fetcher, checkEmptyObject } from "../../utils";
-import { getOnSaleZombies } from "../../utils/queries";
+import { fetcher, checkEmptyObject, parseTier } from "../../utils";
+import { getOnSaleZombies, topZombie } from "../../utils/queries";
 import useSWR from "swr";
 import Router, { useRouter } from "next/router";
 import { Zombie, Collection } from "../../types";
@@ -32,7 +32,7 @@ const Marketplace: NextPage = () => {
   const router = useRouter();
 
   const pageIndex = Number(router.query.page);
-  const gender = router.query.gender as string;
+  const tier = router.query.tier as string;
   const background = router.query.background as string;
   const skin = router.query.skin as string;
   const mouth = router.query.mouth as string;
@@ -50,7 +50,7 @@ const Marketplace: NextPage = () => {
     const isParamsInitialized = () => {
       return (
         typeof Router.query["page"] !== "undefined" ||
-        typeof Router.query["gender"] !== "undefined" ||
+        typeof Router.query["tier"] !== "undefined" ||
         typeof Router.query["background"] !== "undefined" ||
         typeof Router.query["skin"] !== "undefined" ||
         typeof Router.query["mouth"] !== "undefined" ||
@@ -64,7 +64,7 @@ const Marketplace: NextPage = () => {
         pathname: "/marketplace",
         query: {
           page: 1,
-          gender: "",
+          tier: "",
           background: "",
           skin: "",
           mouth: "",
@@ -75,20 +75,35 @@ const Marketplace: NextPage = () => {
     }
   }, [router.query]);
 
+  const { data: topZombieData, error: topZombieError } = useSWR<Data>(
+    topZombie(),
+    fetcher
+  );
+
   const isLoadable = () => {
     return (
-      pageIndex > 0 ||
-      typeof gender !== "undefined" ||
-      typeof background !== "undefined" ||
-      typeof skin !== "undefined" ||
-      typeof mouth !== "undefined" ||
+      topZombieData &&
+      topZombieData.zombies.length > 0 &&
+      pageIndex > 0 &&
+      typeof tier !== "undefined" &&
+      typeof background !== "undefined" &&
+      typeof skin !== "undefined" &&
+      typeof mouth !== "undefined" &&
       typeof eyes !== "undefined"
     );
   };
 
   const { data, error, mutate } = useSWR<Data, Error>(
     isLoadable()
-      ? getOnSaleZombies(pageIndex, gender, background, skin, mouth, eyes, sort)
+      ? getOnSaleZombies(
+          pageIndex,
+          parseTier(tier, topZombieData ? topZombieData.zombies[0].score : 0.0),
+          background,
+          skin,
+          mouth,
+          eyes,
+          sort
+        )
       : null,
     fetcher
   );
@@ -142,7 +157,13 @@ const Marketplace: NextPage = () => {
               <option value="rarity-desc">Rarity (Highest to Lowest)</option>
             </Sorting>
           </div>
-          <Deck {...{ data, error, mutate }} />
+          <Deck
+            {...{
+              data,
+              error: topZombieError ? topZombieError : error,
+              mutate,
+            }}
+          />
         </div>
       </section>
     </Layout>

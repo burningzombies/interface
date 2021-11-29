@@ -1,5 +1,15 @@
 import { toTitleCase } from "../utils";
 
+export const topZombie = (): string => {
+  return `
+    {
+      zombies (first: 1, orderBy: score, orderDirection: desc) {
+        score
+      }
+    }
+  `;
+};
+
 export const collectionInfo = (): string => {
   return `{
     collection(id: 0) {
@@ -74,7 +84,7 @@ export const getSingleZombie = (name: string): string => {
 export const getUserZombies = (
   address: string,
   pageIndex: number,
-  gender: string,
+  tier: string,
   background: string,
   skin: string,
   mouth: string,
@@ -113,11 +123,17 @@ export const getUserZombies = (
     }
   }
 
+  const _tier = tier.split(",");
+  const from = _tier[0];
+  const to = _tier[1];
+
   return `
     {
       zombies (where: {${
         where ? `${where}, ` : ""
-      }owner: "${address}", background_contains: "${background}", gender_contains: "${gender}", skin_contains: "${skin}", mouth_contains: "${mouth}", eyes_contains: "${eyes}" }, skip: ${
+      }owner: "${address}", background_contains: "${background}", ${
+    tier !== "" ? `score_lt: ${to}, score_gte: ${from} ` : ""
+  }skin_contains: "${skin}", mouth_contains: "${mouth}", eyes_contains: "${eyes}" }, skip: ${
     (pageIndex - 1) * 15
   } first: 15, orderDirection: "${direction}", orderBy: "${by}") {
         id

@@ -7,8 +7,8 @@ import { Filter } from "../../components/filter";
 import { Sorting } from "../../components/sorting";
 import Head from "next/head";
 import { APP } from "../../utils/consts";
-import { fetcher, checkEmptyObject } from "../../utils";
-import { getUserZombies } from "../../utils/queries";
+import { parseTier, fetcher, checkEmptyObject } from "../../utils";
+import { getUserZombies, topZombie } from "../../utils/queries";
 import useSWR from "swr";
 import { Deck } from "../../components/deck";
 import { Zombie, Collection } from "../../types";
@@ -25,7 +25,7 @@ const UserGraveyard: NextPage = () => {
   const router = useRouter();
 
   const pageIndex = Number(router.query.page);
-  const gender = router.query.gender as string;
+  const tier = router.query.tier as string;
   const background = router.query.background as string;
   const skin = router.query.skin as string;
   const mouth = router.query.mouth as string;
@@ -46,7 +46,7 @@ const UserGraveyard: NextPage = () => {
     const isNotInitialized = () => {
       return (
         !Router.query["page"] ||
-        typeof Router.query["gender"] === "undefined" ||
+        typeof Router.query["tier"] === "undefined" ||
         typeof Router.query["background"] === "undefined" ||
         typeof Router.query["skin"] === "undefined" ||
         typeof Router.query["mouth"] === "undefined" ||
@@ -60,7 +60,7 @@ const UserGraveyard: NextPage = () => {
         pathname: `/users/${address}`,
         query: {
           page: 1,
-          gender: "",
+          tier: "",
           background: "",
           skin: "",
           mouth: "",
@@ -71,24 +71,31 @@ const UserGraveyard: NextPage = () => {
     }
   }, [address, router.query]);
 
-  const notLoad = () => {
+  const { data: topZombieData, error: topZombieError } = useSWR<Data>(
+    topZombie(),
+    fetcher
+  );
+
+  const isLoadable = () => {
     return (
-      !pageIndex ||
-      typeof gender === "undefined" ||
-      typeof background === "undefined" ||
-      typeof skin === "undefined" ||
-      typeof mouth === "undefined" ||
-      typeof eyes === "undefined"
+      topZombieData &&
+      topZombieData.zombies.length > 0 &&
+      pageIndex > 0 &&
+      typeof tier !== "undefined" &&
+      typeof background !== "undefined" &&
+      typeof skin !== "undefined" &&
+      typeof mouth !== "undefined" &&
+      typeof eyes !== "undefined"
     );
   };
 
   const { data, error, mutate } = useSWR<Data, Error>(
-    notLoad()
+    !isLoadable()
       ? null
       : getUserZombies(
           address,
           pageIndex,
-          gender,
+          parseTier(tier, topZombieData ? topZombieData.zombies[0].score : 0.0),
           background,
           skin,
           mouth,
@@ -147,7 +154,13 @@ const UserGraveyard: NextPage = () => {
                     </option>
                   </Sorting>
                 </div>
-                <Deck {...{ data, error, mutate }} />
+                <Deck
+                  {...{
+                    data,
+                    error: topZombieError ? topZombieError : error,
+                    mutate,
+                  }}
+                />
               </div>
             </section>
           </div>

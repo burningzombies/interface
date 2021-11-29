@@ -11,6 +11,7 @@ import useSWR from "swr";
 import { fetcher } from "../../utils";
 import { Zombie } from "../../types";
 import { Spinner } from "../../components/spinner";
+import { topZombie } from "../../utils/queries";
 
 type Data = {
   zombies: Array<Zombie>;
@@ -75,13 +76,13 @@ const RarityLabel: React.FC<RarityLabelProps> = ({
     topZombie.data && topZombie.data.zombies.length > 0
       ? `
     {
-      zombies (first: 1000, where: { score_lte: "${(
+      zombies (first: 1000, where: { score_lt: "${(
         (topZombie.data.zombies[0].score / 100) *
         max
-      ).toFixed(1)}", score_gte: "${(
+      ).toFixed(0)}", score_gte: "${(
           (topZombie.data.zombies[0].score / 100) *
           min
-        ).toFixed(1)}" }) {
+        ).toFixed(0)}" }) {
         id
       }
     }
@@ -124,14 +125,7 @@ const RarityLabel: React.FC<RarityLabelProps> = ({
 };
 
 const Rarity: NextPage = () => {
-  const { data } = useSWR<Data, Error>(
-    `{
-		zombies(first: 1, orderBy: score, orderDirection: desc) {
-			score
-		}
-	}`,
-    fetcher
-  );
+  const { data } = useSWR<Data, Error>(topZombie, fetcher);
 
   return (
     <Layout>
@@ -152,7 +146,7 @@ const Rarity: NextPage = () => {
               topZombie: { data },
               label: "Common",
               min: 0,
-              max: 39.99,
+              max: 40,
             }}
           >
             <h3>
@@ -163,8 +157,8 @@ const Rarity: NextPage = () => {
             {...{
               topZombie: { data },
               label: "Uncommon",
-              min: 40.0,
-              max: 54.99,
+              min: 40,
+              max: 55,
             }}
           >
             <h3>
@@ -176,8 +170,8 @@ const Rarity: NextPage = () => {
             {...{
               topZombie: { data },
               label: "Rare",
-              min: 55.0,
-              max: 69.99,
+              min: 55,
+              max: 70,
             }}
           >
             <h3>
@@ -190,8 +184,8 @@ const Rarity: NextPage = () => {
             {...{
               topZombie: { data },
               label: "Super Rare",
-              min: 70.0,
-              max: 79.99,
+              min: 70,
+              max: 80,
             }}
           >
             <h3>
@@ -202,8 +196,8 @@ const Rarity: NextPage = () => {
             {...{
               topZombie: { data },
               label: "Mystic",
-              min: 80.0,
-              max: 89.99,
+              min: 80,
+              max: 90,
             }}
           >
             <h3>
@@ -215,7 +209,7 @@ const Rarity: NextPage = () => {
             {...{
               topZombie: { data },
               label: "Legendary",
-              min: 90.0,
+              min: 90,
               max: 100.1,
             }}
           >

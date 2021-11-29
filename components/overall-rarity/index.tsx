@@ -26,7 +26,7 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
   if (error || !data || !(data.top.length > 0))
     return <i className="fas text-light fa-times"></i>;
 
-  const fraction = (score / data.top[0].score) * 100;
+  const fraction = ((score / data.top[0].score) * 100).toFixed(0);
 
   return (
     <>
@@ -36,11 +36,11 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
           className="progress-bar bg-warning text-dark text-shadow fw-bold"
           role="progressbar"
           style={{ width: `${fraction}%` }}
-          aria-valuenow={fraction}
+          aria-valuenow={parseInt(fraction)}
           aria-valuemin={0}
           aria-valuemax={100}
         >
-          {fraction.toFixed(2)}%
+          {fraction}%
         </div>
       </div>
     </>

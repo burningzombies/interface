@@ -7,8 +7,8 @@ import { Filter } from "../../components/filter";
 import { Sorting } from "../../components/sorting";
 import Head from "next/head";
 import { APP } from "../../utils/consts";
-import { fetcher, checkEmptyObject } from "../../utils";
-import { getUserZombies } from "../../utils/queries";
+import { parseTier, fetcher, checkEmptyObject } from "../../utils";
+import { getUserZombies, topZombie } from "../../utils/queries";
 import useSWR from "swr";
 import { useWeb3 } from "../../hooks/use-web3";
 import { Web3Wrapper } from "../../components/web3-wrapper";
@@ -28,7 +28,7 @@ const Graveyard: NextPage = () => {
   const alert = useAlert();
 
   const pageIndex = Number(router.query.page);
-  const gender = router.query.gender as string;
+  const tier = router.query.tier as string;
   const background = router.query.background as string;
   const skin = router.query.skin as string;
   const mouth = router.query.mouth as string;
@@ -45,7 +45,7 @@ const Graveyard: NextPage = () => {
     const isInitialized = () => {
       return (
         typeof Router.query["page"] !== "undefined" &&
-        typeof Router.query["gender"] !== "undefined" &&
+        typeof Router.query["tier"] !== "undefined" &&
         typeof Router.query["background"] !== "undefined" &&
         typeof Router.query["skin"] !== "undefined" &&
         typeof Router.query["mouth"] !== "undefined" &&
@@ -59,7 +59,7 @@ const Graveyard: NextPage = () => {
         pathname: "/graveyard",
         query: {
           page: 1,
-          gender: "",
+          tier: "",
           background: "",
           skin: "",
           mouth: "",
@@ -70,8 +70,23 @@ const Graveyard: NextPage = () => {
     }
   }, [router.query]);
 
+  const { data: topZombieData, error: topZombieError } = useSWR<Data>(topZombie(), fetcher);
+
   const isLoadable = () => {
-    return isReady && address && chainId && chainId === APP.CHAIN_ID;
+    return (
+      topZombieData &&
+      topZombieData.zombies.length > 0 &&
+      pageIndex > 0 &&
+      typeof tier !== "undefined" &&
+      typeof background !== "undefined" &&
+      typeof skin !== "undefined" &&
+      typeof mouth !== "undefined" &&
+      typeof eyes !== "undefined" &&
+      isReady &&
+      address &&
+      chainId &&
+      chainId === APP.CHAIN_ID
+    );
   };
 
   const { data, error, mutate } = useSWR<Data, Error>(
@@ -80,7 +95,7 @@ const Graveyard: NextPage = () => {
       : getUserZombies(
           address as string,
           pageIndex,
-          gender,
+          parseTier(tier, topZombieData ? topZombieData.zombies[0].score : 0.0),
           background,
           skin,
           mouth,
@@ -157,7 +172,7 @@ const Graveyard: NextPage = () => {
                 <option value="rarity-desc">Rarity (Highest to Lowest)</option>
               </Sorting>
             </div>
-            <Deck {...{ data, error, mutate }} />
+            <Deck {...{ data, error: topZombieError ? topZombieError : error, mutate }} />
           </Web3Wrapper>
         </div>
       </section>
