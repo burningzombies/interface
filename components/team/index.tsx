@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import tahaImage from "../../assets/team/taha.jpeg";
-import annaImage from "../../assets/team/anna.jpeg";
-import karinImage from "../../assets/team/karin.jpeg";
+import developerImage from "../../assets/team/developer.jpeg";
+import designerImage from "../../assets/team/designer.jpeg";
+import marketingImage from "../../assets/team/marketing.jpeg";
 
 const teamMembers = [
   {
-    image: tahaImage,
+    image: developerImage,
     name: "Taha",
     title: "Developer",
     links: [
@@ -21,25 +21,30 @@ const teamMembers = [
     ],
   },
   {
-    image: annaImage,
+    image: designerImage,
     name: "Anna",
     title: "NFT Artist",
     links: [
       {
-        icon: "fab fa-telegram",
-        href: "https://t.me/sui_ann",
-      },
-      {
         icon: "fab fa-vk",
         href: "https://vk.com/suchkovaanna",
+      },
+      {
+        icon: "fab fa-telegram",
+        href: "https://t.me/sui_ann",
       },
     ],
   },
   {
-    image: karinImage,
-    name: "Karin",
+    image: marketingImage,
+    name: "Hardcore NFTs",
     title: "Marketing",
-    links: [],
+    links: [
+      {
+        icon: "fab fa-twitter",
+        href: "https://twitter.com/HardcoreNfts",
+      },
+    ],
   },
 ];
 
@@ -78,7 +83,12 @@ export const Team: React.FC = () => {
             <ul className="list-inline mt-2">
               {member.links.map((p, i) => (
                 <li className="list-inline-item" key={i}>
-                  <a target="_blank" rel="noreferrer" href={p.href} className="text-light text-shadow">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={p.href}
+                    className="text-light text-shadow"
+                  >
                     <i className={p.icon}></i>
                   </a>
                 </li>
