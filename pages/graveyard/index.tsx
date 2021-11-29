@@ -42,19 +42,19 @@ const Graveyard: NextPage = () => {
     if (Router.router.asPath !== "/graveyard" && checkEmptyObject(router.query))
       return;
 
-    const isNotInitialized = () => {
+    const isInitialized = () => {
       return (
-        !Router.query["page"] ||
-        typeof Router.query["gender"] === "undefined" ||
-        typeof Router.query["background"] === "undefined" ||
-        typeof Router.query["skin"] === "undefined" ||
-        typeof Router.query["mouth"] === "undefined" ||
-        typeof Router.query["eyes"] === "undefined" ||
-        typeof Router.query["sort"] === "undefined"
+        typeof Router.query["page"] !== "undefined" &&
+        typeof Router.query["gender"] !== "undefined" &&
+        typeof Router.query["background"] !== "undefined" &&
+        typeof Router.query["skin"] !== "undefined" &&
+        typeof Router.query["mouth"] !== "undefined" &&
+        typeof Router.query["eyes"] !== "undefined" &&
+        typeof Router.query["sort"] !== "undefined"
       );
     };
 
-    if (isNotInitialized()) {
+    if (!isInitialized()) {
       Router.replace({
         pathname: "/graveyard",
         query: {
@@ -70,22 +70,12 @@ const Graveyard: NextPage = () => {
     }
   }, [router.query]);
 
-  const notLoad = () => {
-    return (
-      !pageIndex ||
-      typeof gender === "undefined" ||
-      typeof background === "undefined" ||
-      typeof skin === "undefined" ||
-      typeof mouth === "undefined" ||
-      typeof eyes === "undefined" ||
-      !isReady ||
-      !address ||
-      (chainId && chainId !== APP.CHAIN_ID)
-    );
+  const isLoadable = () => {
+    return isReady && address && chainId && chainId === APP.CHAIN_ID;
   };
 
   const { data, error, mutate } = useSWR<Data, Error>(
-    notLoad()
+    !isLoadable()
       ? null
       : getUserZombies(
           address as string,
@@ -99,6 +89,16 @@ const Graveyard: NextPage = () => {
         ), // eslint-disable-line no-mixed-spaces-and-tabs
     fetcher
   );
+  const share = () => {
+    if (typeof window === "undefined" || !router.asPath || !address) return;
+
+    const text = encodeURIComponent(
+      `Hey zombies! I just got mines 🥳.\n\nLook at them 👉 ${
+        window.location.protocol
+      }//${window.location.host}/users/${address.toLowerCase()} 🧟‍♂️🧟‍♀️`
+    );
+    window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+  };
 
   return (
     <Layout>
@@ -110,6 +110,17 @@ const Graveyard: NextPage = () => {
           title="Graveyard"
           desc="The graveyard is the place for the walking dead. You're the one who holds the ax!"
         />
+        <div className="mb-5">
+          <a
+            onClick={share}
+            target="_blank"
+            className="link-light text-shadow"
+            rel="noreferrer"
+            style={{ cursor: "pointer" }}
+          >
+            <i className="fab fa-2x fa-twitter"></i>
+          </a>
+        </div>
       </div>
       <section className="zombie-bg inner-shadow py-5">
         <div className="container">
@@ -122,7 +133,11 @@ const Graveyard: NextPage = () => {
               <Balance {...{ masterContract, owner: address }} />
             </div>
             <CopyToClipboard
-              text={typeof window !== "undefined" ? `${window.location.protocol}//${window.location.host}/users/${address}` : "..."}
+              text={
+                typeof window !== "undefined"
+                  ? `${window.location.protocol}//${window.location.host}/users/${address}`
+                  : "..."
+              }
               onCopy={() => alert.success(<>Copied.</>)}
             >
               <div
