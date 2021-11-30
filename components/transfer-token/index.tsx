@@ -61,9 +61,7 @@ export const TransferToken: React.FC<Props> = ({
       console.log(err);
       setLoading(false);
       changeInputValue("");
-      alert.error(
-        <>{errorHandler(err)}</>
-      );
+      alert.error(<>{errorHandler(err)}</>);
     }
   };
 

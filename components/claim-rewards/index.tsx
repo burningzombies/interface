@@ -27,11 +27,7 @@ export const ClaimRewards: React.FC<Props> = ({ contract }) => {
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      alert.error(
-        <>
-          {errorHandler(err)}
-        </>
-      );
+      alert.error(<>{errorHandler(err)}</>);
       setLoading(false);
     }
   };

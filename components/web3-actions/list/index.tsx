@@ -61,9 +61,7 @@ export const List: React.FC<Props> = ({
     } catch (err: any) {
       console.log(err);
       setLoading(false);
-      alert.error(
-        <>{errorHandler(err)}</>
-      );
+      alert.error(<>{errorHandler(err)}</>);
     }
   };
 
