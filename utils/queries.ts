@@ -117,7 +117,7 @@ export const getAllZombies = (
     }
     default: {
       direction = "asc";
-      by = "mintedAt";
+      by = "name";
       break;
     }
   }
