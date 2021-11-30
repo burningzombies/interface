@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { BigNumber, Contract } from "ethers";
 import avax from "../../assets/avax-logo.svg";
-import { toTitleCase, parsePrice } from "../../utils";
+import { errorHandler, parsePrice } from "../../utils";
 import { useAlert } from "react-alert";
 import { Spinner } from "../spinner";
 
@@ -29,9 +29,7 @@ export const ClaimRewards: React.FC<Props> = ({ contract }) => {
     } catch (err: any) {
       alert.error(
         <>
-          {toTitleCase(
-            err.data ? (err.data.message as string) : (err.message as string)
-          )}
+          {errorHandler(err)}
         </>
       );
       setLoading(false);

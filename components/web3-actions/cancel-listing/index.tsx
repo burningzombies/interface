@@ -1,7 +1,7 @@
 import React from "react";
 import { Contract } from "ethers";
 import { Spinner } from "../../spinner";
-import { toTitleCase } from "../../../utils";
+import { errorHandler } from "../../../utils";
 import { useAlert } from "react-alert";
 
 type Props = {
@@ -37,7 +37,7 @@ export const CancelListing: React.FC<Props> = ({
       console.log(err);
       setLoading(false);
       alert.error(
-        <>{toTitleCase(err.data ? err.data.message : err.message)}</>
+        <>{errorHandler(err)}</>
       );
     }
   };

@@ -80,5 +80,79 @@ export const sleep = (ms: number): Promise<void> => {
 
 // eslint-disable-next-line
 export const errorHandler = (err: any): string => {
+  if (err.data) {
+    if (err.data.message.toLowerCase().includes("sale is active"))
+      return "The minting is still active.";
+
+    if (err.data.message.toLowerCase().includes("insufficient funds"))
+      return "Insufficient balance.";
+
+    if (err.data.message.toLowerCase().includes("first token already minted"))
+      return "Reflection dynamics can not change right now.";
+
+    if (err.data.message.toLowerCase().includes("invalid range"))
+      return "Invalid token ID.";
+
+    if (err.data.message.toLowerCase().includes("token does not exists"))
+      return "Token not found.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("purchase exceed max limit per transaction")
+    )
+      return "Maximum minting per transaction is exceeded.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("the receiver exceeds max holding amount")
+    )
+      return "Maximum hold amount per wallet is exceeded for receiver.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("purchase exceed max supply of tokens")
+    )
+      return "Maximum supply of the tokens is exceeded.";
+
+    if (
+      err.data.message.toLowerCase().includes("ether value sent is not correct")
+    )
+      return "Invalid amount.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("burning exceeds max supply of tokens")
+    )
+      return "Maximum supply of the tokens is exceeded.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("burning exceeds max limit per transaction")
+    )
+      return "Maximum burning per transaction is exceeded.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("there are unclaimed or not burned tokens")
+    )
+      return "Loot will be available end of the burning.";
+
+    if (
+      err.data.message
+        .toLowerCase()
+        .includes("claim reward caller is not owner nor approved")
+    )
+      return "Only owner can claim rewards.";
+  }
+
+  if (err.message.toLowerCase().includes("user denied transaction signature"))
+    return "Transaction cancelled.";
+
   return toTitleCase(err.data ? err.data.message : err.message);
 };

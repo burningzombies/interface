@@ -5,7 +5,7 @@ import avax from "../../../assets/avax-logo.svg";
 import Image from "next/image";
 import { APP } from "../../../utils/consts";
 import { utils } from "ethers";
-import { toTitleCase } from "../../../utils";
+import { errorHandler } from "../../../utils";
 import { useAlert } from "react-alert";
 
 type Props = {
@@ -62,7 +62,7 @@ export const List: React.FC<Props> = ({
       console.log(err);
       setLoading(false);
       alert.error(
-        <>{toTitleCase(err.data ? err.data.message : err.message)}</>
+        <>{errorHandler(err)}</>
       );
     }
   };

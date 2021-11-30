@@ -1,7 +1,7 @@
 import React from "react";
 import { Spinner } from "../spinner";
 import { utils } from "ethers";
-import { toTitleCase } from "../../utils";
+import { errorHandler } from "../../utils";
 import { useAlert } from "react-alert";
 import { useWeb3 } from "../../hooks/use-web3";
 import { sleep } from "../../utils";
@@ -62,7 +62,7 @@ export const TransferToken: React.FC<Props> = ({
       setLoading(false);
       changeInputValue("");
       alert.error(
-        <>{toTitleCase(err.data ? err.data.message : err.message)}</>
+        <>{errorHandler(err)}</>
       );
     }
   };
