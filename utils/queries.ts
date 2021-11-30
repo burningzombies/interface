@@ -10,24 +10,6 @@ export const topZombie = (): string => {
   `;
 };
 
-export const collectionInfo = (): string => {
-  return `{
-    collection(id: 0) {
-      id
-      maxSupply
-      totalSupply
-      maxTokenMint
-      maxTokenPerWallet
-      currentReflection
-      rate
-      tokenPrice
-      nextTokenId
-      saleStartsAt
-      saleDuration
-    }
-  }`;
-};
-
 export const getTraits = (): string => {
   return `
 		{
@@ -197,7 +179,7 @@ export const getUserZombies = (
     }
     default: {
       direction = "asc";
-      by = "mintedAt";
+      by = "name";
       break;
     }
   }
