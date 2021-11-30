@@ -25,7 +25,7 @@ const Home: NextPage = () => {
       </section>
 
       <section className="inner-shadow zombie-bg py-5" id="roadmap">
-        <div className="container">
+        <div className="container-fluid">
           <Roadmap />
         </div>
       </section>
