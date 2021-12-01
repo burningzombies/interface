@@ -15,7 +15,6 @@ import { useAlert } from "react-alert";
 
 const Withdraw: NextPage = () => {
   const alert = useAlert();
-
   const { isReady, signer, provider, address, chainId } = useWeb3();
 
   const [loading, setLoading] = React.useState<boolean>(false);
