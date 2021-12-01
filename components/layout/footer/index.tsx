@@ -122,6 +122,13 @@ export const Footer: React.FC = () => {
                 </a>
               </Link>
             </li>
+            <li className="list-inline-item">
+              <Link href="/withdraw">
+                <a className="small text-decoration-none link-secondary">
+                  Withdraw
+                </a>
+              </Link>
+            </li>
           </ul>
         </div>
         <p className="text-secondary small">

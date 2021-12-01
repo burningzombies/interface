@@ -48,14 +48,10 @@ export const useWeb3 = (): States => {
           const chainId = await signer.getChainId();
 
           const masterContractABIResponse = await fetch(
-            `${APP.IPFS_GATEWAY}/ipfs/${
-              process.env.NEXT_PUBLIC_MASTER_CONTRACT_CID as string
-            }`
+            `${APP.IPFS_GATEWAY}/ipfs/${APP.MASTER_CONTRACT_CID}`
           );
           const marketContractABIResponse = await fetch(
-            `${APP.IPFS_GATEWAY}/ipfs/${
-              process.env.NEXT_PUBLIC_MARKET_CONTRACT_CID as string
-            }`
+            `${APP.IPFS_GATEWAY}/ipfs/${APP.MARKET_CONTRACT_CID}`
           );
 
           const masterContract = new ethers.Contract(

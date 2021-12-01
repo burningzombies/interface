@@ -149,6 +149,12 @@ export const errorHandler = (err: any): string => {
         .includes("claim reward caller is not owner nor approved")
     )
       return "Only owner can claim rewards.";
+
+    if (err.data.message.toLowerCase().includes("account has no shares"))
+      return "This account has no shares.";
+
+    if (err.data.message.toLowerCase().includes("account is not due payment"))
+      return "There is no pending payment.";
   }
 
   if (err.message.toLowerCase().includes("user denied transaction signature"))
