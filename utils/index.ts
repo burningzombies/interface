@@ -99,7 +99,7 @@ export const errorHandler = (err: any): string => {
     if (
       err.data.message
         .toLowerCase()
-        .includes("purchase exceed max limit per transaction")
+        .includes("purchase exceeds max limit per transaction")
     )
       return "Maximum minting per transaction is exceeded.";
 
@@ -113,7 +113,7 @@ export const errorHandler = (err: any): string => {
     if (
       err.data.message
         .toLowerCase()
-        .includes("purchase exceed max supply of tokens")
+        .includes("purchase exceeds max supply of tokens")
     )
       return "Maximum supply of the tokens is exceeded.";
 
