@@ -29,6 +29,7 @@ const Withdraw: NextPage = () => {
   const releasePayment = async () => {
     if (!splitter || !address || loading) return;
     setLoading(true);
+
     try {
       const tx = await splitter.release(address);
       await tx.wait();
