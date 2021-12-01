@@ -108,7 +108,13 @@ export const Hero: React.FC = () => {
         </ul>
       </div>
       <div className="col-lg-5 d-none d-lg-block text-end">
-        <Image src={hero} width={550} height={550} alt="Hero Zombie" />
+        <Image
+          className="rounded-circle"
+          src={hero}
+          width={1000}
+          height={1000}
+          alt="Hero Zombie"
+        />
       </div>
     </div>
   );

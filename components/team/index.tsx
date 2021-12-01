@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import developerImage from "../../assets/team/developer.jpeg";
 import designerImage from "../../assets/team/designer.jpeg";
-import marketingImage from "../../assets/team/marketing.jpeg";
+import comManagerImage from "../../assets/team/com-manager.jpeg";
+import marketingImage from "../../assets/team/marketing.png";
 
 const teamMembers = [
   {
@@ -37,8 +38,19 @@ const teamMembers = [
   },
   {
     image: marketingImage,
-    name: "Hardcore NFTs",
+    name: "It's Your Time",
     title: "Marketing",
+    links: [
+      {
+        icon: "fas fa-globe",
+        href: "https://itsyourtime.pt/",
+      },
+    ],
+  },
+  {
+    image: comManagerImage,
+    name: "Hardcore NFTs",
+    title: "Community Manager",
     links: [
       {
         icon: "fab fa-twitter",
@@ -65,11 +77,11 @@ export const Team: React.FC = () => {
         {teamMembers.map((member) => (
           <div
             key={member.name}
-            className="col-lg-4 mt-5 col-md-6 col-sm-6 col-xs-12"
+            className="col-lg-3 mt-5 col-md-6 col-sm-6 col-xs-12"
           >
             <Image
               src={member.image}
-              className="rounded-circle border border-5 border-dark"
+              className="rounded-circle w-100 border border-5 border-dark"
               width={300}
               height={300}
               alt=""
