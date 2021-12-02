@@ -3,7 +3,7 @@ import Image from "next/image";
 import developerImage from "../../assets/team/developer.jpeg";
 import designerImage from "../../assets/team/designer.jpeg";
 import comManagerImage from "../../assets/team/com-manager.jpeg";
-import marketingImage from "../../assets/team/marketing.png";
+import marketingImage from "../../assets/team/marketing.jpeg";
 
 const teamMembers = [
   {
