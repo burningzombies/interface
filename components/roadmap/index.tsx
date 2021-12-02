@@ -2,6 +2,48 @@ import React from "react";
 import roadmapIMG from "../../assets/roadmap.png";
 import Image from "next/image";
 
+enum NextStep {
+  TESTNET_1,
+  TESTNET_2,
+  MAINNET,
+  MINT,
+  BURN,
+  MARKETPLACE,
+  BURNER_RAFFLE,
+  NEXT,
+}
+
+const current = NextStep.TESTNET_1;
+
+const renderNext = (step: NextStep) => {
+  switch (step) {
+    case NextStep.TESTNET_1: {
+      return "Testnet Round 1";
+    }
+    case NextStep.TESTNET_2: {
+      return "Testnet Round 2";
+    }
+    case NextStep.MAINNET: {
+      return "Mainnet Deployment";
+    }
+    case NextStep.MINT: {
+      return "Minting Starts";
+    }
+    case NextStep.BURN: {
+      return "Burning Starts";
+    }
+    case NextStep.MARKETPLACE: {
+      return "Marketplace Launch";
+    }
+    case NextStep.BURNER_RAFFLE: {
+      return "Minting Starts";
+    }
+    default: {
+      return "To Be Continued";
+    }
+  }
+};
+
 const renderTitle = () => {
   return (
     <div>
@@ -22,8 +64,9 @@ const renderTitle = () => {
             style={{ transform: "rotate(15deg)" }}
           ></i>
         </h2>
-        <p className="lead fw-bold text-light text-shadow">
-          Here is the known roadmap for Burning Zombies.
+        <p title="What's next?" className="lead fw-bold text-light text-shadow">
+          <i className="fas fs-2x fa-map-marker me-2"></i>
+          {renderNext(current)}
         </p>
       </div>
     </div>
