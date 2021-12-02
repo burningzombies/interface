@@ -16,9 +16,9 @@ const renderTitle = () => {
       </div>
       <div className="d-none d-lg-block d-md-block">
         <h2 className="hero-text fw-bold">
-          How is it going?{" "}
+          How is it going
           <i
-            className="ms-1 fas fa-exclamation"
+            className="ms-1 fas fa-question"
             style={{ transform: "rotate(15deg)" }}
           ></i>
         </h2>
