@@ -33,7 +33,7 @@ NEXT_PUBLIC_MARKET_CONTRACT_CID=""  	# Marketplace contract's ABI CID
 NEXT_PUBLIC_NAME="Burning Zombies"  	# Application title
 NEXT_PUBLIC_CHAIN_ID=               	# Blockchain ID
 NEXT_PUBLIC_MASTER_CONTRACT=""      	# Contract address
-NEXT_PUBLIC_MARKET_CONTRACT=""      	# Market contract address
-NEXT_PUBLIC_SPLITTER_CONTRACT=""			# Splitter contract address
-NEXT_PUBLIC_SPLITTER_CONTRACT_CID=""	# Splitter contract's ABI CID
+NEXT_PUBLIC_MARKET_CONTRACT=""  	   	# Market contract address
+NEXT_PUBLIC_SPLITTER_CONTRACT=""      # Splitter contract address
+NEXT_PUBLIC_SPLITTER_CONTRACT_CID=""  # Splitter contract's ABI CID
 ```
