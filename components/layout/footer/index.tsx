@@ -3,6 +3,7 @@ import avalanche from "../../../assets/avalanche.png";
 import Image from "next/image";
 import Link from "next/link";
 import useWindowSize from "../../../hooks/use-window-size";
+import gnu from "../../../assets/gnu.png";
 
 export const Footer: React.FC = () => {
   const size = useWindowSize();
@@ -131,9 +132,9 @@ export const Footer: React.FC = () => {
             </li>
           </ul>
         </div>
-        <p className="text-secondary small">
-          &copy; {new Date().getUTCFullYear()} burningzombies.com
-        </p>
+        <div className="mt-4">
+          <Image src={gnu} width={60} height={60} alt="GNU" />
+        </div>
       </div>
       <style jsx>{`
         .grass {
