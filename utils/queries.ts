@@ -306,6 +306,7 @@ export const getOnSaleZombies = (
       marketStats(id: 0) {
         highestSale
         totalVolume
+        reflectionBalance
       }
       floor: zombies (where: { sale: true }, orderDirection: asc, orderBy: price, first: 1) {
         price

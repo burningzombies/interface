@@ -22,6 +22,7 @@ interface Data {
   marketStats: {
     highestSale: BigNumber;
     totalVolume: BigNumber;
+    reflectionBalance: BigNumber;
   };
   floor: Array<{
     price: BigNumber;
@@ -122,6 +123,7 @@ const Marketplace: NextPage = () => {
         {...{
           highestSale: data.marketStats.highestSale,
           totalVolume: data.marketStats.totalVolume,
+          reflectionBalance: data.marketStats.reflectionBalance,
           floorPrice:
             data.floor.length > 0 ? data.floor[0].price : BigNumber.from(0),
         }}
