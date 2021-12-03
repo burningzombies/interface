@@ -1,21 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import nemoImage from "../../assets/nemo.png";
-import avax from "../../assets/avax-logo.svg";
-
-type Props = {
-  price: number;
-};
-const Price: React.FC<Props> = ({ price }) => {
-  return (
-    <div className="d-inline mx-1">
-      <Image src={avax} width={25} height={25} alt="$AVAX" />
-      <span className="ms-1 fw-bold" style={{ fontSize: "1.2rem" }}>
-        {price}
-      </span>
-    </div>
-  );
-};
 
 export const NeonMonsters: React.FC = () => {
   return (
@@ -30,9 +15,8 @@ export const NeonMonsters: React.FC = () => {
         </div>
         <div className="col-lg-10 col-md-10 col-sm-10">
           <div className="text-light text-shadow">
-            If you&apos;re a Neon Monsters minter, then you can mint Burning
-            Zombies for <Price price={0.2} />. <br />
-            You can claim your token{" "}
+            You can mint Burning Zombies <strong>90%</strong> discounted if
+            you&apos;re a Neon Monsters minter. You can claim your token{" "}
             <a
               className="link-light"
               target="_blank"
@@ -45,9 +29,8 @@ export const NeonMonsters: React.FC = () => {
           </div>
 
           <div className="mt-2 text-light text-shadow">
-            If you&apos;re a Neon Monsters holder, then you can mint Burning
-            Zombies for <Price price={0.5} />. <br />
-            You can buy your token{" "}
+            You can mint Burning Zombies <strong>50%</strong> discounted if
+            you&apos;re a Neon Monsters holder. You can buy your token{" "}
             <a
               className="link-light"
               target="_blank"

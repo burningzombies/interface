@@ -8,7 +8,7 @@ const qa = () => {
   return [
     {
       q: "What is the minting price?",
-      a: "It is 2 $AVAX. You should check the tokenomics section on the Litepaper for a detailed explanation.",
+      a: "You should check the tokenomics section on the Litepaper for a detailed explanation.",
     },
     {
       q: "What is maximum supply?",
