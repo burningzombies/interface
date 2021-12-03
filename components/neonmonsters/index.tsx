@@ -16,13 +16,15 @@ export const NeonMonsters: React.FC = () => {
         <div className="col-lg-10 col-md-10 col-sm-10">
           <div className="text-light text-shadow">
             You can mint Burning Zombies <strong>90%</strong> discounted if
-            you&apos;re a Neon Monsters minter. You can claim your token{" "}
+            you&apos;re a Neon Monsters minter. <br />
+            If not claim your token{" "}
             <a
-              className="link-light"
+              className="fw-bold link-light"
               target="_blank"
               rel="noreferrer"
               href="https://neonmonsters.net/#mint"
             >
+              <i className="me-2 fas fa-shopping-cart"></i>
               here
             </a>
             .
@@ -30,13 +32,15 @@ export const NeonMonsters: React.FC = () => {
 
           <div className="mt-2 text-light text-shadow">
             You can mint Burning Zombies <strong>50%</strong> discounted if
-            you&apos;re a Neon Monsters holder. You can buy your token{" "}
+            you&apos;re a Neon Monsters holder. <br />
+            If not check the second market{" "}
             <a
               className="link-light"
               target="_blank"
               rel="noreferrer"
               href="https://neonmonsters.net/marketplace"
             >
+              <i className="me-2 fas fa-store"></i>
               here
             </a>
             .
