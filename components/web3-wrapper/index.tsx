@@ -37,7 +37,7 @@ export const Web3Wrapper: React.FC<Props> = ({
       <div className={wrapperStyle}>{onlyIcon ? icon() : <NoAccount />}</div>
     );
   }
-  if (args.chainId && args.chainId !== APP.CHAIN_ID) {
+  if (!args.chainId || args.chainId !== APP.CHAIN_ID) {
     return (
       <div className={wrapperStyle}>{onlyIcon ? icon() : <WrongChain />}</div>
     );
