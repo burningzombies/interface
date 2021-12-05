@@ -262,7 +262,7 @@ export const getOnSaleZombies = (
       break;
     }
     case "price-asc": {
-      direction = "desc";
+      direction = "asc";
       by = "price";
       break;
     }
