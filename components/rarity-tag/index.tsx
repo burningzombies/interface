@@ -37,15 +37,15 @@ export const RarityTag: React.FC<Props> = ({ score }) => {
     <span className="fw-bold text-shadow text-light">
       <i className="me-1 fas fa-hashtag"></i>
       {(() => {
-        if (fraction >= 0 && fraction <= 40) {
+        if (fraction >= 0 && fraction < 40) {
           return "Common";
-        } else if (fraction >= 40 && fraction <= 55) {
+        } else if (fraction >= 40 && fraction < 55) {
           return "Uncommon";
-        } else if (fraction >= 55 && fraction <= 70) {
+        } else if (fraction >= 55 && fraction < 70) {
           return "Rare";
-        } else if (fraction >= 70 && fraction <= 80) {
+        } else if (fraction >= 70 && fraction < 80) {
           return "Super Rare";
-        } else if (fraction >= 80 && fraction <= 90) {
+        } else if (fraction >= 80 && fraction < 90) {
           return "Mystic";
         } else {
           return "Legendary";
