@@ -92,7 +92,7 @@ export const Web3Bar: React.FC = () => {
       />
     );
 
-  if (chainId && chainId !== APP.CHAIN_ID)
+  if (!chainId || chainId !== APP.CHAIN_ID)
     return (
       <Bar
         desc={

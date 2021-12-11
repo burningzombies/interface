@@ -4,7 +4,7 @@ import { request } from "graphql-request";
 export const parseTier = (tier: string, highScore: number): string => {
   switch (tier) {
     case "Common": {
-      const from = ((highScore / 100) * 0.0).toFixed(0);
+      const from = ((highScore / 100) * 0).toFixed(0);
       const to = ((highScore / 100) * 40).toFixed(0);
       return `${from},${to}`;
     }

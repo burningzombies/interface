@@ -31,7 +31,7 @@ export const RarityTag: React.FC<Props> = ({ score }) => {
     return <i className="fas text-light fa-times"></i>;
   }
 
-  const fraction = parseFloat(((score / data.top[0].score) * 100).toFixed(0));
+  const fraction = parseFloat(((score / data.top[0].score) * 100).toFixed(1));
 
   return (
     <span className="fw-bold text-shadow text-light">
