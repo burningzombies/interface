@@ -84,6 +84,9 @@ export const errorHandler = (err: any): string => {
     if (err.data.message.toLowerCase().includes("sale is active"))
       return "The minting is still active.";
 
+    if (err.data.message.toLowerCase().includes("sale is not active"))
+      return "The minting is not active.";
+
     if (err.data.message.toLowerCase().includes("insufficient funds"))
       return "Insufficient balance.";
 
