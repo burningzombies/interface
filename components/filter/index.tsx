@@ -120,8 +120,10 @@ export const Filter: React.FC<Props> = ({ initialPathname }) => {
         return (
           <form className="row justify-content-center" onSubmit={filter}>
             {isReloaded() ? (
-              <div className="text-center mt-2">
-                <Spinner color="text-warning" />
+              <div className="col-lg-2 col-md-4 col-sm-6 my-1">
+                <div className="text-center mt-2">
+                  <Spinner color="text-warning" />
+                </div>
               </div>
             ) : (
               <ByRarity defaultValue={router.query.tier as string} />
