@@ -101,7 +101,7 @@ const Withdraw: NextPage = () => {
               <div className="col-lg-12 col-md-6 my-1">
                 <div className="d-inline-flex">
                   <span className="h5 mt-2 me-3 text-shadow text-light fw-bold">
-                    Pending Payment:
+                    Pending:
                   </span>{" "}
                   <>
                     <Image
