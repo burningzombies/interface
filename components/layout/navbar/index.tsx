@@ -60,6 +60,17 @@ export const Navbar: React.FC = () => {
             </Link>
           </li>
           <li>
+            <Link href="/honorary">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/honorary" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-trophy"></i> Honorary
+              </a>
+            </Link>
+          </li>
+          <li>
             <hr className="dropdown-divider" />
           </li>
           <li>
