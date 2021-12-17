@@ -3,12 +3,12 @@ import { fetcher } from "../utils";
 import { Zombie } from "../types";
 
 type Data = {
-  zombies: Array<Zombie>;
+  honoraryZombies: Array<Zombie>;
 };
 
 const query = () => {
   return `{
-    honoraryZombies(first: 5, orderBy: id, orderDirection: asc) {
+    honoraryZombies(orderBy: id, orderDirection: asc) {
       id
       name
       imageURI
@@ -26,7 +26,7 @@ export const useHonorary = (): {
 
   return {
     loading: !data && !error,
-    isEmpty: !data || !(data.zombies.length > 0),
+    isEmpty: !data || !(data.honoraryZombies.length > 0),
     data,
     error,
   };

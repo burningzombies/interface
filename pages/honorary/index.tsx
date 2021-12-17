@@ -124,7 +124,7 @@ const Honorary: NextPage = () => {
                   </div>
                 );
 
-              return data?.zombies.map((z) => (
+              return data?.honoraryZombies.map((z) => (
                 <div
                   key={z.id}
                   className="mt-4 col-lg-4 col-md-6 col-sm-12 col-xs-12"
