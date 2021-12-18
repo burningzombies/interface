@@ -20,6 +20,9 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
       case "0": {
         return "Ceo of Ava Labs";
       }
+      case "1": {
+        return "The Kim Kardashian of Crypto";
+      }
       default: {
         return "Honorary";
       }
@@ -35,6 +38,18 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
               <a className="link-light" target="_blank" rel="noreferrer">
                 <i className="me-2 text-info fab fa-twitter"></i>
                 <span className="small">el33th4xor</span>
+              </a>
+            </Link>
+          </div>
+        );
+      }
+      case "1": {
+        return (
+          <div>
+            <Link href="https://www.instagram.com/hardrocknick/">
+              <a className="link-light" target="_blank" rel="noreferrer">
+                <i className="me-2 text-danger fab fa-instagram"></i>
+                <span className="small">hardrocknick</span>
               </a>
             </Link>
           </div>
@@ -73,7 +88,7 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
           <h5 className="h5 text-truncate text-warning text-shadow fw-bold card-title">
             {name}
           </h5>
-          <div className="text-light small">
+          <div className="text-light small text-truncate">
             <i className="fas fa-info-circle me-1"></i> {title()}
           </div>
         </div>
@@ -87,7 +102,7 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
 
 const Honorary: NextPage = () => {
   const { loading, data, error, isEmpty } = useHonorary();
-  console.log(data);
+
   return (
     <Layout>
       <Head>
