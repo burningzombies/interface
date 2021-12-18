@@ -49,6 +49,7 @@ body {
   background: radial-gradient(ellipse at center, #bcd197 0%, #325757 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#bcd197, endColorstr=#325757, GradientType=1);
   position: relative;
+  background-attachment: fixed;
   font-family: "Montserrat", sans-serif;
 }
 
