@@ -96,7 +96,7 @@ const Lottery: NextPage = () => {
     return () => {
       isMounted = false;
     };
-  }, [signer, address]);
+  }, [signer, address, loading]);
 
   return (
     <Layout>
