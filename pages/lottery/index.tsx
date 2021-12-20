@@ -14,8 +14,8 @@ import { Web3Wrapper } from "../../components/web3-wrapper";
 import { useWeb3 } from "../../hooks/use-web3";
 
 enum LotteryState {
-  OPEN = 0,
-  CLOSED = 1,
+  OPEN,
+  CLOSED,
 }
 
 const Lottery: NextPage = () => {
