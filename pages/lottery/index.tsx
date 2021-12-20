@@ -270,7 +270,7 @@ const Lottery: NextPage = () => {
                       </div>
                     </form>
 
-                    <div className="p-3 bg-secondary rounded shadow mb-3 mt-5">
+                    <div className="p-3 bg-secondary rounded w-100 shadow mb-3 mt-5">
                       <h6 className="small fw-bold text-light">
                         <i className="me-1 fas fa-info-circle"></i> How Does It
                         Work?
@@ -280,7 +280,7 @@ const Lottery: NextPage = () => {
                         between the whole participants. Buying more tickets
                         increases your chance to win. The calculation is not
                         between unique wallet addresses.
-                        <ul className="list-unstyled mt-2">
+                        <ul className="list-unstyled my-2">
                           <li>
                             <span className="small text-light">
                               <i className="mx-2 fas fa-caret-right"></i>100% of
@@ -296,7 +296,7 @@ const Lottery: NextPage = () => {
                           </li>
                         </ul>
                       </p>
-                      <span className="text-light small fst-italic">
+                      <div className="text-light text-truncate small fst-italic">
                         <i className="fas fa-file me-2"></i>
                         Contract:{" "}
                         {lottery ? (
@@ -305,7 +305,7 @@ const Lottery: NextPage = () => {
                               chainId === 43114 ? "" : "testnet."
                             }snowtrace.io/address/${lottery.address}`}
                             rel="noreferrer"
-                            className="link-light"
+                            className="link-light text-truncate"
                             target="_blank"
                           >
                             {lottery.address}
@@ -313,7 +313,7 @@ const Lottery: NextPage = () => {
                         ) : (
                           <Spinner color="text-secondary" />
                         )}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </div>
