@@ -71,13 +71,13 @@ export const Navbar: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link href="/giveaway">
+            <Link href="/lottery">
               <a
                 className={`dropdown-item ${
-                  router.pathname == "/giveaway" && "active"
+                  router.pathname == "/lottery" && "active"
                 }`}
               >
-                <i className="me-1 fas fa-dice"></i> Giveaway
+                <i className="me-1 fas fa-dice"></i> Lottery
               </a>
             </Link>
           </li>

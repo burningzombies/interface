@@ -9,4 +9,7 @@ export const APP = Object.freeze({
   SPLITTER_CONTRACT: process.env.NEXT_PUBLIC_SPLITTER_CONTRACT as string,
   SPLITTER_CONTRACT_CID: process.env
     .NEXT_PUBLIC_SPLITTER_CONTRACT_CID as string,
+  LOTTERY_CONTRACT: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT as string,
+  LOTTERY_CONTRACT_CID: process.env
+    .NEXT_PUBLIC_LOTTERY_CONTRACT_CID as string,
 });
