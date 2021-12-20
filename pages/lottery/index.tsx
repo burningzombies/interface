@@ -207,7 +207,7 @@ const Lottery: NextPage = () => {
                             <i className="fas fa-hourglass-start me-1"></i> Ends
                             in{" "}
                             <Countdown
-                              date={1640011500 * 1000}
+                              date={1640016000 * 1000}
                               daysInHours={true}
                             />
                           </div>
