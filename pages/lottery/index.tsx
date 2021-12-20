@@ -118,13 +118,6 @@ const Lottery: NextPage = () => {
             }}
           >
             {(() => {
-              if (typeof lottery === "undefined")
-                return (
-                  <div className="text-center text-light my-0">
-                    <Spinner color="text-light" />
-                  </div>
-                );
-
               if (lottery === null || lotteryState === LotteryState.CLOSED)
                 return (
                   <div className="text-center text-light">
