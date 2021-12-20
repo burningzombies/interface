@@ -93,10 +93,8 @@ const Lottery: NextPage = () => {
     };
 
     init();
-    const interval = setInterval(() => init(), 1000);
     return () => {
       isMounted = false;
-      clearInterval(interval);
     };
   }, [signer, address]);
 
