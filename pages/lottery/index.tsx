@@ -12,7 +12,6 @@ import avax from "../../assets/avax-logo.svg";
 import Image from "next/image";
 import { Web3Wrapper } from "../../components/web3-wrapper";
 import { useWeb3 } from "../../hooks/use-web3";
-import Countdown from "react-countdown";
 
 enum LotteryState {
   OPEN = 0,
@@ -30,6 +29,7 @@ const Lottery: NextPage = () => {
   const [lengthOf, setLengthOf] = useState<number | undefined>();
   const [fee, setFee] = useState<BigNumber | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [winner, setWinner] = useState<string | undefined>();
 
   const participate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,6 +76,7 @@ const Lottery: NextPage = () => {
         const prize = await lottery.prize();
         const lengthOf = await lottery.lengthOf();
         const fee = await lottery.fee();
+        const winner = await lottery.winner();
 
         if (isMounted) {
           setLottery(lottery);
@@ -84,6 +85,7 @@ const Lottery: NextPage = () => {
           setPrize(prize);
           setLengthOf(lengthOf.toNumber());
           setFee(fee);
+          setWinner(winner);
         }
       } catch {
         setLottery(null);
@@ -128,7 +130,38 @@ const Lottery: NextPage = () => {
               if (lottery === null || lotteryState === LotteryState.CLOSED)
                 return (
                   <div className="text-center text-light">
-                    There is no active lottery, please try again later.
+                    <div className="mb-3">
+                      There is no active lottery, please try again later.
+                    </div>
+                    <h4 className="h6 fw-bold">
+                      Recent Winner:{" "}
+                      {typeof winner !== "undefined" ? (
+                        winner
+                      ) : (
+                        <Spinner color="text-light" />
+                      )}
+                    </h4>
+                    <div className="d-inline-flex">
+                      <span className="h5 mt-2 me-3 text-shadow text-light fw-bold">
+                        Recent Prize:
+                      </span>{" "}
+                      <>
+                        <Image
+                          alt="$AVAX"
+                          src={avax}
+                          width={30}
+                          height={30}
+                          className="float-start"
+                        />
+                        <span className="h5 mt-2 ms-2 text-shadow text-light fw-bold">
+                          {typeof prize !== "undefined" ? (
+                            parsePrice(prize)
+                          ) : (
+                            <Spinner color="text-light" />
+                          )}
+                        </span>
+                      </>
+                    </div>
                   </div>
                 );
 
@@ -158,9 +191,9 @@ const Lottery: NextPage = () => {
                     </div>
                   </div>
                   <div className="col-lg-12 col-md-6 mt-3 my-2">
-                    <form className="row" onSubmit={participate}>
+                    <form className="row mb-2" onSubmit={participate}>
                       <div className="col-lg-12 mb-3">
-                        <div className="d-inline mx-2">
+                        <div className="d-inline mx-2" title="Participants">
                           <span className="text-light">
                             <i className="fas fa-users me-1"></i>
                             {typeof lengthOf !== "undefined" ? (
@@ -170,7 +203,7 @@ const Lottery: NextPage = () => {
                             )}
                           </span>
                         </div>
-                        <div className="d-inline mx-2">
+                        <div className="d-inline mx-2" title="Your Tickets">
                           <span className="text-light">
                             <i className="fas fa-user me-1"></i>
                             {typeof tickets !== "undefined" ? (
@@ -180,7 +213,7 @@ const Lottery: NextPage = () => {
                             )}
                           </span>
                         </div>
-                        <div className="d-inline-flex mx-2">
+                        <div className="d-inline-flex mx-2" title="Ticket Fee">
                           <span className="text-light">
                             <Image
                               src={avax}
@@ -198,18 +231,13 @@ const Lottery: NextPage = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="col-lg-3 text-center col-md-3 mb-3">
+                      <div className="col-lg-4 text-center col-md-4 mb-3">
                         <div
                           className="bg-warning p-1 w-100 rounded shadow"
                           style={{ height: "2.3rem" }}
                         >
-                          <div className="text-dark mt-1">
-                            <i className="fas fa-hourglass-start me-1"></i> Ends
-                            in{" "}
-                            <Countdown
-                              date={1640016000 * 1000}
-                              daysInHours={true}
-                            />
+                          <div className="text-truncate text-dark mt-1">
+                            #BurningZombiesComing
                           </div>
                         </div>
                       </div>
@@ -228,7 +256,7 @@ const Lottery: NextPage = () => {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-4 mb-3">
+                      <div className="col-lg-3 col-md-3 mb-3">
                         <button
                           role="submit"
                           className="btn shadow btn-danger w-100"
@@ -236,11 +264,57 @@ const Lottery: NextPage = () => {
                           {loading ? (
                             <Spinner color="text-light" />
                           ) : (
-                            "Participate"
+                            <>Claim Ticket(s)</>
                           )}
                         </button>
                       </div>
                     </form>
+
+                    <div className="p-3 bg-secondary rounded shadow mb-3 mt-5">
+                      <h6 className="small fw-bold text-light">
+                        <i className="me-1 fas fa-info-circle"></i> How Does It
+                        Work?
+                      </h6>
+                      <p className="text-light small">
+                        The smart contract picks the winner by providing seed
+                        between the whole participants. Buying more tickets
+                        increases your chance to win. The calculation is not
+                        between unique wallet addresses.
+                        <ul className="list-unstyled mt-2">
+                          <li>
+                            <span className="small text-light">
+                              <i className="mx-2 fas fa-caret-right"></i>100% of
+                              the ticket fees are going to add to the prize.
+                            </span>
+                          </li>
+                          <li>
+                            <span className="small text-light">
+                              <i className="mx-2 fas fa-caret-right"></i> The
+                              prize will transfer to the winner&apos;s wallet
+                              directly.
+                            </span>
+                          </li>
+                        </ul>
+                      </p>
+                      <span className="text-light small fst-italic">
+                        <i className="fas fa-file me-2"></i>
+                        Contract:{" "}
+                        {lottery ? (
+                          <a
+                            href={`https://${
+                              chainId === 43114 ? "" : "testnet."
+                            }snowtrace.io/address/${lottery.address}`}
+                            rel="noreferrer"
+                            className="link-light"
+                            target="_blank"
+                          >
+                            {lottery.address}
+                          </a>
+                        ) : (
+                          <Spinner color="text-secondary" />
+                        )}
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
