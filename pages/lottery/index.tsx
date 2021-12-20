@@ -205,7 +205,7 @@ const Lottery: NextPage = () => {
                         </div>
                         <div className="d-inline mx-2" title="Your Tickets">
                           <span className="text-light">
-                            <i className="fas fa-user me-1"></i>
+                            <i className="fas fa-ticket-alt me-1"></i>
                             {typeof tickets !== "undefined" ? (
                               tickets
                             ) : (
