@@ -302,7 +302,7 @@ const Lottery: NextPage = () => {
                             {lottery.address}
                           </a>
                         ) : (
-                          <Spinner color="text-secondary" />
+                          <Spinner color="text-light" />
                         )}
                       </div>
                     </div>
