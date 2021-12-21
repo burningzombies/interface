@@ -169,7 +169,29 @@ const Lottery: NextPage = () => {
                         />
                         <span className="h5 mt-2 ms-2 text-shadow text-light fw-bold">
                           {typeof prize !== "undefined" ? (
-                            parsePrice(prize)
+                            <>
+                              {parsePrice(prize)}
+                              {(() => {
+                                if (fiatLoading)
+                                  return <Spinner color="text-light" />;
+
+                                if (fiatError)
+                                  return (
+                                    <span className="text-light">Error</span>
+                                  );
+
+                                return (
+                                  <span className="ms-2">
+                                    ≈
+                                    <i className="ms-2 me-1 fas fa-dollar-sign"></i>
+                                    {(
+                                      parseInt(parsePrice(prize)) *
+                                      price["avalanche-2"].usd
+                                    ).toFixed(2)}
+                                  </span>
+                                );
+                              })()}
+                            </>
                           ) : (
                             <Spinner color="text-light" />
                           )}
