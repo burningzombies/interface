@@ -104,8 +104,8 @@ const Lottery: NextPage = () => {
     init();
 
     const calculateTime = () => {
-      const start = 1640284400;
-      const end = start + 60 * 60 * 1.3;
+      const start = 1640111811;
+      const end = start + 60 * 60 * 18;
       const current = Math.floor(new Date().getTime() / 1000);
 
       const timeDone = 100 - ((end - current) / (end - start)) * 100;
