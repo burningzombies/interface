@@ -30,6 +30,7 @@ const Lottery: NextPage = () => {
   const [fee, setFee] = useState<BigNumber | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const [winner, setWinner] = useState<string | undefined>();
+  const [timeDone, setTimeDone] = useState<number>(0);
 
   const participate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -93,8 +94,22 @@ const Lottery: NextPage = () => {
     };
 
     init();
+
+    const calculateTime = () => {
+      const start = 1640103058;
+      const end = start + 60 * 60 * 1.3;
+      const current = Math.floor(new Date().getTime() / 1000);
+
+      const timeDone = 100 - ((end - current) / (end - start)) * 100;
+      const result = end - current > 0 ? parseInt(timeDone.toFixed(0)) : 100;
+      if (isMounted) setTimeDone(result);
+    };
+
+    calculateTime();
+    const interval = setInterval(() => calculateTime(), 1000);
     return () => {
       isMounted = false;
+      clearInterval(interval);
     };
   }, [signer, address, loading]);
 
@@ -222,13 +237,23 @@ const Lottery: NextPage = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="col-lg-4 text-center col-md-4 mb-3">
+                      <div className="col-lg-4 col-md-4 mb-3">
                         <div
-                          className="bg-warning p-1 w-100 rounded shadow"
-                          style={{ height: "2.3rem" }}
+                          title={`${100 - timeDone}% left`}
+                          className="progress bg-dark shadow"
+                          style={{ height: "2.35rem" }}
                         >
-                          <div className="text-truncate text-dark mt-1">
-                            #BurningZombiesComing
+                          <div
+                            className="progress-bar bg-warning text-dark fw-bold"
+                            role="progressbar"
+                            style={{
+                              width: `${timeDone}%`,
+                            }}
+                            aria-valuenow={timeDone}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                          >
+                            {100 - timeDone}% left
                           </div>
                         </div>
                       </div>
@@ -271,22 +296,22 @@ const Lottery: NextPage = () => {
                         between the whole participants. Buying more tickets
                         increases your chance to win. The calculation is not
                         between unique wallet addresses.
-                        <ul className="list-unstyled my-2">
-                          <li>
-                            <span className="small text-light">
-                              <i className="mx-2 fas fa-caret-right"></i>100% of
-                              the ticket fees are going to add to the prize.
-                            </span>
-                          </li>
-                          <li>
-                            <span className="small text-light">
-                              <i className="mx-2 fas fa-caret-right"></i> The
-                              prize will transfer to the winner&apos;s wallet
-                              directly.
-                            </span>
-                          </li>
-                        </ul>
                       </p>
+                      <ul className="list-unstyled my-3">
+                        <li>
+                          <span className="small text-light">
+                            <i className="mx-2 fas fa-caret-right"></i>100% of
+                            the ticket fees are going to add to the prize.
+                          </span>
+                        </li>
+                        <li>
+                          <span className="small text-light">
+                            <i className="mx-2 fas fa-caret-right"></i> The
+                            prize will transfer to the winner&apos;s wallet
+                            directly.
+                          </span>
+                        </li>
+                      </ul>
                       <div className="text-light text-truncate small fst-italic">
                         <i className="fas fa-file me-2"></i>
                         Contract:{" "}
