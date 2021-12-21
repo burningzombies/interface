@@ -12,6 +12,7 @@ import avax from "../../assets/avax-logo.svg";
 import Image from "next/image";
 import { Web3Wrapper } from "../../components/web3-wrapper";
 import { useWeb3 } from "../../hooks/use-web3";
+import { useAvax } from "../../hooks/use-avax";
 
 enum LotteryState {
   OPEN,
@@ -21,6 +22,8 @@ enum LotteryState {
 const Lottery: NextPage = () => {
   const alert = useAlert();
   const { isReady, signer, provider, address, chainId } = useWeb3();
+
+  const { mutate, loading: fiatLoading, price, error: fiatError } = useAvax();
 
   const [lottery, setLottery] = useState<Contract | null | undefined>();
   const [lotteryState, setLotteryState] = useState<LotteryState | undefined>();
@@ -72,22 +75,27 @@ const Lottery: NextPage = () => {
           await abi.json(),
           signer
         );
-        const lotteryState = await lottery.lotteryState();
-        const tickets = await lottery.tickets(address);
-        const prize = await lottery.prize();
-        const lengthOf = await lottery.lengthOf();
-        const fee = await lottery.fee();
-        const winner = await lottery.winner();
+        if (isMounted) setLottery(lottery);
 
-        if (isMounted) {
-          setLottery(lottery);
-          setLotteryState(lotteryState);
-          setTickets(tickets.toNumber());
-          setPrize(prize);
-          setLengthOf(lengthOf.toNumber());
-          setFee(fee);
-          setWinner(winner);
-        }
+        const lotteryState = await lottery.lotteryState();
+        if (isMounted) setLotteryState(lotteryState);
+
+        const tickets = await lottery.tickets(address);
+        if (isMounted) setTickets(tickets.toNumber());
+
+        const prize = await lottery.prize();
+        if (isMounted) setPrize(prize);
+
+        const lengthOf = await lottery.lengthOf();
+        if (isMounted) setLengthOf(lengthOf.toNumber());
+
+        const fee = await lottery.fee();
+        if (isMounted) setFee(fee);
+
+        const winner = await lottery.winner();
+        if (isMounted) setWinner(winner);
+
+        mutate();
       } catch {
         setLottery(null);
       }
@@ -111,7 +119,7 @@ const Lottery: NextPage = () => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [signer, address, loading]);
+  }, [mutate, signer, address, loading]);
 
   return (
     <Layout>
@@ -176,7 +184,7 @@ const Lottery: NextPage = () => {
                   <div className="col-lg-12 col-md-6 my-1">
                     <div className="d-inline-flex">
                       <span className="h5 mt-2 me-3 text-shadow text-light fw-bold">
-                        Total Prize:
+                        Prize:
                       </span>{" "}
                       <>
                         <Image
@@ -188,7 +196,29 @@ const Lottery: NextPage = () => {
                         />
                         <span className="h5 mt-2 ms-2 text-shadow text-light fw-bold">
                           {typeof prize !== "undefined" ? (
-                            parsePrice(prize)
+                            <>
+                              {parsePrice(prize)}
+                              {(() => {
+                                if (fiatLoading)
+                                  return <Spinner color="text-light" />;
+
+                                if (fiatError)
+                                  return (
+                                    <span className="text-light">Error</span>
+                                  );
+
+                                return (
+                                  <span className="ms-2">
+                                    ≈
+                                    <i className="ms-2 me-1 fas fa-dollar-sign"></i>
+                                    {(
+                                      parseInt(parsePrice(prize)) *
+                                      price["avalanche-2"].usd
+                                    ).toFixed(2)}
+                                  </span>
+                                );
+                              })()}
+                            </>
                           ) : (
                             <Spinner color="text-light" />
                           )}
