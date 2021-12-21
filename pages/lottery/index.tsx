@@ -209,7 +209,8 @@ const Lottery: NextPage = () => {
 
                                 return (
                                   <span className="ms-2">
-                                    ≈<i className="mx-2 fas fa-dollar-sign"></i>
+                                    ≈
+                                    <i className="ms-2 me-1 fas fa-dollar-sign"></i>
                                     {(
                                       parseInt(parsePrice(prize)) *
                                       price["avalanche-2"].usd
