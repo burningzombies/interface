@@ -75,24 +75,27 @@ const Lottery: NextPage = () => {
           await abi.json(),
           signer
         );
+        if (isMounted) setLottery(lottery);
+
         const lotteryState = await lottery.lotteryState();
+        if (isMounted) setLotteryState(lotteryState);
+
         const tickets = await lottery.tickets(address);
+        if (isMounted) setTickets(tickets.toNumber());
+
         const prize = await lottery.prize();
+        if (isMounted) setPrize(prize);
+
         const lengthOf = await lottery.lengthOf();
+        if (isMounted) setLengthOf(lengthOf.toNumber());
+
         const fee = await lottery.fee();
+        if (isMounted) setFee(fee);
+
         const winner = await lottery.winner();
+        if (isMounted) setWinner(winner);
 
         mutate();
-
-        if (isMounted) {
-          setLottery(lottery);
-          setLotteryState(lotteryState);
-          setTickets(tickets.toNumber());
-          setPrize(prize);
-          setLengthOf(lengthOf.toNumber());
-          setFee(fee);
-          setWinner(winner);
-        }
       } catch {
         setLottery(null);
       }
