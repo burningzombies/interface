@@ -121,6 +121,36 @@ const Lottery: NextPage = () => {
     };
   }, [mutate, signer, address, loading]);
 
+  const renderPriceWithUsd = () => {
+    return (
+      <>
+        {typeof prize !== "undefined" ? (
+          <>
+            {parsePrice(prize)}
+            {(() => {
+              if (fiatLoading) return <Spinner color="text-light" />;
+
+              if (fiatError) return <span className="text-light">Error</span>;
+
+              const parsedPrize = (
+                parseInt(parsePrice(prize)) * price["avalanche-2"].usd
+              ).toString();
+
+              return (
+                <span className="ms-2">
+                  ≈<i className="ms-2 me-1 fas fa-dollar-sign"></i>
+                  {parsePrice(ethers.utils.parseUnits(parsedPrize, 18))}
+                </span>
+              );
+            })()}
+          </>
+        ) : (
+          <Spinner color="text-light" />
+        )}
+      </>
+    );
+  };
+
   return (
     <Layout>
       <Head>
@@ -168,33 +198,7 @@ const Lottery: NextPage = () => {
                           className="float-start"
                         />
                         <span className="h5 mt-2 ms-2 text-shadow text-light fw-bold">
-                          {typeof prize !== "undefined" ? (
-                            <>
-                              {parsePrice(prize)}
-                              {(() => {
-                                if (fiatLoading)
-                                  return <Spinner color="text-light" />;
-
-                                if (fiatError)
-                                  return (
-                                    <span className="text-light">Error</span>
-                                  );
-
-                                return (
-                                  <span className="ms-2">
-                                    ≈
-                                    <i className="ms-2 me-1 fas fa-dollar-sign"></i>
-                                    {(
-                                      parseInt(parsePrice(prize)) *
-                                      price["avalanche-2"].usd
-                                    ).toFixed(2)}
-                                  </span>
-                                );
-                              })()}
-                            </>
-                          ) : (
-                            <Spinner color="text-light" />
-                          )}
+                          {renderPriceWithUsd()}
                         </span>
                       </>
                     </div>
@@ -217,33 +221,7 @@ const Lottery: NextPage = () => {
                           className="float-start"
                         />
                         <span className="h5 mt-2 ms-2 text-shadow text-light fw-bold">
-                          {typeof prize !== "undefined" ? (
-                            <>
-                              {parsePrice(prize)}
-                              {(() => {
-                                if (fiatLoading)
-                                  return <Spinner color="text-light" />;
-
-                                if (fiatError)
-                                  return (
-                                    <span className="text-light">Error</span>
-                                  );
-
-                                return (
-                                  <span className="ms-2">
-                                    ≈
-                                    <i className="ms-2 me-1 fas fa-dollar-sign"></i>
-                                    {(
-                                      parseInt(parsePrice(prize)) *
-                                      price["avalanche-2"].usd
-                                    ).toFixed(2)}
-                                  </span>
-                                );
-                              })()}
-                            </>
-                          ) : (
-                            <Spinner color="text-light" />
-                          )}
+                          {renderPriceWithUsd()}
                         </span>
                       </>
                     </div>
