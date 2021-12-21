@@ -15,6 +15,6 @@ export const useAvax = (): {
     loading: !data && !error,
     price: data,
     error,
-    mutate
+    mutate,
   };
 };
