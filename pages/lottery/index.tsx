@@ -13,11 +13,14 @@ import Image from "next/image";
 import { Web3Wrapper } from "../../components/web3-wrapper";
 import { useWeb3 } from "../../hooks/use-web3";
 import { useAvax } from "../../hooks/use-avax";
+import Countdown from "react-countdown";
 
 enum LotteryState {
   OPEN,
   CLOSED,
 }
+const START = APP.LOTTERY_START;
+const END = START + APP.LOTTERY_DURATION;
 
 const Lottery: NextPage = () => {
   const alert = useAlert();
@@ -104,12 +107,10 @@ const Lottery: NextPage = () => {
     init();
 
     const calculateTime = () => {
-      const start = 1640111811;
-      const end = start + 60 * 60 * 18;
       const current = Math.floor(new Date().getTime() / 1000);
 
-      const timeDone = 100 - ((end - current) / (end - start)) * 100;
-      const result = end - current > 0 ? parseInt(timeDone.toFixed(0)) : 100;
+      const timeDone = 100 - ((END - current) / (END - START)) * 100;
+      const result = END - current > 0 ? parseInt(timeDone.toFixed(0)) : 100;
       if (isMounted) setTimeDone(result);
     };
 
@@ -270,11 +271,11 @@ const Lottery: NextPage = () => {
                       <div className="col-lg-4 col-md-4 mb-3">
                         <div
                           title={`${100 - timeDone}% left`}
-                          className="progress bg-dark shadow"
+                          className="progress bg-warning shadow"
                           style={{ height: "2.35rem" }}
                         >
                           <div
-                            className="progress-bar bg-warning text-dark fw-bold"
+                            className="progress-bar bg-dark text-warning fw-bold"
                             role="progressbar"
                             style={{
                               width: `${timeDone}%`,
@@ -283,7 +284,10 @@ const Lottery: NextPage = () => {
                             aria-valuemin={0}
                             aria-valuemax={100}
                           >
-                            {100 - timeDone}% left
+                            <div>
+                              <i className="me-1 fas fa-stopwatch"></i>
+                              <Countdown date={END * 1000} daysInHours={true} />
+                            </div>
                           </div>
                         </div>
                       </div>
