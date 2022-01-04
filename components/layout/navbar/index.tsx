@@ -173,11 +173,6 @@ export const Navbar: React.FC = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link href="/#story">
-                <a className="nav-link">Story</a>
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link href="/#mint">
                 <a className="nav-link">Mint</a>
               </Link>
@@ -201,6 +196,17 @@ export const Navbar: React.FC = () => {
                   }`}
                 >
                   Graveyard
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/stake">
+                <a
+                  className={`nav-link ${
+                    router.pathname == "/stake" && "active"
+                  }`}
+                >
+                  Stake
                 </a>
               </Link>
             </li>

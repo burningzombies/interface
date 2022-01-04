@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section className="container py-5" id="story">
+      <section className="container py-5">
         <Story />
       </section>
 
