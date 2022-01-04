@@ -5,12 +5,10 @@ import { Rewards } from "./rewards";
 import { Reflection } from "./reflection";
 import { ProgressBar } from "./progress";
 import { Info } from "./info";
-import { Input } from "./input";
 import { TotalSupply } from "./total-supply";
 import { MintButton } from "./button";
 import { useWeb3 } from "../../hooks/use-web3";
 import { useRouter } from "next/router";
-import { BigNumber } from "ethers";
 import { Spinner } from "../spinner";
 import { useAlert } from "react-alert";
 import { sleep } from "../../utils";
@@ -31,35 +29,19 @@ export const Mint: React.FC = () => {
     if (!address || loading || !masterContract || !isReady) return;
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const numberOfTokens = formData.get("numberOfTokens") as string;
-
     try {
-      let amountToPay = BigNumber.from(0);
-      const totalSupply = await masterContract.totalSupply();
-
-      for (
-        let i = totalSupply.toNumber();
-        parseInt(numberOfTokens) + totalSupply.toNumber() > i;
-        i++
-      ) {
-        amountToPay = amountToPay.add(await masterContract.tokenPrice(i));
-      }
-      const tx = await masterContract.mintToken(numberOfTokens, {
-        value: amountToPay,
+      const tx = await masterContract.mint({
+        value: await masterContract.currentTokenPrice(),
       });
       await tx.wait();
 
       alert.success(
         <>
-          Token{parseInt(numberOfTokens) > 1 && <>s</>} successfully minted.
-          Redirecting <Spinner color="text-light" />
+          Token successfully minted. Redirecting <Spinner color="text-light" />
         </>
       );
       await sleep(3000);
-      router.replace(
-        `/congrats?minter=${address.toLowerCase()}&tokens=${numberOfTokens}`
-      );
+      router.replace(`/congrats?minter=${address.toLowerCase()}&tokens=1`);
       return;
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,11 +102,8 @@ export const Mint: React.FC = () => {
           </ul>
 
           <form className="row" onSubmit={mintToken}>
-            <div className="col-lg-3 col-md-3 col-sm-12 mt-2">
+            <div className="col-lg-8 col-md-8 col-sm-12 mt-2">
               <ProgressBar {...{ masterContract }} />
-            </div>
-            <div className="col-lg-5 col-md-5 col-sm-12 mt-2">
-              <Input {...{ masterContract }} />
             </div>
             <div className="col-lg-4 col-md-4 col-sm-12 mt-2">
               <MintButton {...{ loading }} />

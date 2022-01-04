@@ -19,9 +19,6 @@ type Props = {
   address: string | undefined | null;
 };
 export const Info: React.FC<Props> = ({ address, masterContract }) => {
-  const [maxTokenPerTx, setMaxTokenPerTx] = React.useState<
-    number | undefined
-  >();
   const [maxTokenPerWallet, setMaxTokenPerWallet] = React.useState<
     number | undefined
   >();
@@ -32,9 +29,6 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
-        const maxTokenPerTx = (
-          await masterContract.MAX_TOKEN_PER_TX()
-        ).toNumber();
         const maxTokenPerWallet = (
           await masterContract.MAX_TOKEN_PER_WALLET()
         ).toNumber();
@@ -45,12 +39,10 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
         const segmentNo = parseInt(segmentNo_);
 
         if (isMounted) {
-          setMaxTokenPerTx(maxTokenPerTx);
           setMaxTokenPerWallet(maxTokenPerWallet);
           setSegmentNo(segmentNo);
         }
       } catch {
-        setMaxTokenPerTx(undefined);
         setMaxTokenPerWallet(undefined);
         setSegmentNo(undefined);
       }
@@ -60,14 +52,6 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
       isMounted = false;
     };
   }, [masterContract]);
-
-  const renderMaxTokenPerTx = () => {
-    return maxTokenPerTx ? (
-      <strong>{maxTokenPerTx}</strong>
-    ) : (
-      <Spinner color="text-light" />
-    );
-  };
 
   const renderMaxTokenPerWallet = () => {
     return maxTokenPerWallet ? (
@@ -80,7 +64,7 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
   };
 
   const renderSegment = () => {
-    return segmentNo ? (
+    return typeof segmentNo !== "undefined" ? (
       <div className="mt-5 w-100">
         <div className="mb-3 text-center text-shadow">
           {(() => {
@@ -346,12 +330,7 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
       <ul className="list-unstyled mb-0">
         <li>
           <span className="small">
-            * Maximum {renderMaxTokenPerTx()} zombies can mint, once.
-          </span>
-        </li>
-        <li>
-          <span className="small">
-            ** Maximum {renderMaxTokenPerWallet()} zombies can collect per
+            ** Maximum {renderMaxTokenPerWallet()} zombies can collect for this
             wallet.
           </span>
         </li>
