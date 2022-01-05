@@ -6,9 +6,8 @@ export const useProvenance = (): {
   provenance: { final: string; hash: string };
   error: Error;
 } => {
-  const { data, error } = useSWR(
-    process.env.NEXT_PUBLIC_PROVENANCE_CID as string,
-    (cid) => fetch(`${APP.IPFS_GATEWAY}/ipfs/${cid}`).then((r) => r.json())
+  const { data, error } = useSWR(APP.PROVENANCE_CID, (cid) =>
+    fetch(`${APP.IPFS_GATEWAY}/ipfs/${cid}`).then((r) => r.json())
   );
 
   return {
