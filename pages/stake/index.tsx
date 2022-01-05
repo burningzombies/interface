@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "../../components/layout";
 import { PageTitle } from "../../components/page-title";
 import Head from "next/head";
@@ -10,12 +10,93 @@ import { Spinner } from "../../components/spinner";
 import { MultipleSelectForm } from "../../components/multiple-select-form";
 import { useWeb3 } from "../../hooks/use-web3";
 import { useAlert } from "react-alert";
-import { fetcher } from "../../utils";
+import { sleep, errorHandler, fetcher } from "../../utils";
 import useSWR from "swr";
+import { ethers } from "ethers";
 
 interface Data {
   zombies: Array<{ id: number; title: string }>;
 }
+
+interface StakedData {
+  stake: {
+    tokens: Array<{ id: number; title: string }>;
+  };
+}
+
+const useStake = () => {
+  const { signer, address } = useWeb3();
+
+  type StakeContract = ethers.Contract | null | undefined;
+  type TotalSupply = number | undefined | null;
+  type Earned = ethers.BigNumber | undefined | null;
+  type Balance = number | undefined | null;
+  type RewardRate = ethers.BigNumber | undefined | null;
+  type RewardPToken = ethers.BigNumber | undefined | null;
+
+  const [contract, setContract] = useState<StakeContract>(undefined);
+  const [totalSupply, setTotalSupply] = useState<TotalSupply>(undefined);
+  const [earned, setEarned] = useState<Earned>(undefined);
+  const [balance, setBalance] = useState<Balance>(undefined);
+  const [rewardRate, setRewardRate] = useState<RewardRate>(undefined);
+  const [rewardPToken, setRewardPToken] = useState<RewardPToken>(undefined);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const init = async () => {
+      if (!signer || !address) return;
+
+      try {
+        const abi = await fetch(
+          `${APP.IPFS_GATEWAY}/ipfs/${APP.STAKING_CONTRACT_CID}`
+        );
+
+        const contract = new ethers.Contract(
+          APP.STAKING_CONTRACT,
+          await abi.json(),
+          signer
+        );
+
+        if (isMounted) setContract(contract);
+
+        const totalSupply = await contract.totalSupply();
+        if (isMounted) setTotalSupply(totalSupply.toNumber());
+
+        const earned = await contract.earned(address);
+        if (isMounted) setEarned(earned);
+
+        const balance = await contract.balanceOf(address);
+        if (isMounted) setBalance(balance.toNumber());
+
+        const rewardRate = await contract.getRewardForDuration();
+        if (isMounted) setRewardRate(rewardRate);
+
+        const rewardPToken = await contract.rewardPerToken();
+        if (isMounted) setRewardPToken(rewardPToken);
+      } catch {
+        setContract(null);
+      }
+    };
+
+    init();
+    const interval = setInterval(() => init(), 1000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [signer, address]);
+
+  return {
+    contract,
+    totalSupply,
+    earned,
+    balance,
+    rewardRate,
+    rewardPToken,
+  };
+};
 
 const useOwnedTokens = () => {
   const { address } = useWeb3();
@@ -40,26 +121,110 @@ const useOwnedTokens = () => {
   };
 };
 
+const useStakedTokens = () => {
+  const { address } = useWeb3();
+
+  const query = `{
+    stake(id:"${address && address.toLowerCase()}") {
+      tokens (first: 100) {
+        id
+        title: name
+      }
+    }
+  }`;
+
+  const { data, error, mutate } = useSWR<StakedData, Error>(
+    address ? query : null,
+    fetcher
+  );
+
+  return {
+    loading: !data && !error,
+    tokens: data?.stake?.tokens,
+    error,
+    mutate,
+  };
+};
+
 const Main: NextPage = () => {
   const alert = useAlert();
+  const stakeContract = useStake();
 
   const [stakeLoading, setStakeLoading] = useState<boolean>(false);
   const [unstakeLoading, setUnstakeLoading] = useState<boolean>(false);
 
-  const { isReady, provider, address, chainId } = useWeb3();
+  const { masterContract, isReady, provider, address, chainId } = useWeb3();
   const owned = useOwnedTokens();
-  const staked = useOwnedTokens();
+  const staked = useStakedTokens();
 
   const staking = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { contract } = stakeContract;
 
-    if (stakeLoading || unstakeLoading) {
+    if (!masterContract || !contract || stakeLoading || unstakeLoading) {
       alert.info(<>Please wait.</>);
       return;
     }
 
     const formData = new FormData(e.currentTarget);
     const tokenIds = formData.getAll("tokenIds") as Array<FormDataEntryValue>;
+
+    const _stake = async (tokenIds: Array<FormDataEntryValue>) => {
+      try {
+        const isApproved = await masterContract.isApprovedForAll(
+          address,
+          contract.address
+        );
+
+        if (!isApproved) {
+          const approval = await masterContract.setApprovalForAll(
+            contract.address,
+            true
+          );
+          await approval.wait();
+        }
+
+        for (let i = 0; Math.ceil(tokenIds.length / 24) > i; i++) {
+          const batch = tokenIds.slice(i * 24, i * 24 + 24);
+          const stake = await contract.stake(batch);
+          await stake.wait();
+        }
+
+        await sleep(5000);
+        await Promise.all([owned.mutate(), staked.mutate()]);
+
+        alert.success(<>Staked.</>);
+        setStakeLoading(false);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        alert.error(<>{errorHandler(err)}</>);
+      }
+
+      setStakeLoading(false);
+    };
+
+    const _unstake = async (tokenIds: Array<FormDataEntryValue>) => {
+      try {
+        for (let i = 0; Math.ceil(tokenIds.length / 24) > i; i++) {
+          const batch = tokenIds.slice(i * 24, i * 24 + 24);
+          const withdraw = await contract.withdraw(batch);
+          await withdraw.wait();
+        }
+
+        await sleep(5000);
+        await Promise.all([owned.mutate(), staked.mutate()]);
+
+        alert.success(<>Withdrawn.</>);
+        setUnstakeLoading(false);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        alert.error(<>{errorHandler(err)}</>);
+      }
+
+      setUnstakeLoading(false);
+    };
 
     switch (e.currentTarget.name) {
       case "formStake": {
@@ -68,7 +233,7 @@ const Main: NextPage = () => {
         break;
       }
       case "formUnstake": {
-        setStakeLoading(false);
+        setUnstakeLoading(true);
         await _unstake(tokenIds);
         break;
       }
@@ -78,19 +243,6 @@ const Main: NextPage = () => {
     }
 
     return;
-  };
-
-  const _stake = async (tokenIds: Array<FormDataEntryValue>) => {
-    for (let i = 0; Math.ceil(tokenIds.length / 24) > i; i++) {
-      const batch = tokenIds.slice(i * 24, i * 24 + 24);
-      console.log(batch);
-    }
-
-    setStakeLoading(false);
-  };
-
-  const _unstake = async (tokenIds: Array<FormDataEntryValue>) => {
-    setUnstakeLoading(false);
   };
 
   return (
@@ -106,7 +258,7 @@ const Main: NextPage = () => {
         <Web3Wrapper {...{ isReady, provider, address, chainId }}>
           <div className="container">
             <div className="text-center col-lg-12 col-md-12 col-sm-12">
-              <StakingInfo />
+              <StakingInfo {...stakeContract} />
             </div>
 
             <div className="row mt-5">

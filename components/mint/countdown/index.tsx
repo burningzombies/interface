@@ -38,7 +38,8 @@ export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
     <>
       <i className="fas fa-stopwatch me-2"></i>
       {(() => {
-        if (typeof start === "undefined" || typeof duration === "undefined") return <Spinner color="text-light" />;
+        if (typeof start === "undefined" || typeof duration === "undefined")
+          return <Spinner color="text-light" />;
         return (
           <Countdown
             date={start * 1000}
