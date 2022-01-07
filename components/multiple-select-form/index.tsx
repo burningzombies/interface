@@ -14,11 +14,20 @@ type Props = {
 export const MultipleSelectForm: React.FC<Props> = ({ ...args }) => {
   const divId = `${args.controlId}_${Math.random()}`;
 
+  const [select, setSelect] = React.useState<boolean>(false);
+
   return (
     <form name={args.name} onSubmit={args.onSubmit}>
       <div className="mb-3">
         <label htmlFor={divId} className="text-light text-shadow mb-2">
-          {args.label}
+          {args.label}{" "}
+          <a
+            onClick={() => setSelect(true)}
+            role="button"
+            className="link-light small"
+          >
+            (Select All)
+          </a>
         </label>
         <select
           className="form-select form-select-dark"
@@ -30,7 +39,7 @@ export const MultipleSelectForm: React.FC<Props> = ({ ...args }) => {
         >
           <option disabled>- Available Tokens ({args.options.length}) -</option>
           {args.options.map((x) => (
-            <option key={x.id} value={x.id}>
+            <option selected={select} key={x.id} className="small" value={x.id}>
               {x.title}
             </option>
           ))}

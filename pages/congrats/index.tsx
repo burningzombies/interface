@@ -28,7 +28,7 @@ interface Data {
   zombies: Array<Zombie>;
 }
 
-const PreviewToken: React.FC<Props> = ({ name, imageURI, isNew }) => {
+const PreviewToken: React.FC<Props> = ({ id, name, imageURI, isNew }) => {
   return (
     <div
       className={`card p-1 ${
@@ -62,7 +62,10 @@ const PreviewToken: React.FC<Props> = ({ name, imageURI, isNew }) => {
               isNew ? "link-dark" : "link-light"
             }`}
           >
-            <span className="d-block text-truncate fw-bold">{name}</span>
+            <span className="d-block text-truncate fw-bold">
+              {name}
+              <sup className="ms-1">{id}</sup>
+            </span>
           </a>
         </Link>
       </div>

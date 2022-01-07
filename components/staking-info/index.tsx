@@ -11,6 +11,7 @@ type Props = {
   balance?: number | null;
   rewardRate?: ethers.BigNumber | null;
   rewardPToken?: ethers.BigNumber | null;
+  pair: string;
 };
 
 export const StakingInfo: React.FC<Props> = ({ ...props }) => {
@@ -40,7 +41,7 @@ export const StakingInfo: React.FC<Props> = ({ ...props }) => {
     if (typeof props.earned === "undefined" || loading || props.earned === null)
       return <Spinner color="text-dark" />;
 
-    return parsePrice(props.earned);
+    return parsePrice(props.earned, 2);
   };
 
   const renderRewardRate = () => {
@@ -61,7 +62,8 @@ export const StakingInfo: React.FC<Props> = ({ ...props }) => {
       return <Spinner color="text-light" />;
 
     return parsePrice(
-      props.rewardPToken.div(ethers.BigNumber.from("1000000000000000000"))
+      props.rewardPToken.div(ethers.BigNumber.from("1000000000000000000")),
+      2
     );
   };
 
@@ -81,27 +83,27 @@ export const StakingInfo: React.FC<Props> = ({ ...props }) => {
         ) : (
           <Spinner color="text-light" />
         )}
-        <small className="ms-1">$ZOMBIE</small>
+        <small className="ms-1">{props.pair}</small>
       </li>
       <li className="mx-3 list-inline-item" title="Your Stake">
         <i className="fas fa-user-lock me-2"></i>
         {renderBalance()}
-        <small className="ms-1">$ZOMBIE</small>
+        <small className="ms-1">{props.pair}</small>
       </li>
-      <li className="mx-3 list-inline-item" title="Pool Rate $BURN">
+      <li className="mx-3 list-inline-item" title="Pool Rate BURN">
         <i className="fas fa-coins me-2"></i>
         {renderRewardRate()}
-        <small className="ms-1">$BURN</small>
+        <small className="ms-1">BURN</small>
       </li>
-      <li className="mx-3 list-inline-item" title="$BURN per $ZOMBIE">
+      <li className="mx-3 list-inline-item" title={`BURN per ${props.pair}`}>
         <i className="fas fa-donate me-2"></i>
         {renderRewardPToken()}
-        <small className="ms-1">$BURN</small>
+        <small className="ms-1">BURN</small>
       </li>
       <li className="mx-3 list-inline-item" title="Get Rewards">
         <button onClick={getReward} className="btn btn-warning btn-sm">
           {renderEarned()}
-          <small className="ms-1">$BURN</small>
+          <small className="ms-1">BURN</small>
         </button>
       </li>
     </ul>

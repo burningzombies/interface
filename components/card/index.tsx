@@ -40,6 +40,7 @@ export const Card: React.FC<Zombie & Props> = ({ mutate, ...zombie }) => {
             >
               <a className="link-warning text-decoration-none text-truncate">
                 {zombie.name}
+                <sup className="ms-1">{zombie.id}</sup>
               </a>
             </Link>
           </h5>

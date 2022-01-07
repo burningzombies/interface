@@ -1,4 +1,33 @@
-export const APP = Object.freeze({
+interface ObjectType {
+  NAME: string;
+  CHAIN_ID: number;
+  IPFS_GATEWAY: string;
+  PROVENANCE_CID: string;
+  MASTER_CONTRACT: string;
+  MASTER_CONTRACT_CID: string;
+
+  MARKET_CONTRACT: string;
+  MARKET_CONTRACT_CID: string;
+
+  SPLITTER_CONTRACT: string;
+  SPLITTER_CONTRACT_CID: string;
+
+  LOTTERY_START: number;
+  LOTTERY_DURATION: number;
+  LOTTERY_CONTRACT: string;
+  LOTTERY_CONTRACT_CID: string;
+
+  STAKING: {
+    [key: string]: {
+      SUBGRAPH: string;
+      CONTRACT: string;
+      MASTER: string;
+    };
+  };
+  STAKE_CONTRACT_CID: string;
+}
+
+export const APP: ObjectType = {
   NAME: "Burning Zombies",
   CHAIN_ID: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID as string),
   IPFS_GATEWAY: "https://storage.burningzombies.com",
@@ -23,7 +52,20 @@ export const APP = Object.freeze({
   LOTTERY_CONTRACT: "0x13fAEA45Ac96E4c2EAC0aFc24b0493aB1b30b4d7",
   LOTTERY_CONTRACT_CID: "QmPs248QR8LTps4bQ9FnwVR9e6E2uFSYfAMFnp4RzTRFCz",
 
-  // staking
-  STAKING_CONTRACT: "0xBA96E075D88644d885e760e5Ac1C9e25A6De8D85",
-  STAKING_CONTRACT_CID: "QmWwvvcX1nnr67SYiE8FB3RQ9TRxpgJsbjhUytU8VNfJn3",
-});
+  STAKING: {
+    ZOMBIE: {
+      SUBGRAPH:
+        "https://api.thegraph.com/subgraphs/name/burningzombies/zombie-stake",
+      CONTRACT: "0xBA96E075D88644d885e760e5Ac1C9e25A6De8D85",
+      MASTER: "0x15Ee4A7a3f9DCe5ABc2Ca40B37729B5d872e90Ef",
+    },
+    NEMO: {
+      SUBGRAPH:
+        "https://api.thegraph.com/subgraphs/name/burningzombies/nemo-stake",
+      CONTRACT: "0x40ef07b5e0D5895343a0Df6F92cEC872F9fdF439",
+      MASTER: "0x5A01ca6cfA4d8a9152E93Da820dA195553Dba3D0",
+    },
+  },
+
+  STAKE_CONTRACT_CID: "QmWwvvcX1nnr67SYiE8FB3RQ9TRxpgJsbjhUytU8VNfJn3",
+};
