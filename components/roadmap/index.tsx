@@ -13,7 +13,7 @@ enum NextStep {
   NEXT,
 }
 
-const current = NextStep.TESTNET_1;
+const current = NextStep.TESTNET_2;
 
 const renderNext = (step: NextStep) => {
   switch (step) {
@@ -78,13 +78,15 @@ export const Roadmap: React.FC = () => {
     <div className="text-center">
       {renderTitle()}
       <div className="row">
-        <Image
-          src={roadmapIMG}
-          alt="Roadmap"
-          layout="responsive"
-          width={1920}
-          height={1080}
-        />
+        <div className="col-lg-12">
+          <Image
+            src={roadmapIMG}
+            alt="Roadmap"
+            layout="responsive"
+            width={1920}
+            height={1080}
+          />
+        </div>
       </div>
     </div>
   );
