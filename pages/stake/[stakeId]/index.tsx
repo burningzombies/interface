@@ -1,5 +1,5 @@
 import type { NextPage, GetServerSideProps } from "next";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Layout } from "../../../components/layout";
 import { PageTitle } from "../../../components/page-title";
 import Head from "next/head";
@@ -10,27 +10,34 @@ import { Spinner } from "../../../components/spinner";
 import { MultipleSelectForm } from "../../../components/multiple-select-form";
 import { useWeb3 } from "../../../hooks/use-web3";
 import { useStake } from "../../../hooks/staking/use-stake";
-import { useOwnedTokens } from "../../../hooks/staking/use-owned-tokens";
-import { useStakedTokens } from "../../../hooks/staking/use-staked-tokens";
+import { useTokens } from "../../../hooks/staking/use-tokens";
 import { useAlert } from "react-alert";
 import { sleep, errorHandler } from "../../../utils";
 import { ethers } from "ethers";
 import ErrorPage from "../../404";
 
-const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
+const Main: NextPage<{ isAvailable: boolean; stakeId: number }> = ({
   isAvailable,
-  pair,
+  stakeId,
 }) => {
   const alert = useAlert();
-  const stakeContract = useStake(pair);
+  const stakeContract = useStake(stakeId);
 
+  const [lastId, setLastId] = useState<number | undefined>();
   const [stakeLoading, setStakeLoading] = useState<boolean>(false);
   const [unstakeLoading, setUnstakeLoading] = useState<boolean>(false);
 
   const { signer, isReady, provider, address, chainId } = useWeb3();
 
-  const owned = useOwnedTokens(isAvailable ? APP.STAKING[pair].SUBGRAPH : "");
-  const staked = useStakedTokens(isAvailable ? APP.STAKING[pair].SUBGRAPH : "");
+  const tokens = useTokens(isAvailable ? APP.STAKING[stakeId].SUBGRAPH : "");
+
+  useEffect(() => {
+    const init = async () => {
+      await sleep(1000);
+      setLastId(stakeId);
+    };
+    init();
+  });
 
   const staking = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +62,7 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
         );
 
         const masterContract = new ethers.Contract(
-          APP.STAKING[pair].MASTER,
+          APP.STAKING[stakeId].MASTER,
           await masterABI.json(),
           signer
         );
@@ -83,7 +90,7 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
         }
 
         await sleep(5000);
-        await Promise.all([owned.mutate(), staked.mutate()]);
+        await tokens.mutate();
 
         await new Promise(() => {
           setLoading(false);
@@ -125,7 +132,10 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
         <title>{APP.NAME} - Stake</title>
       </Head>
       <div className="container mt-5">
-        <PageTitle title="Stake" desc={`Stake ${pair} to earn BURN.`} />
+        <PageTitle
+          title="Stake"
+          desc={`Stake ${APP.STAKING[stakeId].STAKING_SYMBOL} to earn ${APP.STAKING[stakeId].REWARDS_SYMBOL}.`}
+        />
       </div>
 
       <section className="inner-shadow zombie-bg py-5">
@@ -138,14 +148,14 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
             <div className="row mt-5">
               <div className="col-lg-6 col-md-6 col-sm-12">
                 {(() => {
-                  if (owned.loading)
+                  if (tokens.loading || typeof lastId === "undefined")
                     return (
                       <div className="text-center mt-5">
                         <Spinner color="text-light" />
                       </div>
                     );
 
-                  if (owned.error)
+                  if (tokens.error)
                     return (
                       <div className="text-center mt-5 text-light">
                         Something went wrong.
@@ -161,7 +171,7 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
                           <i className="fas fa-lock-open me-2"></i>Owned Tokens
                         </>
                       }
-                      options={owned.tokens ? owned.tokens : []}
+                      options={tokens.ownedTokens ? tokens.ownedTokens : []}
                       onSubmit={staking}
                       buttonVal="Stake"
                       loading={stakeLoading}
@@ -171,14 +181,14 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
               </div>
               <div className="col-lg-6 col-md-6 col-sm-12">
                 {(() => {
-                  if (staked.loading)
+                  if (tokens.loading || typeof lastId === "undefined")
                     return (
                       <div className="text-center mt-5">
                         <Spinner color="text-light" />
                       </div>
                     );
 
-                  if (staked.error)
+                  if (tokens.error)
                     return (
                       <div className="text-center mt-5 text-light">
                         Something went wrong.
@@ -194,7 +204,7 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
                           <i className="fas fa-lock me-2"></i>Staked Tokens
                         </>
                       }
-                      options={staked.tokens ? staked.tokens : []}
+                      options={tokens.stakedTokens ? tokens.stakedTokens : []}
                       onSubmit={staking}
                       buttonVal="Unstake"
                       loading={unstakeLoading}
@@ -220,20 +230,20 @@ const Main: NextPage<{ isAvailable: boolean; pair: string }> = ({
 export default Main;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const pair = params ? (params.pair as string) : "";
+  const stakeId = params ? parseInt(params.stakeId as string) : "";
 
-  if (!Object.prototype.hasOwnProperty.call(APP.STAKING, pair))
+  if (!Object.prototype.hasOwnProperty.call(APP.STAKING, stakeId))
     return {
       props: {
         isAvailable: false,
-        pair: pair,
+        stakeId: stakeId,
       },
     };
 
   return {
     props: {
       isAvailable: true,
-      pair,
+      stakeId,
     },
   };
 };

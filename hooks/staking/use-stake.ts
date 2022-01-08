@@ -7,7 +7,7 @@ type StakeContract = ethers.Contract | null | undefined;
 type TotalSupply = number | undefined | null;
 type Earned = ethers.BigNumber | undefined | null;
 type Balance = number | undefined | null;
-type RewardRate = ethers.BigNumber | undefined | null;
+type RewardForDuration = ethers.BigNumber | undefined | null;
 type RewardPToken = ethers.BigNumber | undefined | null;
 
 type UseStakeType = {
@@ -15,19 +15,20 @@ type UseStakeType = {
   totalSupply: TotalSupply;
   earned: Earned;
   balance: Balance;
-  rewardRate: RewardRate;
+  rewardForDuration: RewardForDuration;
   rewardPToken: RewardPToken;
-  pair: string;
+  stakeId: number;
 };
 
-export const useStake = (pair: string): UseStakeType => {
+export const useStake = (stakeId: number): UseStakeType => {
   const { signer, address } = useWeb3();
 
   const [contract, setContract] = useState<StakeContract>(undefined);
   const [totalSupply, setTotalSupply] = useState<TotalSupply>(undefined);
   const [earned, setEarned] = useState<Earned>(undefined);
   const [balance, setBalance] = useState<Balance>(undefined);
-  const [rewardRate, setRewardRate] = useState<RewardRate>(undefined);
+  const [rewardForDuration, setRewardForDuration] =
+    useState<RewardForDuration>(undefined);
   const [rewardPToken, setRewardPToken] = useState<RewardPToken>(undefined);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export const useStake = (pair: string): UseStakeType => {
         );
 
         const contract = new ethers.Contract(
-          APP.STAKING[pair].CONTRACT,
+          APP.STAKING[stakeId].CONTRACT,
           await abi.json(),
           signer
         );
@@ -58,8 +59,8 @@ export const useStake = (pair: string): UseStakeType => {
         const balance = await contract.balanceOf(address);
         if (isMounted) setBalance(balance.toNumber());
 
-        const rewardRate = await contract.getRewardForDuration();
-        if (isMounted) setRewardRate(rewardRate);
+        const rewardForDuration = await contract.getRewardForDuration();
+        if (isMounted) setRewardForDuration(rewardForDuration);
 
         const rewardPToken = await contract.rewardPerToken();
         if (isMounted) setRewardPToken(rewardPToken);
@@ -75,15 +76,15 @@ export const useStake = (pair: string): UseStakeType => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, [signer, address, pair]);
+  }, [signer, address, stakeId]);
 
   return {
     contract,
     totalSupply,
     earned,
     balance,
-    rewardRate,
+    rewardForDuration,
     rewardPToken,
-    pair,
+    stakeId,
   };
 };

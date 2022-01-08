@@ -3,15 +3,16 @@ import { ethers } from "ethers";
 import { nFormatter, errorHandler, parsePrice } from "../../utils";
 import { Spinner } from "../spinner";
 import { useAlert } from "react-alert";
+import { APP } from "../../utils/consts";
 
 type Props = {
   contract?: ethers.Contract | null;
   totalSupply?: number | null;
   earned?: ethers.BigNumber | null;
   balance?: number | null;
-  rewardRate?: ethers.BigNumber | null;
+  rewardForDuration?: ethers.BigNumber | null;
   rewardPToken?: ethers.BigNumber | null;
-  pair: string;
+  stakeId: number;
 };
 
 export const StakingInfo: React.FC<Props> = ({ ...props }) => {
@@ -44,12 +45,15 @@ export const StakingInfo: React.FC<Props> = ({ ...props }) => {
     return parsePrice(props.earned, 2);
   };
 
-  const renderRewardRate = () => {
-    if (typeof props.rewardRate === "undefined" || props.rewardRate === null)
+  const renderRewardForDuration = () => {
+    if (
+      typeof props.rewardForDuration === "undefined" ||
+      props.rewardForDuration === null
+    )
       return <Spinner color="text-light" />;
 
     return nFormatter(
-      parseFloat(ethers.utils.formatUnits(props.rewardRate, 18)),
+      parseFloat(ethers.utils.formatUnits(props.rewardForDuration, 18)),
       3
     );
   };
@@ -83,27 +87,45 @@ export const StakingInfo: React.FC<Props> = ({ ...props }) => {
         ) : (
           <Spinner color="text-light" />
         )}
-        <small className="ms-1">{props.pair}</small>
+        <small className="ms-1">
+          {APP.STAKING[props.stakeId].STAKING_SYMBOL}
+        </small>
       </li>
       <li className="mx-3 list-inline-item" title="Your Stake">
         <i className="fas fa-user-lock me-2"></i>
         {renderBalance()}
-        <small className="ms-1">{props.pair}</small>
+        <small className="ms-1">
+          {APP.STAKING[props.stakeId].STAKING_SYMBOL}
+        </small>
       </li>
-      <li className="mx-3 list-inline-item" title="Pool Rate BURN">
+      <li
+        className="mx-3 list-inline-item"
+        title={`Pool Rate ${APP.STAKING[props.stakeId].REWARDS_SYMBOL}`}
+      >
         <i className="fas fa-coins me-2"></i>
-        {renderRewardRate()}
-        <small className="ms-1">BURN</small>
+        {renderRewardForDuration()}
+        <small className="ms-1">
+          {APP.STAKING[props.stakeId].REWARDS_SYMBOL}
+        </small>
       </li>
-      <li className="mx-3 list-inline-item" title={`BURN per ${props.pair}`}>
+      <li
+        className="mx-3 list-inline-item"
+        title={`${APP.STAKING[props.stakeId].REWARDS_SYMBOL} per ${
+          APP.STAKING[props.stakeId].STAKING_SYMBOL
+        }`}
+      >
         <i className="fas fa-donate me-2"></i>
         {renderRewardPToken()}
-        <small className="ms-1">BURN</small>
+        <small className="ms-1">
+          {APP.STAKING[props.stakeId].REWARDS_SYMBOL}
+        </small>
       </li>
       <li className="mx-3 list-inline-item" title="Get Rewards">
         <button onClick={getReward} className="btn btn-warning btn-sm">
           {renderEarned()}
-          <small className="ms-1">BURN</small>
+          <small className="ms-1">
+            {APP.STAKING[props.stakeId].REWARDS_SYMBOL}
+          </small>
         </button>
       </li>
     </ul>

@@ -1,4 +1,4 @@
-interface ObjectType {
+export interface ObjectType {
   NAME: string;
   CHAIN_ID: number;
   IPFS_GATEWAY: string;
@@ -17,13 +17,14 @@ interface ObjectType {
   LOTTERY_CONTRACT: string;
   LOTTERY_CONTRACT_CID: string;
 
-  STAKING: {
-    [key: string]: {
-      SUBGRAPH: string;
-      CONTRACT: string;
-      MASTER: string;
-    };
-  };
+  STAKING: Array<{
+    SUBGRAPH: string;
+    CONTRACT: string;
+    MASTER: string;
+    STAKING_SYMBOL: string;
+    REWARDS_SYMBOL: string;
+    POOL_IMAGE: string;
+  }>;
   STAKE_CONTRACT_CID: string;
 }
 
@@ -52,20 +53,35 @@ export const APP: ObjectType = {
   LOTTERY_CONTRACT: "0x13fAEA45Ac96E4c2EAC0aFc24b0493aB1b30b4d7",
   LOTTERY_CONTRACT_CID: "QmPs248QR8LTps4bQ9FnwVR9e6E2uFSYfAMFnp4RzTRFCz",
 
-  STAKING: {
-    ZOMBIE: {
+  STAKING: [
+    {
       SUBGRAPH:
         "https://api.thegraph.com/subgraphs/name/burningzombies/zombie-stake",
       CONTRACT: "0xBA96E075D88644d885e760e5Ac1C9e25A6De8D85",
       MASTER: "0x15Ee4A7a3f9DCe5ABc2Ca40B37729B5d872e90Ef",
+      STAKING_SYMBOL: "ZOMBIE",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/stake-0.png",
     },
-    NEMO: {
+    {
       SUBGRAPH:
         "https://api.thegraph.com/subgraphs/name/burningzombies/nemo-stake",
       CONTRACT: "0x40ef07b5e0D5895343a0Df6F92cEC872F9fdF439",
       MASTER: "0x5A01ca6cfA4d8a9152E93Da820dA195553Dba3D0",
+      STAKING_SYMBOL: "NEMO",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/stake-1.png",
     },
-  },
+    {
+      SUBGRAPH:
+        "https://api.thegraph.com/subgraphs/name/burningzombies/firat-nft-stake",
+      CONTRACT: "0x0942EC098A73808f0d9dD3aB4d0386061C7AdDfE",
+      MASTER: "0xa9e188f2ba1421f0e65e7ddf2f6cef289399d66c",
+      STAKING_SYMBOL: "FIRAT_NFT",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/stake-7.png",
+    },
+  ],
 
   STAKE_CONTRACT_CID: "QmWwvvcX1nnr67SYiE8FB3RQ9TRxpgJsbjhUytU8VNfJn3",
 };

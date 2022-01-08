@@ -4,16 +4,20 @@ import { request } from "graphql-request";
 
 interface Data {
   tokens: Array<{ id: number; title: string }>;
+  stake: {
+    tokens: Array<{ id: number; title: string }>;
+  };
 }
 
-type UseOwnedTokens = {
+type UseTokens = {
   loading: boolean;
-  tokens?: Data["tokens"];
+  ownedTokens?: Data["tokens"];
+  stakedTokens?: Data["stake"]["tokens"];
   error?: Error;
   mutate: any; // eslint-disable-line
 };
 
-export const useOwnedTokens = (url: string): UseOwnedTokens => {
+export const useTokens = (url: string): UseTokens => {
   const { address } = useWeb3();
 
   const query = `{
@@ -22,6 +26,12 @@ export const useOwnedTokens = (url: string): UseOwnedTokens => {
     }" }, orderBy: updatedAt, orderDirection: desc ) {
       id
       title
+    }
+    stake(id:"${address && address.toLowerCase()}") {
+      tokens (first: 1000, orderBy: updatedAt, orderDirection: desc) {
+        id
+        title
+      }
     }
   }`;
 
@@ -33,7 +43,8 @@ export const useOwnedTokens = (url: string): UseOwnedTokens => {
 
   return {
     loading: !data && !error,
-    tokens: data?.tokens,
+    ownedTokens: data?.tokens,
+    stakedTokens: data?.stake?.tokens,
     error,
     mutate,
   };
