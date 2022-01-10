@@ -80,7 +80,8 @@ export const Progress: React.FC<Props> = ({ masterContract }) => {
         ) : (
           <Spinner color="text-light" />
         )}{" "}
-        of zombies are gone, keep going!
+        of zombies are gone,{" "}
+        {(burned + minted).toFixed(2) === "100.00" ? "done" : "keep going"}!
       </span>
       <div className="my-2 progress bg-dark shadow" style={{ height: "3rem" }}>
         <div

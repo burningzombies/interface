@@ -106,7 +106,7 @@ export const Mint: React.FC = () => {
               <ProgressBar {...{ masterContract }} />
             </div>
             <div className="col-lg-4 col-md-4 col-sm-12 mt-2">
-              <MintButton {...{ loading }} />
+              <MintButton {...{ masterContract, loading }} />
             </div>
             <div className="mt-3">
               <Info {...{ masterContract, address }} />

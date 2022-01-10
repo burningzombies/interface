@@ -3,12 +3,11 @@ import { Spinner } from "../../../components/spinner";
 import { Contract } from "ethers";
 
 type Props = {
-  masterContract: Contract | undefined | null;
+  masterContract?: Contract | null;
 };
 
 export const TotalSupply: React.FC<Props> = ({ masterContract }) => {
   const [totalSupply, setTotalSupply] = React.useState<number | undefined>();
-
   React.useEffect(() => {
     let isMounted = true;
     const init = async () => {
@@ -28,7 +27,6 @@ export const TotalSupply: React.FC<Props> = ({ masterContract }) => {
       clearInterval(iID);
     };
   }, [masterContract]);
-
   return (
     <div className="d-inline" title="Total Supply">
       <i className="fas fa-biohazard me-2"></i>

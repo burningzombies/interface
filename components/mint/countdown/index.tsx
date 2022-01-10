@@ -10,6 +10,7 @@ type Props = {
 export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
   const [start, setStart] = React.useState<number | undefined>();
   const [duration, setDuration] = React.useState<number | undefined>();
+  const [isSaleActive, setIsSaleActive] = React.useState<boolean | undefined>();
 
   React.useEffect(() => {
     let isMounted = true;
@@ -18,6 +19,9 @@ export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
       try {
         const start = (await masterContract.saleStartsAt()).toNumber();
         const duration = (await masterContract.saleDuration()).toNumber();
+        const isSaleActive = await masterContract.isSaleActive();
+
+        if (isMounted) setIsSaleActive(isSaleActive);
 
         if (isMounted) {
           setStart(start);
@@ -26,6 +30,7 @@ export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
       } catch (err) {
         setStart(undefined);
         setDuration(undefined);
+        setIsSaleActive(undefined);
       }
     };
     init();
@@ -38,8 +43,13 @@ export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
     <>
       <i className="fas fa-stopwatch me-2"></i>
       {(() => {
-        if (typeof start === "undefined" || typeof duration === "undefined")
+        if (
+          typeof isSaleActive === "undefined" ||
+          typeof start === "undefined" ||
+          typeof duration === "undefined"
+        )
           return <Spinner color="text-light" />;
+        if (isSaleActive === false) return <>Sold Out!</>;
         return (
           <Countdown
             date={start * 1000}

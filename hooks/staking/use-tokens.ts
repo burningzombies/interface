@@ -21,7 +21,7 @@ export const useTokens = (url: string): UseTokens => {
   const { address } = useWeb3();
 
   const query = `{
-    tokens( first: 120, where: { owner: "${
+    tokens( first: 1000, where: { owner: "${
       address ? address.toLowerCase() : ""
     }" }, orderBy: updatedAt, orderDirection: desc ) {
       id

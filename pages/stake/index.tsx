@@ -22,7 +22,7 @@ const Main: NextPage = () => {
               <div
                 title={stake.CONTRACT}
                 key={stake.CONTRACT}
-                className="col-lg-3 my-3"
+                className="col-lg-3 col-md-6 col-sm-6 my-3"
               >
                 <StakingCard index={index} {...stake} />
               </div>

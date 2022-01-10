@@ -97,18 +97,18 @@ export const StakingCard: React.FC<Props> = ({ index, ...stake }) => {
         className="card-img-top"
         alt={`${stake.STAKING_SYMBOL}/${stake.REWARDS_SYMBOL}`}
       />
-      <div className="card-body">
-        <h5 className="card-title fw-bold h6">
+      <div className="card-body mb-0">
+        <h5 className="text-truncate card-title fw-bold h6">
           {stake.STAKING_SYMBOL}
           <small>/{stake.REWARDS_SYMBOL}</small>
         </h5>
-        <ul className="small mt-3 m-0 list-unstyled">
+        <ul className="small mt-3 mb-0 list-unstyled">
           <li className="mb-2">
             <i className="fas fa-coins me-2"></i>
             {renderRewardForDuration()}
             <span style={{ fontSize: "0.7rem" }}>{stake.REWARDS_SYMBOL}</span>
           </li>
-          <li className="mb-2">
+          <li className="text-truncate ">
             <i className="fas fa-lock me-2"></i>
             {renderTotalStaked()}
             <span style={{ fontSize: "0.7rem" }}>{stake.STAKING_SYMBOL}</span>
@@ -116,9 +116,17 @@ export const StakingCard: React.FC<Props> = ({ index, ...stake }) => {
         </ul>
       </div>
       <div className="card-footer d-flex justify-content-between align-items-center">
-        <Link href={`/stake/${index}`}>
-          <a className="btn btn-warning btn-sm w-100">Stake</a>
-        </Link>
+        {(() => {
+          if (stake.CONTRACT.length > 0)
+            return (
+              <Link href={`/stake/${index}`}>
+                <a className="btn btn-warning btn-sm w-100">Stake</a>
+              </Link>
+            );
+          return (
+            <a className="btn btn-secondary btn-sm w-100 disabled">Soon...</a>
+          );
+        })()}
       </div>
     </div>
   );

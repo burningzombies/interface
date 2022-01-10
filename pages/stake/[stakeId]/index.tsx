@@ -56,6 +56,19 @@ const Main: NextPage<{ isAvailable: boolean; stakeId: number }> = ({
       func: number,
       setLoading: Dispatch<SetStateAction<boolean>>
     ) => {
+      const isRequireSingleApproval = () => {
+        if (func !== 0) return false;
+
+        const req = ["AVAXAPE"];
+        const res = false;
+
+        for (let x = 0; req.length > x; x++) {
+          if (APP.STAKING[stakeId].STAKING_SYMBOL === req[x]) return true;
+        }
+
+        return res;
+      };
+
       try {
         const masterABI = await fetch(
           `${APP.IPFS_GATEWAY}/ipfs/${APP.MASTER_CONTRACT_CID}`
@@ -67,26 +80,42 @@ const Main: NextPage<{ isAvailable: boolean; stakeId: number }> = ({
           signer
         );
 
-        const isApproved = await masterContract.isApprovedForAll(
-          address,
-          contract.address
-        );
+        if (isRequireSingleApproval()) {
+          for (let i = 0; tokenIds.length > i; i++) {
+            const approval = await masterContract.getApproved(tokenIds[i]);
 
-        if (!isApproved) {
-          const approval = await masterContract.setApprovalForAll(
-            contract.address,
-            true
+            if (approval.toLowerCase() !== contract.address.toLowerCase()) {
+              const approve = await masterContract.approve(
+                contract.address,
+                tokenIds[i]
+              );
+              await approve.wait();
+            }
+            const stake = await contract.stake([tokenIds[i]]);
+            await stake.wait();
+          }
+        } else {
+          const isApproved = await masterContract.isApprovedForAll(
+            address,
+            contract.address
           );
-          await approval.wait();
-        }
 
-        for (let i = 0; Math.ceil(tokenIds.length / 24) > i; i++) {
-          const batch = tokenIds.slice(i * 24, i * 24 + 24);
-          const stake =
-            func === 0
-              ? await contract.stake(batch)
-              : await contract.withdraw(batch);
-          await stake.wait();
+          if (!isApproved) {
+            const approval = await masterContract.setApprovalForAll(
+              contract.address,
+              true
+            );
+            await approval.wait();
+          }
+
+          for (let i = 0; Math.ceil(tokenIds.length / 24) > i; i++) {
+            const batch = tokenIds.slice(i * 24, i * 24 + 24);
+            const stake =
+              func === 0
+                ? await contract.stake(batch)
+                : await contract.withdraw(batch);
+            await stake.wait();
+          }
         }
 
         await sleep(5000);
@@ -216,8 +245,8 @@ const Main: NextPage<{ isAvailable: boolean; stakeId: number }> = ({
             <div className="mt-3">
               <span className="fst-italic text-light small">
                 * Due to third-party apps&apos; rules, the lists show the first
-                120 tokens for the owned and 1000 for the staked tokens list.
-                The rest of them will be visible after staked and withdrawn.{" "}
+                1000 for the lists. The rest of them will be visible after
+                staked and withdrawn.{" "}
               </span>
             </div>
           </div>
