@@ -9,251 +9,251 @@ import { useAlert } from "react-alert";
 import { errorHandler } from "../../../utils";
 
 export const Navbar: React.FC = () => {
-	const router = useRouter();
-	const alert = useAlert();
+  const router = useRouter();
+  const alert = useAlert();
 
-	const addBurn = async () => {
-		const tokenAddress = APP.GOVERNANCE_TOKEN.CONTRACT;
-		const tokenSymbol = APP.GOVERNANCE_TOKEN.SYMBOL;
-		const tokenDecimals = APP.GOVERNANCE_TOKEN.DECIMAL;
-		const tokenImage = `${APP.IPFS_GATEWAY}/ipfs/QmXsEP3fU5rHDuXKP2rcGLYP3XvVewfrNSpaoNTrbFHjJa`;
+  const addBurn = async () => {
+    const tokenAddress = APP.GOVERNANCE_TOKEN.CONTRACT;
+    const tokenSymbol = APP.GOVERNANCE_TOKEN.SYMBOL;
+    const tokenDecimals = APP.GOVERNANCE_TOKEN.DECIMAL;
+    const tokenImage = `${APP.IPFS_GATEWAY}/ipfs/QmXsEP3fU5rHDuXKP2rcGLYP3XvVewfrNSpaoNTrbFHjJa`;
 
-		try {
-			// wasAdded is a boolean. Like any RPC method, an error may be thrown.
-			const wasAdded = await window.ethereum.request({
-				method: "wallet_watchAsset",
-				params: {
-					type: "ERC20",
-					options: {
-						address: tokenAddress, // The address that the token is at.
-						symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-						decimals: tokenDecimals, // The number of decimals in the token
-						image: tokenImage, // A string url of the token logo
-					},
-				},
-			});
+    try {
+      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+      const wasAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: tokenAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+            image: tokenImage, // A string url of the token logo
+          },
+        },
+      });
 
-			if (wasAdded) alert.success(<>Added.</>);
+      if (wasAdded) alert.success(<>Added.</>);
 
-			// eslint-disable-next-line
-		} catch (err: any) {
-			alert.error(<>{errorHandler(err)}</>);
-		}
-	};
+      // eslint-disable-next-line
+    } catch (err: any) {
+      alert.error(<>{errorHandler(err)}</>);
+    }
+  };
 
-	const renderDropdown = () => {
-		return (
-			<li className="nav-item dropdown">
-				<a
-					className="nav-link dropdown-toggle"
-					href="#"
-					id="navbarDropdown"
-					role="button"
-					data-bs-toggle="dropdown"
-					aria-expanded="false"
-				>
-					Menu
-				</a>
-				<ul
-					className="dropdown-menu dropdown-menu-dark"
-					aria-labelledby="navbarDropdown"
-				>
-					<li>
-						<Link href="/burn">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/burn" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-fire"></i> Burn
-							</a>
-						</Link>
-					</li>
-					<li>
-						<Link href="/loot">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/loot" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-coins"></i> Loot
-							</a>
-						</Link>
-					</li>
-					<li>
-						<Link href="/zombies">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/zombies" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-biohazard"></i> Collection
-							</a>
-						</Link>
-					</li>
-					<li>
-						<Link href="/honorary">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/honorary" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-trophy"></i> Honorary
-							</a>
-						</Link>
-					</li>
-					<li>
-						<Link href="/lottery">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/lottery" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-dice"></i> Lottery
-							</a>
-						</Link>
-					</li>
-					<li>
-						<hr className="dropdown-divider" />
-					</li>
-					<li>
-						<Link href="/rarity">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/rarity" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-square-root-alt"></i> Rarity
-							</a>
-						</Link>
-					</li>
-					<li>
-						<Link href="/provenance">
-							<a
-								className={`dropdown-item ${
-									router.pathname == "/provenance" && "active"
-								}`}
-							>
-								<i className="me-1 fas fa-passport"></i> Provenance
-							</a>
-						</Link>
-					</li>
-					<li>
-						<hr className="dropdown-divider" />
-					</li>
-					<li>
-						<a
-							href="https://docs.burningzombies.com"
-							target="_blank"
-							rel="noreferrer"
-							className="dropdown-item"
-						>
-							<i className="me-1 fas fa-scroll"></i> Docs
-						</a>
-					</li>
-					<li>
-						<a onClick={addBurn} role="button" className="dropdown-item">
-							<i className="me-1 fas fa-plus"></i> Add BURN
-						</a>
-					</li>
-				</ul>
-			</li>
-		);
-	};
+  const renderDropdown = () => {
+    return (
+      <li className="nav-item dropdown">
+        <a
+          className="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Menu
+        </a>
+        <ul
+          className="dropdown-menu dropdown-menu-dark"
+          aria-labelledby="navbarDropdown"
+        >
+          <li>
+            <Link href="/burn">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/burn" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-fire"></i> Burn
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/loot">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/loot" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-coins"></i> Loot
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/zombies">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/zombies" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-biohazard"></i> Collection
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/honorary">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/honorary" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-trophy"></i> Honorary
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/lottery">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/lottery" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-dice"></i> Lottery
+              </a>
+            </Link>
+          </li>
+          <li>
+            <hr className="dropdown-divider" />
+          </li>
+          <li>
+            <Link href="/rarity">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/rarity" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-square-root-alt"></i> Rarity
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/provenance">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/provenance" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-passport"></i> Provenance
+              </a>
+            </Link>
+          </li>
+          <li>
+            <hr className="dropdown-divider" />
+          </li>
+          <li>
+            <a
+              href="https://docs.burningzombies.com"
+              target="_blank"
+              rel="noreferrer"
+              className="dropdown-item"
+            >
+              <i className="me-1 fas fa-scroll"></i> Docs
+            </a>
+          </li>
+          <li>
+            <a onClick={addBurn} role="button" className="dropdown-item">
+              <i className="me-1 fas fa-plus"></i> Add to Wallet
+            </a>
+          </li>
+        </ul>
+      </li>
+    );
+  };
 
-	return (
-		<nav className="py-3 navbar navbar-expand-lg navbar-dark bg-dark shadow">
-			<div className="container">
-				<Link href="/">
-					<a>
-						<Image
-							src={logo}
-							width={69}
-							height={80}
-							alt="Burning Zombies Logo"
-						/>
-					</a>
-				</Link>
-				<div className="d-none d-md-block d-lg-block ms-2 position-relative">
-					<Link href="/">
-						<a className={`text-light text-shadow navbar-brand fw-bold`}>
-							Burning Zombies
-						</a>
-					</Link>
-					<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-						{APP.CHAIN_ID === 43114 ? "C-Chain" : "Fuji"}
-						<span className="visually-hidden">Blockchain</span>
-					</span>
-				</div>
-				<div className="d-sm-block d-xs-block d-md-none d-lg-none position-relative">
-					<Link href="/">
-						<a className={`text-light text-shadow navbar-brand fw-bold`}>
-							Zombies
-						</a>
-					</Link>
-					<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-						{APP.CHAIN_ID === 43114 ? "Mainnet" : "Fuji"}
-						<span className="visually-hidden">Blockchain</span>
-					</span>
-				</div>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon"></span>
-				</button>
-				<div className="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-						<li className="nav-item">
-							<Link href="/#mint">
-								<a className="nav-link">Mint</a>
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link href="/marketplace">
-								<a
-									className={`nav-link ${
-										router.pathname == "/marketplace" && "active"
-									}`}
-								>
-									Marketplace
-								</a>
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link href="/graveyard">
-								<a
-									className={`nav-link ${
-										router.pathname == "/graveyard" && "active"
-									}`}
-								>
-									Graveyard
-								</a>
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link href="/stake">
-								<a
-									className={`nav-link ${
-										router.pathname == "/stake" && "active"
-									}`}
-								>
-									Stake
-								</a>
-							</Link>
-						</li>
-						{renderDropdown()}
-						<li className="nav-item">
-							<Signal />
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	);
+  return (
+    <nav className="py-3 navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div className="container">
+        <Link href="/">
+          <a>
+            <Image
+              src={logo}
+              width={69}
+              height={80}
+              alt="Burning Zombies Logo"
+            />
+          </a>
+        </Link>
+        <div className="d-none d-md-block d-lg-block ms-2 position-relative">
+          <Link href="/">
+            <a className={`text-light text-shadow navbar-brand fw-bold`}>
+              Burning Zombies
+            </a>
+          </Link>
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {APP.CHAIN_ID === 43114 ? "C-Chain" : "Fuji"}
+            <span className="visually-hidden">Blockchain</span>
+          </span>
+        </div>
+        <div className="d-sm-block d-xs-block d-md-none d-lg-none position-relative">
+          <Link href="/">
+            <a className={`text-light text-shadow navbar-brand fw-bold`}>
+              Zombies
+            </a>
+          </Link>
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {APP.CHAIN_ID === 43114 ? "Mainnet" : "Fuji"}
+            <span className="visually-hidden">Blockchain</span>
+          </span>
+        </div>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link href="/#mint">
+                <a className="nav-link">Mint</a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/marketplace">
+                <a
+                  className={`nav-link ${
+                    router.pathname == "/marketplace" && "active"
+                  }`}
+                >
+                  Marketplace
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/graveyard">
+                <a
+                  className={`nav-link ${
+                    router.pathname == "/graveyard" && "active"
+                  }`}
+                >
+                  Graveyard
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/stake">
+                <a
+                  className={`nav-link ${
+                    router.pathname == "/stake" && "active"
+                  }`}
+                >
+                  Stake
+                </a>
+              </Link>
+            </li>
+            {renderDropdown()}
+            <li className="nav-item">
+              <Signal />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 };

@@ -49,7 +49,8 @@ export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
           typeof duration === "undefined"
         )
           return <Spinner color="text-light" />;
-        if (isSaleActive === false) return <>Sold Out!</>;
+        if (isSaleActive === false && start >= new Date().getTime() * 1000)
+          return <>Sold Out!</>;
         return (
           <Countdown
             date={start * 1000}

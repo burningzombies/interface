@@ -47,8 +47,10 @@ export const RarityTag: React.FC<Props> = ({ score }) => {
           return "Super Rare";
         } else if (fraction >= 80 && fraction < 90) {
           return "Mystic";
-        } else {
+        } else if (fraction >= 90 && fraction < 100) {
           return "Legendary";
+        } else {
+          return "Reveal Soon";
         }
       })()}
     </span>

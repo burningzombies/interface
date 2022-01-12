@@ -1,5 +1,41 @@
 import { BigNumber } from "ethers";
 
+export interface AppConsts {
+  NAME: string;
+  CHAIN_ID: number;
+  IPFS_GATEWAY: string;
+  PROVENANCE_CID: string;
+  MASTER_CONTRACT: string;
+  MASTER_CONTRACT_CID: string;
+
+  MARKET_CONTRACT: string;
+  MARKET_CONTRACT_CID: string;
+
+  SPLITTER_CONTRACT: string;
+  SPLITTER_CONTRACT_CID: string;
+
+  LOTTERY_START: number;
+  LOTTERY_DURATION: number;
+  LOTTERY_CONTRACT: string;
+  LOTTERY_CONTRACT_CID: string;
+
+  GOVERNANCE_TOKEN: {
+    CONTRACT: string;
+    SYMBOL: string;
+    DECIMAL: number;
+  };
+
+  STAKING: Array<{
+    SUBGRAPH: string;
+    CONTRACT: string;
+    MASTER: string;
+    STAKING_SYMBOL: string;
+    REWARDS_SYMBOL: string;
+    POOL_IMAGE: string;
+  }>;
+  STAKE_CONTRACT_CID: string;
+}
+
 export interface Collection {
   totalSupply: number;
   highestScore: number;

@@ -1,47 +1,46 @@
-import { APP as FUJI_CONSTS } from "./consts.fuji";
-import { APP as CCHAIN_CONSTS } from "./consts.cchain";
+import type { AppConsts } from "../types";
 
-export interface ObjectType {
-	NAME: string;
-	CHAIN_ID: number;
-	IPFS_GATEWAY: string;
-	PROVENANCE_CID: string;
-	MASTER_CONTRACT: string;
-	MASTER_CONTRACT_CID: string;
+export const APP: AppConsts = Object.freeze({
+  NAME: "Burning Zombies",
+  CHAIN_ID: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID as string),
+  IPFS_GATEWAY: "https://storage.burningzombies.com",
 
-	MARKET_CONTRACT: string;
-	MARKET_CONTRACT_CID: string;
+  PROVENANCE_CID: "QmcD5fjjsUArKKj1f1a2Lp7Pzz2HSXizJyY2xMfkQuGdNZ",
 
-	SPLITTER_CONTRACT: string;
-	SPLITTER_CONTRACT_CID: string;
+  GOVERNANCE_TOKEN: {
+    CONTRACT: "",
+    SYMBOL: "",
+    DECIMAL: 0,
+  },
 
-	LOTTERY_START: number;
-	LOTTERY_DURATION: number;
-	LOTTERY_CONTRACT: string;
-	LOTTERY_CONTRACT_CID: string;
+  // master
+  MASTER_CONTRACT: "0xEa2184765Fb2c4254106a1D999ed2eD481d9b702",
+  MASTER_CONTRACT_CID: "Qmc5c3x3bdJZX6811UwRyUVViczZEL7cn3ND4Av9K4YwiG",
 
-	GOVERNANCE_TOKEN: {
-		CONTRACT: string;
-		SYMBOL: string;
-		DECIMAL: number;
-	};
+  // market
+  MARKET_CONTRACT: "0xC1D8AE4310eF5ff2C5A0242c9FC993E7C06c7f85",
+  MARKET_CONTRACT_CID: "QmZ1ut4KgdcrWC8eBu9RuNF8NAsNATotd6D7xdrpRWzJ3W",
 
-	STAKING: Array<{
-		SUBGRAPH: string;
-		CONTRACT: string;
-		MASTER: string;
-		STAKING_SYMBOL: string;
-		REWARDS_SYMBOL: string;
-		POOL_IMAGE: string;
-	}>;
-	STAKE_CONTRACT_CID: string;
-}
+  // splitter
+  SPLITTER_CONTRACT: "0x54810A0a5A5Ebf50F922D74e13ADA36D5D8c9e54",
+  SPLITTER_CONTRACT_CID: "QmRTZET28M1vh8K9XZcWoxsefcCyFSMjiJ16UeSCRRaiMw",
 
-const chainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID as string);
+  // Lottery consts
+  LOTTERY_START: 0,
+  LOTTERY_DURATION: 0,
+  LOTTERY_CONTRACT: "",
+  LOTTERY_CONTRACT_CID: "",
 
-let APP: ObjectType;
+  STAKING: [
+    {
+      SUBGRAPH: "",
+      CONTRACT: "",
+      MASTER: "",
+      STAKING_SYMBOL: "ZOMBIE",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/stake-0.png",
+    },
+  ],
 
-if (chainId === 43113) APP = FUJI_CONSTS;
-if (chainId === 43114) APP = CCHAIN_CONSTS;
-
-export { APP };
+  STAKE_CONTRACT_CID: "",
+});

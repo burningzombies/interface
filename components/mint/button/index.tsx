@@ -40,7 +40,7 @@ export const MintButton: React.FC<Props> = ({ loading, masterContract }) => {
       ) : isSaleActive ? (
         <>Mint</>
       ) : (
-        <>Sold Out!</>
+        <>Not Mintable!</>
       )}
     </button>
   );
