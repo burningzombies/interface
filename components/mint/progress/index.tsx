@@ -7,6 +7,7 @@ type Props = {
 
 export const ProgressBar: React.FC<Props> = ({ masterContract }) => {
   const [fraction, setFraction] = React.useState<number>(0);
+  const [isSaleActive, setIsSaleActive] = React.useState<boolean | undefined>();
 
   React.useEffect(() => {
     let isMounted = true;
@@ -15,9 +16,12 @@ export const ProgressBar: React.FC<Props> = ({ masterContract }) => {
       try {
         const total = await masterContract.totalSupply();
         const max = await masterContract.MAX_SUPPLY();
+        const isSaleActive = await masterContract.isSaleActive();
+
+        if (isMounted) setIsSaleActive(isSaleActive);
 
         if (isMounted)
-          setFraction(parseFloat(((total / max) * 100).toFixed(0)));
+          setFraction(parseFloat(((total / max) * 100).toFixed(1)));
       } catch {
         setFraction(0);
       }
@@ -45,7 +49,27 @@ export const ProgressBar: React.FC<Props> = ({ masterContract }) => {
         aria-valuenow={fraction}
         aria-valuemin={0}
         aria-valuemax={100}
-      >{`${fraction}%`}</div>
+      >
+        {isSaleActive === true ? (
+          `${fraction}%`
+        ) : (
+          <i className="fas fa-check-circle"></i>
+        )}
+      </div>
+      {typeof isSaleActive !== "undefined" && !isSaleActive && (
+        <div
+          className="progress-bar bg-danger text-light fw-bold"
+          role="progressbar"
+          style={{
+            width: `${100 - fraction}%`,
+          }}
+          aria-valuenow={100 - fraction}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <i className="fas fa-fire"></i>
+        </div>
+      )}
     </div>
   );
 };

@@ -102,7 +102,8 @@ const SingleZombie: NextPage = () => {
               <PageTitle
                 title={
                   <>
-                    {data.zombies[0].name} (
+                    {data.zombies[0].name}
+                    <sup className="ms-1">{data.zombies[0].id}</sup> (
                     {data.zombies[0].gender === "Male" ? (
                       <i className="text-info fas fa-mars"></i>
                     ) : (

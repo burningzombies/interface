@@ -34,12 +34,13 @@ export const Card: React.FC<Zombie & Props> = ({ mutate, ...zombie }) => {
           </a>
         </Link>
         <div className="card-body">
-          <h5 className="float-start h4 text-warning text-shadow fw-bold card-title">
+          <h5 className="float-start mt-1 text-warning text-shadow fw-bold card-title">
             <Link
               href={`/zombies/${encodeURIComponent(zombie.name.toLowerCase())}`}
             >
               <a className="link-warning text-decoration-none text-truncate">
                 {zombie.name}
+                <sup className="ms-1">{zombie.id}</sup>
               </a>
             </Link>
           </h5>

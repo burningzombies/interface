@@ -210,7 +210,7 @@ const Rarity: NextPage = () => {
               topZombie: { data },
               label: "Legendary",
               min: 90,
-              max: 100.1,
+              max: 100.4,
             }}
           >
             <h3>
