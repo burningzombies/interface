@@ -13,7 +13,7 @@ enum NextStep {
   NEXT,
 }
 
-const current = NextStep.TESTNET_2;
+const current = NextStep.MAINNET;
 
 const renderNext = (step: NextStep) => {
   switch (step) {
