@@ -14,11 +14,6 @@ export interface AppConsts {
   SPLITTER_CONTRACT: string;
   SPLITTER_CONTRACT_CID: string;
 
-  LOTTERY_START: number;
-  LOTTERY_DURATION: number;
-  LOTTERY_CONTRACT: string;
-  LOTTERY_CONTRACT_CID: string;
-
   GOVERNANCE_TOKEN: {
     CONTRACT: string;
     SYMBOL: string;

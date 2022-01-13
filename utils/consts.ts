@@ -8,9 +8,9 @@ export const APP: AppConsts = Object.freeze({
   PROVENANCE_CID: "QmSxjQjk1bMN2PkFm36ow45fD9DpBqCT9VVfq1Gq1rgQhw",
 
   GOVERNANCE_TOKEN: {
-    CONTRACT: "",
-    SYMBOL: "",
-    DECIMAL: 0,
+    CONTRACT: "0x9c4f88408f9f003Fb10f106E7A69989bB4f3452f",
+    SYMBOL: "BURN",
+    DECIMAL: 18,
   },
 
   // master
@@ -25,12 +25,6 @@ export const APP: AppConsts = Object.freeze({
   SPLITTER_CONTRACT: "0x19BD1dD6A19211E9D0Ed991B25a7ed4dCCA52b45",
   SPLITTER_CONTRACT_CID: "QmRTZET28M1vh8K9XZcWoxsefcCyFSMjiJ16UeSCRRaiMw",
 
-  // Lottery consts
-  LOTTERY_START: 1641998105,
-  LOTTERY_DURATION: 86400 * 3,
-  LOTTERY_CONTRACT: "0x71bB6C8245d75ce10511fee925419d3d45651c86",
-  LOTTERY_CONTRACT_CID: "QmTtMT5tsEpar2vKR6HajnDkjDyzA14T2zLoGsUGUXj2gu",
-
   STAKING: [
     {
       SUBGRAPH: "",
@@ -39,6 +33,14 @@ export const APP: AppConsts = Object.freeze({
       STAKING_SYMBOL: "ZOMBIE",
       REWARDS_SYMBOL: "BURN",
       POOL_IMAGE: "/stake/stake-0.png",
+    },
+    {
+      SUBGRAPH: "",
+      CONTRACT: "",
+      MASTER: "",
+      STAKING_SYMBOL: "NEMO",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/stake-1.png",
     },
   ],
 
