@@ -31,7 +31,9 @@ export const parseTier = (
   const calc = (per: number): number => {
     const val =
       parseFloat(lowScore.toString()) +
-      ((parseFloat(highScore.toString()) - parseFloat(lowScore.toString())) * per) / 100;
+      ((parseFloat(highScore.toString()) - parseFloat(lowScore.toString())) *
+        per) /
+        100;
     const parsedVal = parseFloat(val.toString());
     return parsedVal;
   };
