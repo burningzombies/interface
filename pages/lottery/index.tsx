@@ -129,9 +129,15 @@ const Lottery: NextPage = () => {
           <>
             {parsePrice(prize)}
             {(() => {
-              if (fiatLoading) return <Spinner color="text-light" />;
+              if (fiatLoading)
+                return (
+                  <span className="ms-2">
+                    <Spinner color="text-light" />
+                  </span>
+                );
 
-              if (fiatError) return <span className="text-light">Error</span>;
+              if (fiatError)
+                return <span className="ms-2 text-light">Error</span>;
 
               const parsedPrize = (
                 parseInt(parsePrice(prize)) * price["avalanche-2"].usd
