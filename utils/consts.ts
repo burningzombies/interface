@@ -8,9 +8,9 @@ export const APP: AppConsts = Object.freeze({
   PROVENANCE_CID: "QmSxjQjk1bMN2PkFm36ow45fD9DpBqCT9VVfq1Gq1rgQhw",
 
   GOVERNANCE_TOKEN: {
-    CONTRACT: "",
-    SYMBOL: "",
-    DECIMAL: 0,
+    CONTRACT: "0x9c4f88408f9f003Fb10f106E7A69989bB4f3452f",
+    SYMBOL: "BURN",
+    DECIMAL: 18,
   },
 
   // master
