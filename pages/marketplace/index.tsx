@@ -17,6 +17,8 @@ import { Zombie, Collection } from "../../types";
 import { Spinner } from "../../components/spinner";
 
 interface Data {
+  max: Array<Zombie>;
+  min: Array<Zombie>;
   zombies: Array<Zombie>;
   collection: Collection;
   marketStats: {
@@ -83,8 +85,9 @@ const Marketplace: NextPage = () => {
 
   const isLoadable = () => {
     return (
-      topZombieData &&
-      topZombieData.zombies.length > 0 &&
+      typeof topZombieData !== "undefined" &&
+      topZombieData.min.length > 0 &&
+      topZombieData.max.length > 0 &&
       pageIndex > 0 &&
       typeof tier !== "undefined" &&
       typeof background !== "undefined" &&
@@ -98,7 +101,11 @@ const Marketplace: NextPage = () => {
     isLoadable()
       ? getOnSaleZombies(
           pageIndex,
-          parseTier(tier, topZombieData ? topZombieData.zombies[0].score : 0.0),
+          parseTier(
+            tier,
+            topZombieData ? topZombieData.min[0].score : 0.0,
+            topZombieData ? topZombieData.max[0].score : 999
+          ),
           background,
           skin,
           mouth,
