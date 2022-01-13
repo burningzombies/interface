@@ -3,7 +3,10 @@ import { toTitleCase } from "../utils";
 export const topZombie = (): string => {
   return `
     {
-      zombies (first: 1, orderBy: score, orderDirection: desc) {
+      max: zombies (first: 1, orderBy: score, orderDirection: desc) {
+        score
+      }
+      min: zombies (first: 1, orderBy: score, orderDirection: asc) {
         score
       }
     }

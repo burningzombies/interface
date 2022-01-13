@@ -14,6 +14,8 @@ import { Spinner } from "../../components/spinner";
 import { topZombie } from "../../utils/queries";
 
 type Data = {
+  max: Array<Zombie>;
+  min: Array<Zombie>;
   zombies: Array<Zombie>;
 };
 
@@ -72,24 +74,32 @@ const RarityLabel: React.FC<RarityLabelProps> = ({
   min,
   children,
 }) => {
-  const { data, error } = useSWR<Data, Error>(
-    topZombie.data && topZombie.data.zombies.length > 0
-      ? `
-    {
-      zombies (first: 1000, where: { score_lt: "${(
-        (topZombie.data.zombies[0].score / 100) *
-        max
-      ).toFixed(0)}", score_gte: "${(
-          (topZombie.data.zombies[0].score / 100) *
-          min
-        ).toFixed(0)}" }) {
+  const runQuery = () => {
+    if (
+      !topZombie.data ||
+      !(topZombie.data.max.length > 0) ||
+      !(topZombie.data.min.length > 0)
+    )
+      return null;
+
+    const maxZombieScore = parseFloat(topZombie.data.max[0].score.toString());
+    const minZombieScore = parseFloat(topZombie.data.min[0].score.toString());
+
+    const from =
+      minZombieScore + ((maxZombieScore - minZombieScore) * min) / 100;
+    const parsedFrom = parseFloat(from.toString());
+
+    const to = minZombieScore + ((maxZombieScore - minZombieScore) * max) / 100;
+    const parsedTo = parseFloat(to.toString());
+
+    return `{
+      zombies (first: 1000, where: { score_lt: "${parsedTo}", score_gte: "${parsedFrom}" }) {
         id
       }
-    }
-    `
-      : null,
-    fetcher
-  );
+    }`;
+  };
+
+  const { data, error } = useSWR<Data, Error>(runQuery(), fetcher);
 
   return (
     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">

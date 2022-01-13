@@ -17,6 +17,8 @@ import { utils } from "ethers";
 import { Spinner } from "../../components/spinner";
 
 interface Data {
+  max: Array<Zombie>;
+  min: Array<Zombie>;
   zombies: Array<Zombie>;
   collection: Collection;
 }
@@ -78,8 +80,9 @@ const UserGraveyard: NextPage = () => {
 
   const isLoadable = () => {
     return (
-      topZombieData &&
-      topZombieData.zombies.length > 0 &&
+      typeof topZombieData !== "undefined" &&
+      topZombieData.min.length > 0 &&
+      topZombieData.max.length > 0 &&
       pageIndex > 0 &&
       typeof tier !== "undefined" &&
       typeof background !== "undefined" &&
@@ -95,7 +98,11 @@ const UserGraveyard: NextPage = () => {
       : getUserZombies(
           address,
           pageIndex,
-          parseTier(tier, topZombieData ? topZombieData.zombies[0].score : 0.0),
+          parseTier(
+            tier,
+            topZombieData ? topZombieData.min[0].score : 0.0,
+            topZombieData ? topZombieData.max[0].score : 999
+          ),
           background,
           skin,
           mouth,

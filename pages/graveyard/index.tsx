@@ -19,6 +19,8 @@ import { useAlert } from "react-alert";
 import { Balance } from "../../components/balance";
 
 interface Data {
+  max: Array<Zombie>;
+  min: Array<Zombie>;
   zombies: Array<Zombie>;
   collection: Collection;
 }
@@ -77,8 +79,9 @@ const Graveyard: NextPage = () => {
 
   const isLoadable = () => {
     return (
-      topZombieData &&
-      topZombieData.zombies.length > 0 &&
+      typeof topZombieData !== "undefined" &&
+      topZombieData.min.length > 0 &&
+      topZombieData.max.length > 0 &&
       pageIndex > 0 &&
       typeof tier !== "undefined" &&
       typeof background !== "undefined" &&
@@ -98,7 +101,11 @@ const Graveyard: NextPage = () => {
       : getUserZombies(
           address as string,
           pageIndex,
-          parseTier(tier, topZombieData ? topZombieData.zombies[0].score : 0.0),
+          parseTier(
+            tier,
+            topZombieData ? topZombieData.min[0].score : 0.0,
+            topZombieData ? topZombieData.max[0].score : 999
+          ),
           background,
           skin,
           mouth,

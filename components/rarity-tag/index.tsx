@@ -8,16 +8,20 @@ type Props = {
 };
 
 type Data = {
-  top: Array<{ score: number }>;
+  min: Array<{ score: number }>;
+  max: Array<{ score: number }>;
 };
 
 export const RarityTag: React.FC<Props> = ({ score }) => {
   const { data, error } = useSWR<Data, Error>(
     `{
-		top: zombies(first: 1, orderBy: score, orderDirection: desc) {
-			score
-		}
-	}`,
+      max: zombies (first: 1, orderBy: score, orderDirection: desc) {
+        score
+      }
+      min: zombies (first: 1, orderBy: score, orderDirection: asc) {
+        score
+      }
+    }`,
     fetcher
   );
 
@@ -27,11 +31,15 @@ export const RarityTag: React.FC<Props> = ({ score }) => {
   if (error) {
     return <i className="fas text-light fa-times"></i>;
   }
-  if (!data || !(data.top.length > 0)) {
+  if (!data || !(data.min.length > 0) || !(data.max.length > 0)) {
     return <i className="fas text-light fa-times"></i>;
   }
 
-  const fraction = parseFloat(((score / data.top[0].score) * 100).toFixed(1));
+  const fraction =
+    ((parseFloat(data.min[0].score.toString()) - score) /
+      (parseFloat(data.min[0].score.toString()) -
+        parseFloat(data.max[0].score.toString()))) *
+    100;
 
   return (
     <span className="fw-bold text-shadow text-light">
@@ -47,7 +55,7 @@ export const RarityTag: React.FC<Props> = ({ score }) => {
           return "Super Rare";
         } else if (fraction >= 80 && fraction < 90) {
           return "Mystic";
-        } else if (fraction >= 90 && fraction < 100) {
+        } else if (fraction >= 90 && fraction < 100.4) {
           return "Legendary";
         } else {
           return "Reveal Soon";

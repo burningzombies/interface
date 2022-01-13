@@ -23,37 +23,39 @@ export const nFormatter = (num: number, digits: number): string => {
     : "0";
 };
 
-export const parseTier = (tier: string, highScore: number): string => {
+export const parseTier = (
+  tier: string,
+  lowScore: number,
+  highScore: number
+): string => {
+  const calc = (per: number): number => {
+    const val =
+      parseFloat(lowScore.toString()) +
+      ((parseFloat(highScore.toString()) - parseFloat(lowScore.toString())) *
+        per) /
+        100;
+    const parsedVal = parseFloat(val.toString());
+    return parsedVal;
+  };
+
   switch (tier) {
     case "Common": {
-      const from = ((highScore / 100) * 0).toFixed(0);
-      const to = ((highScore / 100) * 40).toFixed(0);
-      return `${from},${to}`;
+      return `${calc(0)},${calc(40)}`;
     }
     case "Uncommon": {
-      const from = ((highScore / 100) * 40.0).toFixed(0);
-      const to = ((highScore / 100) * 55).toFixed(0);
-      return `${from},${to}`;
+      return `${calc(40)},${calc(55)}`;
     }
     case "Rare": {
-      const from = ((highScore / 100) * 55.0).toFixed(0);
-      const to = ((highScore / 100) * 70).toFixed(0);
-      return `${from},${to}`;
+      return `${calc(55)},${calc(70)}`;
     }
     case "Super Rare": {
-      const from = ((highScore / 100) * 70.0).toFixed(0);
-      const to = ((highScore / 100) * 80).toFixed(0);
-      return `${from},${to}`;
+      return `${calc(70)},${calc(80)}`;
     }
     case "Mystic": {
-      const from = ((highScore / 100) * 80.0).toFixed(0);
-      const to = ((highScore / 100) * 90).toFixed(0);
-      return `${from},${to}`;
+      return `${calc(80)},${calc(90)}`;
     }
     case "Legendary": {
-      const from = ((highScore / 100) * 90.0).toFixed(0);
-      const to = ((highScore / 100) * 100.1).toFixed(0);
-      return `${from},${to}`;
+      return `${calc(90)},${calc(100.4)}`;
     }
   }
   return "0,999";

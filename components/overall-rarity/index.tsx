@@ -8,28 +8,33 @@ type Props = {
 };
 
 type Data = {
-  top: Array<{ score: number }>;
+  min: Array<{ score: number }>;
+  max: Array<{ score: number }>;
 };
 
 export const OverallRarity: React.FC<Props> = ({ score }) => {
   const { data, error } = useSWR<Data, Error>(
     `{
-		top: zombies(first: 1, orderBy: score, orderDirection: desc) {
-			score
-		}
-	}`,
+      max: zombies (first: 1, orderBy: score, orderDirection: desc) {
+        score
+      }
+      min: zombies (first: 1, orderBy: score, orderDirection: asc) {
+        score
+      }
+    }`,
     fetcher
   );
 
   if (!data && !error) return <Spinner color="text-light" />;
 
-  if (error || !data || !(data.top.length > 0))
+  if (error || !data || !(data.max.length > 0) || !(data.min.length > 0))
     return <i className="fas text-light fa-times"></i>;
 
-  const fraction = !(score > 0)
-    ? String(0)
-    : ((score / data.top[0].score) * 100).toFixed(1);
-
+  const fraction =
+    ((parseFloat(data.min[0].score.toString()) - score) /
+      (parseFloat(data.min[0].score.toString()) -
+        parseFloat(data.max[0].score.toString()))) *
+    100;
   return (
     <>
       <div className="mt-2 text-light small">Overall Rarity Score</div>
@@ -38,11 +43,11 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
           className="progress-bar bg-warning text-dark text-shadow fw-bold"
           role="progressbar"
           style={{ width: `${fraction}%` }}
-          aria-valuenow={parseInt(fraction)}
+          aria-valuenow={fraction}
           aria-valuemin={0}
           aria-valuemax={100}
         >
-          {fraction}%
+          {fraction.toFixed(1)}%
         </div>
       </div>
     </>
