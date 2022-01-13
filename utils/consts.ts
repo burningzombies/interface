@@ -5,7 +5,7 @@ export const APP: AppConsts = Object.freeze({
   CHAIN_ID: 43114,
   IPFS_GATEWAY: "https://storage.burningzombies.com",
 
-  PROVENANCE_CID: "QmcD5fjjsUArKKj1f1a2Lp7Pzz2HSXizJyY2xMfkQuGdNZ",
+  PROVENANCE_CID: "QmSxjQjk1bMN2PkFm36ow45fD9DpBqCT9VVfq1Gq1rgQhw",
 
   GOVERNANCE_TOKEN: {
     CONTRACT: "",
