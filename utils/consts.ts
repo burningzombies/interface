@@ -27,20 +27,21 @@ export const APP: AppConsts = Object.freeze({
 
   STAKING: [
     {
+      SUBGRAPH:
+        "https://api.thegraph.com/subgraphs/name/burningzombies/nemo-stake",
+      CONTRACT: "0xAd147ad40290CAa8cac0B9eec399eBbc43d8b8c7",
+      MASTER: "0x1b72CFde16E5a33a36eAAFbf2eb9CDEd02B09577",
+      STAKING_SYMBOL: "NEMO",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/stake-1.png",
+    },
+    {
       SUBGRAPH: "",
       CONTRACT: "",
       MASTER: "",
       STAKING_SYMBOL: "ZOMBIE",
       REWARDS_SYMBOL: "BURN",
       POOL_IMAGE: "/stake/stake-0.png",
-    },
-    {
-      SUBGRAPH: "",
-      CONTRACT: "",
-      MASTER: "",
-      STAKING_SYMBOL: "NEMO",
-      REWARDS_SYMBOL: "BURN",
-      POOL_IMAGE: "/stake/stake-1.png",
     },
   ],
 
