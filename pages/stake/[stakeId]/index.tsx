@@ -93,6 +93,7 @@ const Main: NextPage<{ isAvailable: boolean; stakeId: number }> = ({
             }
             const stake = await contract.stake([tokenIds[i]]);
             await stake.wait();
+            alert.info(<>Waiting confirmation for the next token.</>);
           }
         } else {
           const isApproved = await masterContract.isApprovedForAll(
@@ -115,6 +116,7 @@ const Main: NextPage<{ isAvailable: boolean; stakeId: number }> = ({
                 ? await contract.stake(batch)
                 : await contract.withdraw(batch);
             await stake.wait();
+            alert.info(<>Waiting confirmation for the next 24 tokens.</>);
           }
         }
 
