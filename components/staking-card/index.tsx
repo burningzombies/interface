@@ -58,7 +58,7 @@ export const StakingCard: React.FC<Props> = ({ index, ...stake }) => {
     if (rewardForDuration === null)
       return (
         <span className="text-light small me-1">
-          <i className="fas fa-exclamation-triangle"></i>
+          <i className="fas fa-spinner"></i>
         </span>
       );
 
@@ -81,7 +81,7 @@ export const StakingCard: React.FC<Props> = ({ index, ...stake }) => {
     if (totalStaked === null)
       return (
         <span className="text-light small me-1">
-          <i className="fas fa-exclamation-triangle"></i>
+          <i className="fas fa-spinner"></i>
         </span>
       );
 

@@ -39,7 +39,7 @@ export const useStake = (stakeId: number): UseStakeType => {
 
       try {
         const abi = await fetch(
-          `${APP.IPFS_GATEWAY}/ipfs/${APP.STAKE_CONTRACT_CID}`
+          `${APP.IPFS_GATEWAY}/ipfs/QmUGT15keV7d9BYLPnAwCVWXzkxe1H1HUJH1tcSYoFSgcB`
         );
 
         const contract = new ethers.Contract(
