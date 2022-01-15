@@ -27,5 +27,5 @@ npm run prettier          # prettier
 Make a copy of `env.sample` named `.env.local`
 
 ```shell
-NEXT_PUBLIC_CHAIN_ID=                   # Blockchain ID
+NEXT_PUBLIC_CHAIN_ID= # Blockchain ID
 ```
