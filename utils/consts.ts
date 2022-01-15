@@ -14,7 +14,7 @@ export const APP: AppConsts = Object.freeze({
   },
 
   // master
-  MASTER_CONTRACT: "0x8B301E92Ed8565786F467c9D4655C8711c26AAfa",
+  MASTER_CONTRACT: "0xa9EDaf66c717808A30dfDEaf2490e3147a145fb5",
   MASTER_CONTRACT_CID: "Qmc5c3x3bdJZX6811UwRyUVViczZEL7cn3ND4Av9K4YwiG",
 
   // market
