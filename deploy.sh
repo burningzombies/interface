@@ -18,5 +18,5 @@ npx tsc &&
 echo "Git"
 git add -A &&
 git commit -m $MSG &&
-git push -u origin main
+git push -u origin develop
 
