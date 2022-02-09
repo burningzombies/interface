@@ -8,6 +8,9 @@ export interface AppConsts {
   MASTER_CONTRACT: string;
   MASTER_CONTRACT_CID: string;
 
+  MINT_START: number;
+  MINT_END: number;
+
   MARKET_CONTRACT: string;
   MARKET_CONTRACT_CID: string;
 

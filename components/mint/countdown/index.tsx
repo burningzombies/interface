@@ -1,64 +1,20 @@
 import React from "react";
 import Countdown from "react-countdown";
-import { Spinner } from "../../../components/spinner";
-import { Contract } from "ethers";
+import { APP } from "../../../utils/consts";
 
-type Props = {
-  masterContract: Contract | undefined | null;
-};
-
-export const MintCountdown: React.FC<Props> = ({ masterContract }) => {
-  const [start, setStart] = React.useState<number | undefined>();
-  const [duration, setDuration] = React.useState<number | undefined>();
-  const [isSaleActive, setIsSaleActive] = React.useState<boolean | undefined>();
-
-  React.useEffect(() => {
-    let isMounted = true;
-    const init = async () => {
-      if (!masterContract) return;
-      try {
-        const start = (await masterContract.saleStartsAt()).toNumber();
-        const duration = (await masterContract.saleDuration()).toNumber();
-        const isSaleActive = await masterContract.isSaleActive();
-
-        if (isMounted) setIsSaleActive(isSaleActive);
-
-        if (isMounted) {
-          setStart(start);
-          setDuration(duration);
-        }
-      } catch (err) {
-        setStart(undefined);
-        setDuration(undefined);
-        setIsSaleActive(undefined);
-      }
-    };
-    init();
-    return () => {
-      isMounted = false;
-    };
-  }, [masterContract]);
-
+export const MintCountdown: React.FC = () => {
   return (
     <>
       <i className="fas fa-stopwatch me-2"></i>
       {(() => {
-        if (
-          typeof isSaleActive === "undefined" ||
-          typeof start === "undefined" ||
-          typeof duration === "undefined"
-        )
-          return <Spinner color="text-light" />;
-        if (isSaleActive === false && start >= new Date().getTime() * 1000)
-          return <>Sold Out!</>;
         return (
           <Countdown
-            date={start * 1000}
+            date={APP.MINT_START}
             renderer={({ days, hours, minutes, seconds, completed }) => {
               if (completed)
                 return (
                   <Countdown
-                    date={start * 1000 + duration * 1000}
+                    date={APP.MINT_END}
                     renderer={({
                       days,
                       hours,

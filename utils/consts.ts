@@ -13,6 +13,9 @@ export const APP: AppConsts = Object.freeze({
     DECIMAL: 18,
   },
 
+  MINT_START: 1645196400 * 1000,
+  MINT_END: 1646060400 * 1000,
+
   // master
   MASTER_CONTRACT: "0xa9EDaf66c717808A30dfDEaf2490e3147a145fb5",
   MASTER_CONTRACT_CID: "Qmc5c3x3bdJZX6811UwRyUVViczZEL7cn3ND4Av9K4YwiG",
