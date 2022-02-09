@@ -83,7 +83,7 @@ export const Mint: React.FC = () => {
         <div className="text-light">
           <ul className="list-inline mt-3 mb-2">
             <li className="list-inline-item me-3">
-              <MintCountdown {...{ masterContract }} />
+              <MintCountdown />
             </li>
           </ul>
           <ul className="list-inline">
