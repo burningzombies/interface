@@ -1,7 +1,6 @@
 import React from "react";
 import { Spinner } from "../../../components/spinner";
 import { Contract } from "ethers";
-import { Balance } from "../../../components/balance";
 import Image from "next/image";
 
 // DeFi
@@ -136,12 +135,8 @@ const NFT_PLAYERS = [
 
 type Props = {
   masterContract: Contract | undefined | null;
-  address: string | undefined | null;
 };
-export const Info: React.FC<Props> = ({ address, masterContract }) => {
-  const [maxTokenPerWallet, setMaxTokenPerWallet] = React.useState<
-    number | undefined
-  >();
+export const Info: React.FC<Props> = ({ masterContract }) => {
   const [segmentNo, setSegmentNo] = React.useState<number | undefined>();
 
   React.useEffect(() => {
@@ -149,21 +144,15 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
-        const maxTokenPerWallet = (
-          await masterContract.MAX_TOKEN_PER_WALLET()
+        const nextTokenId = await masterContract.nextTokenId();
+        const segmentNo = (
+          await masterContract.segmentNoOfToken(nextTokenId)
         ).toNumber();
 
-        const segmentSize = (await masterContract.segmentSize()).toNumber();
-        const totalSupply = (await masterContract.currentTokenId()).toNumber();
-        const segmentNo_ = (totalSupply / segmentSize).toString();
-        const segmentNo = parseInt(segmentNo_);
-
         if (isMounted) {
-          setMaxTokenPerWallet(maxTokenPerWallet);
           setSegmentNo(segmentNo);
         }
       } catch {
-        setMaxTokenPerWallet(undefined);
         setSegmentNo(undefined);
       }
     };
@@ -172,16 +161,6 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
       isMounted = false;
     };
   }, [masterContract]);
-
-  const renderMaxTokenPerWallet = () => {
-    return maxTokenPerWallet ? (
-      <strong>
-        <Balance {...{ masterContract, owner: address }} />/{maxTokenPerWallet}
-      </strong>
-    ) : (
-      <Spinner color="text-light" />
-    );
-  };
 
   const renderPlayers = (players: Array<Player>) => {
     return (
@@ -236,7 +215,7 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
                   <div>
                     <i className="fas fa-hashtag me-1"></i>Neon Monsters Round
                   </div>
-                  <p>It&apos;s mintable 90% discounted for every 10 $NEMO.</p>
+                  <p>It&apos;s mintable 90% discounted for a zombie.</p>
                 </div>
               );
 
@@ -325,17 +304,5 @@ export const Info: React.FC<Props> = ({ address, masterContract }) => {
     );
   };
 
-  return (
-    <div>
-      <ul className="list-unstyled mb-0">
-        <li>
-          <span className="small">
-            ** Maximum {renderMaxTokenPerWallet()} zombies can collect for this
-            wallet.
-          </span>
-        </li>
-      </ul>
-      {renderSegment()}
-    </div>
-  );
+  return <div>{renderSegment()}</div>;
 };

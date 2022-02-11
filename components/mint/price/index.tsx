@@ -7,9 +7,10 @@ import { Contract, BigNumber } from "ethers";
 
 type Props = {
   masterContract: Contract | undefined | null;
+  address?: string | null;
 };
 
-export const TokenPrice: React.FC<Props> = ({ masterContract }) => {
+export const TokenPrice: React.FC<Props> = ({ masterContract, address }) => {
   const [tokenPrice, setTokenPrice] = React.useState<BigNumber | undefined>();
 
   React.useEffect(() => {
@@ -17,7 +18,9 @@ export const TokenPrice: React.FC<Props> = ({ masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
-        const price = await masterContract.currentTokenPrice();
+        const nextTokenId = await masterContract.nextTokenId();
+
+        const price = await masterContract.tokenPrice(address, nextTokenId);
         if (isMounted) setTokenPrice(price);
       } catch {
         setTokenPrice(undefined);
@@ -27,7 +30,7 @@ export const TokenPrice: React.FC<Props> = ({ masterContract }) => {
     return () => {
       isMounted = false;
     };
-  }, [masterContract]);
+  }, [masterContract, address]);
 
   return (
     <div title="Token Price" className="d-inline-flex">

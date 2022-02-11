@@ -46,9 +46,9 @@ export const Progress: React.FC<Props> = ({ masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
-        const currentTokenId = await masterContract.currentTokenId();
+        const currentTokenId = await masterContract.nextTokenId();
         const totalSupply = await masterContract.totalSupply();
-        const maxSupply = await masterContract.MAX_SUPPLY();
+        const maxSupply = 3024;
         if (isMounted) {
           setMinted(parseFloat(((totalSupply / maxSupply) * 100).toFixed(2)));
           setBurned(

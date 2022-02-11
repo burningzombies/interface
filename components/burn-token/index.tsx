@@ -21,7 +21,7 @@ export const BurnToken: React.FC = () => {
     const numberOfTokens = formData.get("numberOfTokens") as string;
 
     try {
-      const tx = await masterContract.divideUnclaimedTokenReflection(
+      const tx = await masterContract.divideUnclaimedTokensReflection(
         numberOfTokens
       );
       await tx.wait();

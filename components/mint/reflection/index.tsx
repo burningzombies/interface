@@ -14,8 +14,9 @@ export const Reflection: React.FC<Props> = ({ masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
+        const nextTokenId = await masterContract.nextTokenId();
         const reflection = (
-          await masterContract.calculateReflectionShare()
+          await masterContract.calcRefShare(nextTokenId)
         ).toNumber();
 
         if (isMounted) setReflection(reflection);

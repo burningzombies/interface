@@ -58,8 +58,8 @@ export const AttributesTable: React.FC = () => {
       if (!isReady || !masterContract) return;
 
       try {
-        const saleStatus = await masterContract.isSaleActive();
-        if (isMounted) setSale(saleStatus);
+        const saleStatus = await masterContract.status();
+        if (isMounted) setSale(saleStatus == 1 ? true : false);
       } catch {
         setSale(undefined);
       }

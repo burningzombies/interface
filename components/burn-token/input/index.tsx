@@ -15,10 +15,7 @@ export const Input: React.FC<Props> = ({ masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
-        const maxTokenPerTx = (
-          await masterContract.MAX_TOKEN_PER_TX()
-        ).toNumber();
-        if (isMounted) setMaxTokenPerTx(maxTokenPerTx);
+        if (isMounted) setMaxTokenPerTx(50);
       } catch {
         setMaxTokenPerTx(undefined);
       }
