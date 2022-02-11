@@ -38,8 +38,6 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
 
   const parsedFraction = fraction === 0 ? 1 : fraction;
 
-  console.log(fraction);
-
   return (
     <>
       <div className="mt-2 text-light small">Overall Rarity Score</div>
