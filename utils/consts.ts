@@ -45,7 +45,7 @@ export const APP: AppConsts = Object.freeze({
       MASTER: "0xb47d3Cd10DB2f035e14163e3D96F2B2F92eB66e2",
       STAKING_SYMBOL: "NEMOv2",
       REWARDS_SYMBOL: "BURN",
-      POOL_IMAGE: "/stake/nemov2.png",
+      POOL_IMAGE: "/stake/nemo-stake.png",
     },
     {
       SUBGRAPH: "",
