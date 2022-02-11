@@ -49,7 +49,7 @@ export const APP: AppConsts = Object.freeze({
     },
     {
       SUBGRAPH:
-        "https://api.thegraph.com/subgraphs/id/QmfLGjTWEkAe1vgcQmGSijqahGZfm9PYT7qSHCwCdw4WjV",
+        "https://api.thegraph.com/subgraphs/id/QmRybdmihxw3DjE9wmJUrWbghQNxE7Y8AxXbAqzoWhrJdw",
       CONTRACT: "0xBF9803BCcCDD2Ff604b4F8ECb41C29DA03696881",
       MASTER: "0xF2674DAa048f039E30Da9e12cB0e0879eEb02229",
       STAKING_SYMBOL: "LPASS",
