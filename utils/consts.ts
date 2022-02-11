@@ -48,6 +48,15 @@ export const APP: AppConsts = Object.freeze({
       POOL_IMAGE: "/stake/nemo-stake.png",
     },
     {
+      SUBGRAPH:
+        "https://api.thegraph.com/subgraphs/id/QmfLGjTWEkAe1vgcQmGSijqahGZfm9PYT7qSHCwCdw4WjV",
+      CONTRACT: "0xBF9803BCcCDD2Ff604b4F8ECb41C29DA03696881",
+      MASTER: "0xF2674DAa048f039E30Da9e12cB0e0879eEb02229",
+      STAKING_SYMBOL: "LPASS",
+      REWARDS_SYMBOL: "BURN",
+      POOL_IMAGE: "/stake/degen-stake.png",
+    },
+    {
       SUBGRAPH: "",
       CONTRACT: "",
       MASTER: "",
