@@ -15,14 +15,16 @@ export const ProgressBar: React.FC<Props> = ({ masterContract }) => {
       if (!masterContract) return;
       try {
         const total = await masterContract.totalSupply();
-        const max = await masterContract.MAX_SUPPLY();
-        const isSaleActive = await masterContract.isSaleActive();
+        const max = 3024;
+        const stat = await masterContract.status();
+        const isSaleActive = stat == 1 ? true : false;
 
         if (isMounted) setIsSaleActive(isSaleActive);
 
         if (isMounted)
           setFraction(parseFloat(((total / max) * 100).toFixed(1)));
-      } catch {
+      } catch (err) {
+        console.log(err);
         setFraction(0);
       }
     };

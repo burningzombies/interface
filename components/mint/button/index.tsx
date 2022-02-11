@@ -14,7 +14,8 @@ export const MintButton: React.FC<Props> = ({ loading, masterContract }) => {
     const init = async () => {
       if (!masterContract) return;
       try {
-        const isSaleActive = await masterContract.isSaleActive();
+        const stat = await masterContract.status();
+        const isSaleActive = stat == 1 ? true : false;
 
         if (isMounted) setIsSaleActive(isSaleActive);
       } catch {

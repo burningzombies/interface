@@ -30,8 +30,11 @@ export const Mint: React.FC = () => {
     setLoading(true);
 
     try {
-      const tx = await masterContract.mint({
-        value: await masterContract.currentTokenPrice(),
+      const tx = await masterContract.mintToken(address, {
+        value: await masterContract.tokenPrice(
+          address,
+          await masterContract.nextTokenId()
+        ),
       });
       await tx.wait();
 
@@ -88,7 +91,7 @@ export const Mint: React.FC = () => {
           </ul>
           <ul className="list-inline">
             <li className="list-inline-item me-3">
-              <TokenPrice {...{ masterContract }} />
+              <TokenPrice {...{ masterContract, address }} />
             </li>
             <li className="list-inline-item me-3">
               <Rewards {...{ masterContract }} />
@@ -109,7 +112,7 @@ export const Mint: React.FC = () => {
               <MintButton {...{ masterContract, loading }} />
             </div>
             <div className="mt-3">
-              <Info {...{ masterContract, address }} />
+              <Info {...{ masterContract }} />
             </div>
           </form>
         </div>

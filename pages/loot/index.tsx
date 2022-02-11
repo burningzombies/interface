@@ -50,7 +50,7 @@ const Loot: NextPage = () => {
                     Zombies are tradable; all trades have rewards, and it&apos;s
                     yours!
                   </p>
-                  <ClaimRewards {...{ contract: marketContract }} />
+                  <ClaimRewards {...{ contract: marketContract, address }} />
                 </>
               )}
               {col(
@@ -61,7 +61,7 @@ const Loot: NextPage = () => {
                   <p className="text-light">
                     All zombies hold minting rewards, grab your ax loot them!{" "}
                   </p>
-                  <ClaimRewards {...{ contract: masterContract }} />
+                  <ClaimRewards {...{ contract: masterContract, address }} />
                 </>
               )}
             </div>
