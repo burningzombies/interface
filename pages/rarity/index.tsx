@@ -93,7 +93,7 @@ const RarityLabel: React.FC<RarityLabelProps> = ({
     const parsedTo = parseFloat(to.toString());
 
     return `{
-      zombies (first: 1000, where: { score_lt: "${parsedTo}", score_gte: "${parsedFrom}" }) {
+      zombies (first: 3024, where: { score_lt: "${parsedTo}", score_gte: "${parsedFrom}" }) {
         id
       }
     }`;

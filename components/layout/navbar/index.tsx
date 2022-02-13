@@ -5,41 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Signal } from "./signal";
 import { APP } from "../../../utils/consts";
-import { useAlert } from "react-alert";
-import { errorHandler } from "../../../utils";
 
 export const Navbar: React.FC = () => {
   const router = useRouter();
-  const alert = useAlert();
-
-  const addBurn = async () => {
-    const tokenAddress = APP.GOVERNANCE_TOKEN.CONTRACT;
-    const tokenSymbol = APP.GOVERNANCE_TOKEN.SYMBOL;
-    const tokenDecimals = APP.GOVERNANCE_TOKEN.DECIMAL;
-    const tokenImage = `${APP.IPFS_GATEWAY}/ipfs/QmXsEP3fU5rHDuXKP2rcGLYP3XvVewfrNSpaoNTrbFHjJa`;
-
-    try {
-      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-      const wasAdded = await window.ethereum.request({
-        method: "wallet_watchAsset",
-        params: {
-          type: "ERC20",
-          options: {
-            address: tokenAddress, // The address that the token is at.
-            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
-            decimals: tokenDecimals, // The number of decimals in the token
-            image: tokenImage, // A string url of the token logo
-          },
-        },
-      });
-
-      if (wasAdded) alert.success(<>Added.</>);
-
-      // eslint-disable-next-line
-    } catch (err: any) {
-      alert.error(<>{errorHandler(err)}</>);
-    }
-  };
 
   const renderDropdown = () => {
     return (
@@ -139,6 +107,17 @@ export const Navbar: React.FC = () => {
             </Link>
           </li>
           <li>
+            <Link href="/burn-token">
+              <a
+                className={`dropdown-item ${
+                  router.pathname == "/burn-token" && "active"
+                }`}
+              >
+                <i className="me-1 fas fa-dollar-sign"></i> BURN
+              </a>
+            </Link>
+          </li>
+          <li>
             <hr className="dropdown-divider" />
           </li>
           <li>
@@ -149,11 +128,6 @@ export const Navbar: React.FC = () => {
               className="dropdown-item"
             >
               <i className="me-1 fas fa-scroll"></i> Docs
-            </a>
-          </li>
-          <li>
-            <a onClick={addBurn} role="button" className="dropdown-item">
-              <i className="me-1 fas fa-plus"></i> Add to Wallet
             </a>
           </li>
         </ul>
