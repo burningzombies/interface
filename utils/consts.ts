@@ -3,7 +3,7 @@ import type { AppConsts } from "../types";
 export const APP: AppConsts = Object.freeze({
   NAME: "Burning Zombies",
   CHAIN_ID: 43114,
-  IPFS_GATEWAY: "https://storage.burningzombies.com",
+  IPFS_GATEWAY: "https://graph.burningzombies.com",
 
   PROVENANCE_CID: "QmSxjQjk1bMN2PkFm36ow45fD9DpBqCT9VVfq1Gq1rgQhw",
 

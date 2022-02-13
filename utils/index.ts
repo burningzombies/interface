@@ -63,7 +63,7 @@ export const parseTier = (
 
 export const fetcher = <TData>(query: string): Promise<TData> => {
   return request(
-    "https://api.thegraph.com/subgraphs/id/QmZXcWcDdvxDZzLogRuYZhSMkz7LguMQuRyD6CKFPXTFqc",
+    "https://graph.burningzombies.com/subgraphs/id/QmZXcWcDdvxDZzLogRuYZhSMkz7LguMQuRyD6CKFPXTFqc",
     query
   );
 };
