@@ -39,9 +39,9 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
   const parsedFraction = fraction === 0 ? 1 : fraction;
 
   return (
-    <>
-      <div className="mt-2 text-light small">Overall Rarity Score</div>
-      <div className="progress shadow mt-2 mb-3 bg-secondary">
+    <div className="mt-4 mb-3">
+      <div className="mb-2 text-light small">Overall Rarity Score</div>
+      <div className="progress shadow bg-secondary">
         <div
           className="progress-bar bg-warning text-dark text-shadow fw-bold"
           role="progressbar"
@@ -53,6 +53,9 @@ export const OverallRarity: React.FC<Props> = ({ score }) => {
           {parsedFraction.toFixed(1)}%
         </div>
       </div>
-    </>
+      <span className="fst-italic text-light" style={{ fontSize: ".8rem" }}>
+        Score: {parseFloat(score.toString()).toFixed(2)}
+      </span>
+    </div>
   );
 };
