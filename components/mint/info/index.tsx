@@ -55,7 +55,7 @@ export const Info: React.FC<Props> = ({ masterContract }) => {
         ).toNumber();
 
         if (isMounted) {
-          setSegmentNo(2);
+          setSegmentNo(segmentNo);
         }
       } catch {
         setSegmentNo(undefined);
