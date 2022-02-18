@@ -5,6 +5,9 @@ import Image from "next/image";
 
 // NFT Players
 import NEMO from "../../../assets/nft-round-players/i-NEMO.png";
+import SAPLING from "../../../assets/sapling.jpg";
+import BBULLS from "../../../assets/bossbulls.jpg";
+import DEGENS from "../../../assets/degens.jpg";
 
 type Player = {
   image: StaticImageData;
@@ -17,6 +20,21 @@ const NFT_PLAYERS = [
     image: NEMO,
     title: "Neon Monsters",
     href: "https://twitter.com/0xNeonMonsters",
+  },
+  {
+    image: SAPLING,
+    title: "Avax Sapling",
+    href: "https://twitter.com/AvaxSapling",
+  },
+  {
+    image: BBULLS,
+    title: "Boss Bulls",
+    href: "https://twitter.com/avaxbossbulls",
+  },
+  {
+    image: DEGENS,
+    title: "ClubDegen.avax",
+    href: "https://twitter.com/AVAXClubDegen",
   },
 ];
 
@@ -103,8 +121,8 @@ export const Info: React.FC<Props> = ({ masterContract }) => {
                     <i className="fas fa-hashtag me-1"></i>NFT Round
                   </div>
                   <p>
-                    It can mint with a 10% discount if you&apos;re the holder of
-                    one of the tokens below.
+                    It can mint with discount up to 75% if you&apos;re the
+                    holder of one of the tokens below.
                   </p>
                   {renderPlayers(NFT_PLAYERS)}
                 </div>

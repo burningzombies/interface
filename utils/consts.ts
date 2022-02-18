@@ -58,7 +58,7 @@ export const APP: AppConsts = Object.freeze({
     },
     {
       SUBGRAPH:
-        "https://api.thegraph.com/subgraphs/name/burningzombies/boss-bulls-stake",
+        "https://api.thegraph.com/subgraphs/name/burningzombies/sapling-stake",
       CONTRACT: "0x89029C62068ef1065ee56b91974a72e3439Fd499",
       MASTER: "0x2fe07FCD6d67141Ec36314223d63abA7b7fe90Db",
       STAKING_SYMBOL: "SAPLING",
