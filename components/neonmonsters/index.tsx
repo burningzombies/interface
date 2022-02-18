@@ -6,8 +6,8 @@ export const NeonMonsters: React.FC = () => {
   return (
     <div className="bg-dark p-3 rounded shadow">
       <h3 className="fw-bold text-center hero-text h5 mb-4">
-        <i className="fas fa-certificate"></i> You like Neon Monsters? Zombies
-        are!
+        <i className="fas fa-certificate"></i> Do you like Neon Monsters?
+        Zombies do!
       </h3>
       <div className="row">
         <div className="col-lg-1 col-md-2 col-sm-2">
