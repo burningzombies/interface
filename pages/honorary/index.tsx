@@ -21,7 +21,7 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
         return "Ceo of Ava Labs";
       }
       case "1": {
-        return "The Kim Kardashian of Crypto";
+        return "The king of the subnetoors.";
       }
       default: {
         return "Honorary";
