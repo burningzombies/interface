@@ -23,6 +23,9 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
       case "1": {
         return "The king of the subnetoors.";
       }
+      case "2": {
+        return "The Kim Kardashian of Crypto.";
+      }
       default: {
         return "Honorary";
       }
@@ -44,6 +47,18 @@ const HonoraryCard: React.FC<HonoraryCardProps> = ({ id, name, imageURI }) => {
         );
       }
       case "1": {
+        return (
+          <div>
+            <Link href="https://twitter.com/_patrickogrady">
+              <a className="link-light" target="_blank" rel="noreferrer">
+                <i className="me-2 text-info fab fa-twitter"></i>
+                <span className="small">_patrickogrady</span>
+              </a>
+            </Link>
+          </div>
+        );
+      }
+      case "2": {
         return (
           <div>
             <Link href="https://www.instagram.com/hardrocknick/">
