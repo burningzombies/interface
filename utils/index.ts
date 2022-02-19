@@ -63,7 +63,14 @@ export const parseTier = (
 
 export const fetcher = <TData>(query: string): Promise<TData> => {
   return request(
-    "https://graph.burningzombies.com/subgraphs/id/QmVz8kQ8GK2FyQQYNotK1jjQC8M1b5YyPsdknzwXhfCdE6",
+    "https://graph.burningzombies.com/subgraphs/id/QmQW4vLrF4ZYwifBnNtaLxymYFWUQMcQYXeZS7qZETJ7H9",
+    query
+  );
+};
+
+export const wagmiFetcher = <TData>(query: string): Promise<TData> => {
+  return request(
+    "https://w-sg.neonmonsters.net/subgraphs/id/QmQW4vLrF4ZYwifBnNtaLxymYFWUQMcQYXeZS7qZETJ7H9",
     query
   );
 };
