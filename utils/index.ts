@@ -68,6 +68,13 @@ export const fetcher = <TData>(query: string): Promise<TData> => {
   );
 };
 
+export const wagmiFetcher = <TData>(query: string): Promise<TData> => {
+  return request(
+    "https://w-sg.neonmonsters.net/subgraphs/id/QmQW4vLrF4ZYwifBnNtaLxymYFWUQMcQYXeZS7qZETJ7H9",
+    query
+  );
+};
+
 export const toTitleCase = (str: string): string => {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
