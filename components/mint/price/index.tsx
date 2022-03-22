@@ -20,7 +20,10 @@ export const TokenPrice: React.FC<Props> = ({ masterContract, address }) => {
       try {
         const nextTokenId = await masterContract.nextTokenId();
 
-        const price = await masterContract.tokenPrice(address, nextTokenId);
+        const price = await masterContract.tokenPrice(
+          address,
+          nextTokenId.toNumber() > 3023 ? 3023 : nextTokenId
+        );
         if (isMounted) setTokenPrice(price);
       } catch {
         setTokenPrice(undefined);
